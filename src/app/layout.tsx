@@ -2,7 +2,7 @@
 import Navbar from "../components/Navbar";
 import "./globals.css";
 import { Geist } from "next/font/google";
-import { cn } from "@/lib/utils";
+import { cn } from "@/src/lib/utils";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -21,7 +21,7 @@ export default function RootLayout({
         {/* The specific page content is injected here */}
         <div className="flex-1 overflow-hidden">
           {children}
-          
+
         </div>
       </body>
     </html>
