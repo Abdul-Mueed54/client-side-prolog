@@ -11,8 +11,18 @@ export default function ProjectCard({ project }: { project: Project }) {
     (state) => state.setSelectedProject,
   );
 
+  const selectedProject = useProjectDisplayStore((state) => state.selectedProject,);
   return (
-    <div className="bg-white rounded-xl shadow-sm border p-5 flex flex-col h-full hover:shadow-md transition-shadow">
+    <div
+      onClick={() => setSelectedProject(project)}
+  className={`
+    bg-white rounded-xl p-5 flex flex-col h-full transition-all duration-300 cursor-pointer
+    ${selectedProject?.id === project.id
+      ? "ring-2 ring-indigo-700 shadow-2xl scale-[1.02] z-10 relative"
+      : "shadow-sm border border-slate-200 hover:shadow-md opacity-80 hover:opacity-100"
+    }
+  `}
+>
       {" "}
       {/* Header: Title & Badge */}
       <div className="flex justify-between items-start gap-4 mb-2">

@@ -1,6 +1,5 @@
-import PrimarySidebar from "../../../components/layouts/primarySidebar";
-import SecondarySidebar from "../../../components/layouts/secondarySidebar";
-import MainWindow from "../../../components/layouts/mainWindow";
+import PrimarySidebar from "../components/layouts/primarySidebar";
+import SecondarySidebar from "../components/layouts/secondarySidebar";
 
 export default function Guest() {
   return (

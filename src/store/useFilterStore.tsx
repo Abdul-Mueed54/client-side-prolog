@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 interface FilterState {
-  selectedDepartments: string[];
+  selectedDepartment: string ;
   selectedDomains: string[];
   selectedIndustries: string[];
   selectedYears: string[];
@@ -21,22 +21,17 @@ interface FilterState {
 }
 
 export const useFilterStore = create<FilterState>((set) => ({
-  selectedDepartments: [],
+  selectedDepartment: "",
   selectedDomains: [],
   selectedIndustries: [],
   selectedYears: [],
 
-  addDepartment: (dept) =>
-    set((state) => ({
-      selectedDepartments: state.selectedDepartments.includes(dept)
-        ? state.selectedDepartments
-        : [...state.selectedDepartments, dept],
-    })),
+  addDepartment: (dept) => set({ selectedDepartment: dept }),
 
-  removeDepartment: (deptToRemove) =>
-    set((state) => ({
-      selectedDepartments: state.selectedDepartments.filter((dept) => dept !== deptToRemove),
-    })),
+  removeDepartment: () =>
+    set({
+      selectedDepartment: "",
+    }),
 
   addDomain: (domain) =>
     set((state) => ({
@@ -47,7 +42,9 @@ export const useFilterStore = create<FilterState>((set) => ({
 
   removeDomain: (domainToRemove) =>
     set((state) => ({
-      selectedDomains: state.selectedDomains.filter((domain) => domain !== domainToRemove),
+      selectedDomains: state.selectedDomains.filter(
+        (domain) => domain !== domainToRemove,
+      ),
     })),
 
   toggleIndustry: (industry) =>
@@ -66,7 +63,7 @@ export const useFilterStore = create<FilterState>((set) => ({
 
   clearAll: () =>
     set({
-      selectedDepartments: [],
+      selectedDepartment: "",
       selectedDomains: [],
       selectedIndustries: [],
       selectedYears: [],

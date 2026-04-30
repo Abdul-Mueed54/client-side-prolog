@@ -32,7 +32,8 @@ export default function Navbar() {
         <RoleLink
           href="/protected/faculty"
           label="Faculty"
-          active={isActive("/protected/faculty")}
+          active={isActive("/protected/faculty")
+          }
         />
         <RoleLink
           href="/protected/staff"

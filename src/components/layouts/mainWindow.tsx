@@ -1,6 +1,6 @@
 import React from "react";
 import ProjectCard from "../projects/ProjectCard";
-import { Project } from "@/src/types";
+import { Project } from "@/../src/types";
 import SearchBar from "../searchBar/SearchBar";
 
 export default function MainWindow() {
@@ -15,6 +15,22 @@ export default function MainWindow() {
       supervisor: "Dr. Muhammad Numan",
       batch: "2025-2026",
       isSponsored: true,
+      resources: [
+        {
+          projectReport: "https://university-archive.edu/prolog-report.pdf",
+          other: "https://github.com/university/prolog-client",
+        },
+      ],
+      comment: [
+        {
+          id: "c-001",
+          text: "The search indexing is incredibly fast. Make sure to document the Zustand state management flow before final submission.",
+        },
+        {
+          id: "c-002",
+          text: "UI is looking very clean. Approved for Phase 2.",
+        },
+      ],
     },
     {
       id: "proj-002",
@@ -26,6 +42,13 @@ export default function MainWindow() {
       supervisor: "Dr. Aisha Khan",
       batch: "2024-2025",
       isSponsored: false,
+      resources: [
+        {
+          projectReport: "https://university-archive.edu/ecoweave-draft.pdf",
+          other: "Dataset: https://kaggle.com/datasets/textile-temps",
+        },
+      ],
+      // Notice: No comment array here, perfect for testing empty states!
     },
     {
       id: "proj-003",
@@ -37,42 +60,27 @@ export default function MainWindow() {
       supervisor: "Engr. Tariq Mehmood",
       batch: "2025-2026",
       isSponsored: true,
+      comment: [
+        {
+          id: "c-003",
+          text: "Industry sponsor has requested a demo next Tuesday. Please prepare the loom sensors.",
+        },
+      ],
+      // Notice: No resources array here
     },
     {
       id: "proj-004",
       title: "SecureCampus: Zero-Trust Network Architecture",
       abstract:
-        "Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.",
+        "Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.",
       department: "SE - Software Engineering",
       domains: ["Cyber Security"],
       supervisor: "Dr. Sarah Ahmed",
       batch: "2023-2024",
       isSponsored: false,
-    },
-    {
-      id: "proj-005",
-      title: "CloudLoom: IoT Weaving Analytics",
-      abstract:
-        "A cloud-based dashboard that aggregates real-time IoT sensor data from multiple industrial looms to predict maintenance needs.",
-      department: "CIS - Computer & Info Systems",
-      domains: ["Cloud Computing", "Web Dev", "Embedded Systems"],
-      supervisor: "Dr. Muhammad Numan",
-      batch: "2024-2025",
-      isSponsored: true,
-    },
-    {
-      id: "proj-006",
-      title: "PolyFlex: Advanced Sports Textiles",
-      abstract:
-        "Development of a new polymer blend for high-performance athletic wear that dynamically adjusts breathability based on body heat.",
-      department: "TE - Textile Engineering",
-      domains: ["Polymer Science", "Yarn Manufacturing"],
-      supervisor: "Dr. Usman Ali",
-      batch: "2025-2026",
-      isSponsored: false,
+      // Pure guest-level project: no comments, no resources.
     },
   ];
-
   return (
     <div className="h-[700px] overflow-y-auto overflow-scroll">
       <SearchBar />
@@ -82,7 +90,7 @@ export default function MainWindow() {
           Projects Found
         </p>
       </div>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 gap-4 p-3">
         {MOCK_PROJECTS.map((p) => (
           <ProjectCard key={p.id} project={p} />
         ))}
