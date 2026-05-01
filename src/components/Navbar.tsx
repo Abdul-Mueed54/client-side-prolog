@@ -14,10 +14,10 @@ export default function Navbar() {
   };
 
   return (
-    <header className="flex items-center justify-between px-8 py-4 bg-[#ffffff] border-b border-black shrink-0">
+    <header className="flex items-center justify-between px-8 py-4 bg-pwhite border-b border-black shrink-0">
       {/* LEFT: Branding */}
       <div className="flex items-center">
-        <h1 className="text-2xl font-serif text-gray-900">
+        <h1 className="text-2xl font-serif text-gray-d">
           ProLog - Project Cataloging System
         </h1>
       </div>
@@ -27,18 +27,18 @@ export default function Navbar() {
         <RoleLink
           href="/protected/admin/"
           label="Admin"
-          active={isActive("/protected/admin")}
+          active={isActive("/admin")}
         />
         <RoleLink
           href="/protected/faculty"
           label="Faculty"
-          active={isActive("/protected/faculty")
+          active={isActive("/faculty")
           }
         />
         <RoleLink
           href="/protected/staff"
           label="Staff"
-          active={isActive("/protected/staff")}
+          active={isActive("/staff")}
         />
         <RoleLink href="/" label="Guest" active={isActive("/")} />
       </nav>
@@ -59,10 +59,10 @@ function RoleLink({
   return (
     <Link
       href={href}
-      className={`px-5 py-1.5 rounded-full text-sm font-medium transition-colors border border-black ${
+      className={`px-5 py-1.5 rounded-full text-sm font-medium transition-colors border border-black shadow hover:shadow-2xl ${
         active
-          ? "bg-[#EF9F27] text-[#412402] " // The amber active state
-          : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50" // Inactive state
+          ? "bg-brand text-gray-d " // The amber active state
+          : "bg-white text-gray-d border-gray-300 hover:bg-gray-50" // Inactive state
       }`}
     >
       {label}

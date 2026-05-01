@@ -85,8 +85,8 @@ export default function MainWindow() {
     <div className="h-[700px] overflow-y-auto overflow-scroll">
       <SearchBar />
       <div className="mb-6">
-        <p className="text-slate-500 font-medium">
-          <strong className="text-slate-800">{MOCK_PROJECTS.length}</strong>{" "}
+        <p className="text-slate-l font-medium">
+          <strong className="text-slate-d">{MOCK_PROJECTS.length}</strong>{" "}
           Projects Found
         </p>
       </div>

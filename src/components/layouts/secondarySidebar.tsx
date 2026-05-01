@@ -11,8 +11,8 @@ export default function SecondarySidebar() {
   // The Empty State
   if (!selectedProject) {
     return (
-      <aside className="w-80 min-w-80 max-w-80 h-screen flex items-center justify-center text-center bg-white border-l border-slate-200">
-        <p className="text-sm text-slate-400 font-medium px-4">
+      <aside className="w-80 min-w-80 max-w-80 h-screen flex items-center justify-center text-center bg-white border-l border-slate-d">
+        <p className="text-sm text-slate-l font-medium px-4">
           Select a project to view details
         </p>
       </aside>
@@ -21,12 +21,12 @@ export default function SecondarySidebar() {
 
   // The Populated State
   return (
-    <aside className="w-80 min-w-80 max-w-80 h-screen flex flex-col bg-white border-l border-slate-200">
+    <aside className="w-80 min-w-80 max-w-80 h-screen flex flex-col bg-white border-l border-slate-d">
       {/* Scrollable Padding Container */}
       <div className="flex-1 min-w-0 overflow-hidden overflow-scroll p-8 flex flex-col gap-8">
         {/* Title Section */}
         <div className="min-w-0">
-          <h2 className="text-sm font-bold text-slate-400 tracking-widest uppercase mb-2">
+          <h2 className="text-sm font-bold text-slate-l tracking-widest uppercase mb-2">
             Title
           </h2>
           <p className="text-black text-lg font-bold leading-snug break-words">
@@ -36,7 +36,7 @@ export default function SecondarySidebar() {
 
         {/* Abstract Section */}
         <div className="min-w-0 flex flex-col max-h-64">
-          <h2 className="text-sm font-bold text-slate-400 tracking-widest uppercase mb-2">
+          <h2 className="text-sm font-bold text-slate-l tracking-widest uppercase mb-2">
             Abstract
           </h2>
           <div className="overflow-y-auto pr-2 text-black text-sm leading-relaxed break-words">
@@ -46,7 +46,7 @@ export default function SecondarySidebar() {
 
         {/* Domains Section */}
         <div className="min-w-0">
-          <h2 className="text-sm font-bold text-slate-400 tracking-widest uppercase mb-2">
+          <h2 className="text-sm font-bold text-slate-l tracking-widest uppercase mb-2">
             Domains
           </h2>
           <div className="flex flex-col gap-1.5">
@@ -64,7 +64,7 @@ export default function SecondarySidebar() {
         {/* Meta Data Section */}
         <div className="pt-6 border-t border-slate-100 flex flex-col gap-4 min-w-0">
           <div>
-            <h2 className="text-sm font-bold text-slate-400 tracking-widest uppercase mb-2">
+            <h2 className="text-sm font-bold text-slate-l tracking-widest uppercase mb-2">
               Supervisor
             </h2>
             <p className="text-sm font-medium text-black break-words">
@@ -72,7 +72,7 @@ export default function SecondarySidebar() {
             </p>
           </div>
           <div>
-            <h2 className="text-sm font-bold text-slate-400 tracking-widest uppercase mb-2">
+            <h2 className="text-sm font-bold text-slate-l tracking-widest uppercase mb-2">
               Batch
             </h2>
             <p className="text-sm font-medium text-black">
@@ -88,7 +88,7 @@ export default function SecondarySidebar() {
           <div className="pt-6 border-t border-slate-200 flex flex-col gap-8 w-full mt-4">
             {/* 1. Resources Area */}
             <div className="w-full">
-              <h2 className="text-sm font-bold text-slate-400 tracking-widest uppercase mb-2 flex gap-2">
+              <h2 className="text-sm font-bold text-slate-l tracking-widest uppercase mb-2 flex gap-2">
                 <Link size={16} /> Resources
               </h2>
               {selectedProject.resources &&
@@ -105,7 +105,7 @@ export default function SecondarySidebar() {
                   ))}
                 </div>
               ) : (
-                <p className="text-xs text-slate-400 italic">
+                <p className="text-xs text-slate-l italic">
                   No resources attached.
                 </p>
               )}
@@ -113,7 +113,7 @@ export default function SecondarySidebar() {
 
             {/* 2. Commenting Area */}
             <div className="w-full">
-              <h2 className="text-sm font-bold text-slate-400 tracking-widest uppercase mb-2 flex gap-2">
+              <h2 className="text-sm font-bold text-slate-l tracking-widest uppercase mb-2 flex gap-2">
                 <MessageSquare size={16} /> Faculty Notes
               </h2>
 
@@ -121,7 +121,7 @@ export default function SecondarySidebar() {
               <div className="relative mb-4">
                 <textarea
                   placeholder="Any suggestion for the project above..."
-                  className="w-full bg-slate-50 border border-slate-200 rounded-lg p-3 pr-10 text-sm text-slate-700 resize-none h-20 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-lg p-3 pr-10 text-sm text-slate-d resize-none h-20 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
                 <button className="absolute bottom-3 right-3 text-indigo-700 hover:text-indigo-800 p-1 bg-indigo-50 rounded-md">
                   <Send size={14} />
@@ -138,7 +138,7 @@ export default function SecondarySidebar() {
                 key={comment.id}
                 className="bg-slate-50 p-3 rounded-lg border border-slate-100"
               >
-                <p className="text-xs text-slate-600 break-words">
+                <p className="text-xs text-slate-m break-words">
                   {comment.text}
                 </p>
               </div>

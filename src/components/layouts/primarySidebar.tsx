@@ -52,8 +52,8 @@ export default function PrimarySidebar() {
     store.selectedYears.length > 0;
 
   return (
-    <aside className="w-64 h-screen bg-white border-r border-slate-200 flex flex-col overflow-y-auto">
-      <div className="sticky top-0 bg-white z-20 flex items-center justify-between p-5 border-b border-slate-100">
+    <aside className="w-64 h-screen bg-pwhite border-r border-slate-d flex flex-col overflow-y-auto">
+      <div className="sticky top-0 bg-white z-20 flex items-center justify-between p-5 border-b border-slate-200">
         <div className="flex items-center gap-2 text-slate-700 text-xl font-bold">
           <Funnel className="w-5 h-5 text-indigo-600" />
           <span className="tracking-tight">Filters</span>
@@ -61,7 +61,7 @@ export default function PrimarySidebar() {
         {hasActiveFilters && (
           <button
             onClick={store.clearAll}
-            className="text-[10px] uppercase font-bold text-slate-400 hover:text-red-500 transition-colors"
+            className="text-[10px] uppercase font-bold text-slate-l hover:text-red-500 transition-colors"
           >
             Clear All
           </button>
@@ -130,20 +130,20 @@ function FilterDropdown({ label, placeholder, options, selectedItems, onAdd, onR
 
   return (
     <div className="flex flex-col gap-2">
-      <label className="text-slate-400 text-[11px] font-bold uppercase tracking-widest">{label}</label>
+      <label className="text-slate-l text-sm font-bold uppercase tracking-widest">{label}</label>
       <div className="relative">
         <div
           onClick={() => setIsOpen(!isOpen)}
-          className="w-full min-h-[40px] p-1.5 bg-slate-50 border border-slate-200 rounded-lg flex flex-wrap gap-1.5 items-center cursor-pointer hover:border-indigo-400 transition-all"
+          className="w-full min-h-[40px] p-1.5 bg-slate-50 border border-slate-l rounded-lg flex flex-wrap gap-1.5 items-center cursor-pointer hover:border-indigo-400 transition-all"
         >
           {items.length === 0 && <span className="text-sm text-slate-400 ml-1">{placeholder}</span>}
           {items.map((item) => (
-            <span key={item} className="flex items-center gap-1 bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-semibold px-2 py-1 rounded-md">
+            <span key={item} className="flex items-center gap-1 bg-indigo-l border border-indigo-m text-indigo-d text-xs font-semibold px-2 py-1 rounded-md">
               {extractLabel(item)}
               <X className="w-3 h-3 cursor-pointer hover:text-red-500" onClick={(e) => { e.stopPropagation(); onRemove(item); }} />
             </span>
           ))}
-          <ChevronDown className={`w-4 h-4 text-slate-400 ml-auto transition-transform ${isOpen ? "rotate-180" : ""}`} />
+          <ChevronDown className={`w-4 h-4 text-slate-l ml-auto transition-transform ${isOpen ? "rotate-180" : ""}`} />
         </div>
 
         {isOpen && availableOptions.length > 0 && (
@@ -153,7 +153,7 @@ function FilterDropdown({ label, placeholder, options, selectedItems, onAdd, onR
               {availableOptions.map((opt) => (
                 <div
                   key={opt}
-                  className="p-2.5 text-sm text-slate-600 hover:bg-indigo-50 hover:text-indigo-700 cursor-pointer transition-colors"
+                  className="p-2.5 text-sm text-slate-m hover:bg-indigo-l hover:text-indigo-d cursor-pointer transition-colors"
                   onClick={() => { onAdd(opt); setIsOpen(false); }}
                 >
                   {opt}
@@ -170,13 +170,13 @@ function FilterDropdown({ label, placeholder, options, selectedItems, onAdd, onR
 function FilterCheckboxGroup({ label, options, selectedItems, onToggle }: { label: string; options: string[]; selectedItems: string[]; onToggle: (i: string) => void }) {
   return (
     <div className="flex flex-col gap-3">
-      <label className="text-slate-400 text-[11px] font-bold uppercase tracking-widest">{label}</label>
+      <label className="text-slate-l text-sm font-bold uppercase tracking-widest">{label}</label>
       <div className="flex flex-col gap-2.5">
         {options.map((opt) => {
           const checked = selectedItems.includes(opt);
           return (
             <label key={opt} className="flex items-center gap-3 cursor-pointer group">
-              <div className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${checked ? "bg-amber-500 border-amber-600 text-white" : "bg-white border-slate-300 group-hover:border-slate-500"}`}>
+              <div className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${checked ? "bg-brand border-slate-d text-white" : "bg-white border-slate-l group-hover:border-slate-m"}`}>
                 {checked && <Check className="w-3 h-3" strokeWidth={4} />}
               </div>
               <input type="checkbox" className="hidden" checked={checked} onChange={() => onToggle(opt)} />

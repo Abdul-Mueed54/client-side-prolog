@@ -16,7 +16,7 @@ export default function ProjectCard({ project }: { project: Project }) {
     <div
       onClick={() => setSelectedProject(project)}
   className={`
-    bg-white rounded-xl p-5 flex flex-col h-full transition-all duration-300 cursor-pointer
+    bg-pwhite rounded-xl p-5 flex flex-col h-full transition-all duration-300 cursor-pointer
     ${selectedProject?.id === project.id
       ? "ring-2 ring-indigo-700 shadow-2xl scale-[1.02] z-10 relative"
       : "shadow-sm border border-slate-200 hover:shadow-md opacity-80 hover:opacity-100"
@@ -26,7 +26,7 @@ export default function ProjectCard({ project }: { project: Project }) {
       {" "}
       {/* Header: Title & Badge */}
       <div className="flex justify-between items-start gap-4 mb-2">
-        <h3 className="font-bold text-slate-800 text-lg leading-tight">
+        <h3 className="font-bold text-slate-d text-lg leading-tight">
           {project.title}
         </h3>
         {project.isSponsored && (
@@ -40,23 +40,23 @@ export default function ProjectCard({ project }: { project: Project }) {
         {project.domains.map((domain) => (
           <span
             key={domain}
-            className="bg-indigo-50 text-indigo-700 border border-indigo-100 text-xs font-semibold px-2 py-0.5 rounded-md"
+            className="bg-indigo-l text-indigo-d border border-indigo-100 text-xs font-semibold px-2 py-0.5 rounded-md"
           >
             {domain}
           </span>
         ))}
       </div>
       {/* Abstract */}
-      <p className="text-slate-600 text-sm mb-6 flex-grow line-clamp-3">
+      <p className="text-slate-m text-sm mb-6 flex-grow line-clamp-3">
         {project.abstract}
       </p>
       {/* Footer: Meta & Button */}
       <div className="flex items-end justify-between mt-auto pt-4 border-t border-slate-100">
         <div className="flex flex-col gap-0.5">
-          <span className="text-xs text-slate-500 font-medium">
+          <span className="text-xs text-slate-l font-medium">
             {project.supervisor}
           </span>
-          <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">
+          <span className="text-[10px] text-slate-l font-semibold uppercase tracking-wider">
             Batch {project.batch.split("-")[0]}{" "}
             {/* Turns "2025-2026" into "2025" */}
           </span>
