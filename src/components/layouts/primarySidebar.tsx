@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
-import { Funnel, X, ChevronDown, Check } from "lucide-react";
+import React, { useEffect, useMemo } from "react";
+import { Funnel, Check } from "lucide-react";
 import { useFilterStore } from "../../store/useFilterStore";
+import { UniversalDropdown } from "../dropDown/universalDropDown";
 
 // --- MASTER DATA ---
 const DEPARTMENTS = [
@@ -12,11 +13,12 @@ const DEPARTMENTS = [
   "SE - Software Engineering",
 ];
 
+// FIX 1: Made this an actual Record (Object) so your cascading logic works!
 const DOMAIN_MAPPING: Record<string, string[]> = {
-  "TE - Textile Engineering": ["Yarn Manufacturing", "Polymer Science", "AI/ML", "Quality Control"],
-  "TS - Textile Sciences": ["Smart Textiles", "Chemical Processing", "Sustainability"],
-  "CIS - Computer & Info Systems": ["AI/ML", "Web Dev", "Cloud Computing", "Embedded Systems", "FPGA"],
-  "SE - Software Engineering": ["Web Dev", "App Dev", "Cyber Security", "AI/ML"],
+  "TE - Textile Engineering": ["Yarn Manufacturing", "Polymer Science"],
+  "TS - Textile Sciences": ["Quality Control"],
+  "CIS - Computer & Info Systems": ["AI/ML", "Web Dev", "Data Science"],
+  "SE - Software Engineering": ["AI/ML", "Cyber Security", "Web Dev"],
 };
 
 const INDUSTRIES = ["Industry-Linked", "Received Grant"];
@@ -29,31 +31,35 @@ export default function PrimarySidebar() {
   const availableDomains = useMemo(() => {
     const dept = store.selectedDepartment;
     if (!dept) {
+      // If no dept selected, show all unique domains across all departments
       return Array.from(new Set(Object.values(DOMAIN_MAPPING).flat())).sort();
     }
-    // If it's a string, wrap in array to use same logic; if array, use as is
-    const depts = Array.isArray(dept) ? dept : [dept];
-    const union = new Set<string>();
-    depts.forEach((d) => DOMAIN_MAPPING[d]?.forEach((dom) => union.add(dom)));
-    return Array.from(union).sort();
+    // Return domains specifically for the single selected department
+    return DOMAIN_MAPPING[dept] || [];
   }, [store.selectedDepartment]);
-
-  // 2. Safety: Remove domains that are no longer valid for the selected department
+  // 2. Safety Cleanup: Automatically deselect domains that don't belong to the new department
   useEffect(() => {
-    store.selectedDomains.forEach((dom) => {
-      if (!availableDomains.includes(dom)) store.removeDomain(dom);
-    });
-  }, [availableDomains, store]);
+    // Filter the currently selected domains to only keep ones that are still valid
+    const validSelectedDomains = store.selectedDomains.filter((dom) =>
+      availableDomains.includes(dom)
+    );
+
+    // If the length changed, it means some invalid domains were removed, 
+    // so we update the store to clear them out of the UI.
+    if (validSelectedDomains.length !== store.selectedDomains.length) {
+      store.setDomains(validSelectedDomains);
+    }
+  }, [availableDomains, store.selectedDomains, store.setDomains]);
 
   const hasActiveFilters =
-    (Array.isArray(store.selectedDepartment) ? store.selectedDepartment.length > 0 : !!store.selectedDepartment) ||
+    !!store.selectedDepartment ||
     store.selectedDomains.length > 0 ||
     store.selectedIndustries.length > 0 ||
     store.selectedYears.length > 0;
 
   return (
-    <aside className="w-64 h-screen bg-white border-r border-slate-200 flex flex-col overflow-y-auto">
-      <div className="sticky top-0 bg-white z-20 flex items-center justify-between p-5 border-b border-slate-100">
+    <aside className="w-64 h-screen bg-slate-50 border-r border-slate-200 flex flex-col overflow-y-auto">
+      <div className="sticky top-0 bg-white z-20 flex items-center justify-between p-5 border-b border-slate-200">
         <div className="flex items-center gap-2 text-slate-700 text-xl font-bold">
           <Funnel className="w-5 h-5 text-indigo-600" />
           <span className="tracking-tight">Filters</span>
@@ -69,37 +75,43 @@ export default function PrimarySidebar() {
       </div>
 
       <div className="flex flex-col p-5 gap-8">
-        <FilterDropdown
+        
+        {/* DEPARTMENT: Single Select */}
+        <UniversalDropdown
           label="Department"
           placeholder="Select department..."
           options={DEPARTMENTS}
-          selectedItems={store.selectedDepartment}
-          onAdd={store.addDepartment}
-          onRemove={store.removeDepartment}
-          extractLabel={(item) => item}
+          multiple={false} 
+          searchable={true}
+          value={store.selectedDepartment} 
+          onChange={store.setDepartment}   
         />
 
-        <FilterDropdown
-          label="Domain"
+        {/* DOMAINS: Multi Select */}
+        <UniversalDropdown
+          label="Domains"
           placeholder="Select domains..."
-          options={availableDomains}
-          selectedItems={store.selectedDomains}
-          onAdd={store.addDomain}
-          onRemove={store.removeDomain}
+          options={availableDomains}   
+          multiple={true}   
+          searchable={true}            
+          value={store.selectedDomains} 
+          onChange={store.setDomains}   
         />
 
+        {/* INDUSTRIES: Checkboxes */}
         <FilterCheckboxGroup
           label="Industry"
           options={INDUSTRIES}
           selectedItems={store.selectedIndustries}
-          onToggle={store.toggleIndustry}
+          onChange={store.setIndustries} 
         />
 
+        {/* YEARS: Checkboxes */}
         <FilterCheckboxGroup
           label="Academic Year"
           options={YEARS}
           selectedItems={store.selectedYears}
-          onToggle={store.toggleYear}
+          onChange={store.setYears} 
         />
       </div>
     </aside>
@@ -108,78 +120,40 @@ export default function PrimarySidebar() {
 
 // --- REUSABLE COMPONENTS ---
 
-interface DropdownProps {
-  label: string;
-  placeholder: string;
-  options: string[];
-  selectedItems: string | string[]; // Support for single string or array
-  onAdd: (val: string) => void;
-  onRemove: (val: string) => void;
-  extractLabel?: (val: string) => string;
-}
+// FIX 3: Updated to use `onChange(newArray)` to match UniversalDropdown and Zustand perfectly
+function FilterCheckboxGroup({ 
+  label, 
+  options, 
+  selectedItems, 
+  onChange 
+}: { 
+  label: string; 
+  options: string[]; 
+  selectedItems: string[]; 
+  onChange: (newArray: string[]) => void 
+}) {
+  
+  // This little function handles adding/removing from the array
+  const handleToggle = (opt: string) => {
+    if (selectedItems.includes(opt)) {
+      onChange(selectedItems.filter(item => item !== opt)); // Remove
+    } else {
+      onChange([...selectedItems, opt]); // Add
+    }
+  };
 
-function FilterDropdown({ label, placeholder, options, selectedItems, onAdd, onRemove, extractLabel = (i) => i }: DropdownProps) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  // Normalize to array for the UI loop
-  const items = Array.isArray(selectedItems)
-    ? selectedItems
-    : selectedItems ? [selectedItems] : [];
-
-  const availableOptions = options.filter(opt => !items.includes(opt));
-
-  return (
-    <div className="flex flex-col gap-2">
-      <label className="text-slate-400 text-[11px] font-bold uppercase tracking-widest">{label}</label>
-      <div className="relative">
-        <div
-          onClick={() => setIsOpen(!isOpen)}
-          className="w-full min-h-[40px] p-1.5 bg-slate-50 border border-slate-200 rounded-lg flex flex-wrap gap-1.5 items-center cursor-pointer hover:border-indigo-400 transition-all"
-        >
-          {items.length === 0 && <span className="text-sm text-slate-400 ml-1">{placeholder}</span>}
-          {items.map((item) => (
-            <span key={item} className="flex items-center gap-1 bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-semibold px-2 py-1 rounded-md">
-              {extractLabel(item)}
-              <X className="w-3 h-3 cursor-pointer hover:text-red-500" onClick={(e) => { e.stopPropagation(); onRemove(item); }} />
-            </span>
-          ))}
-          <ChevronDown className={`w-4 h-4 text-slate-400 ml-auto transition-transform ${isOpen ? "rotate-180" : ""}`} />
-        </div>
-
-        {isOpen && availableOptions.length > 0 && (
-          <>
-            <div className="fixed inset-0 z-10" onClick={() => setIsOpen(false)} />
-            <div className="absolute top-full mt-1 w-full bg-white border border-slate-200 rounded-lg shadow-xl z-20 max-h-48 overflow-y-auto">
-              {availableOptions.map((opt) => (
-                <div
-                  key={opt}
-                  className="p-2.5 text-sm text-slate-600 hover:bg-indigo-50 hover:text-indigo-700 cursor-pointer transition-colors"
-                  onClick={() => { onAdd(opt); setIsOpen(false); }}
-                >
-                  {opt}
-                </div>
-              ))}
-            </div>
-          </>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function FilterCheckboxGroup({ label, options, selectedItems, onToggle }: { label: string; options: string[]; selectedItems: string[]; onToggle: (i: string) => void }) {
   return (
     <div className="flex flex-col gap-3">
-      <label className="text-slate-400 text-[11px] font-bold uppercase tracking-widest">{label}</label>
+      <label className="text-slate-500 text-sm font-bold uppercase tracking-widest">{label}</label>
       <div className="flex flex-col gap-2.5">
         {options.map((opt) => {
           const checked = selectedItems.includes(opt);
           return (
             <label key={opt} className="flex items-center gap-3 cursor-pointer group">
-              <div className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${checked ? "bg-amber-500 border-amber-600 text-white" : "bg-white border-slate-300 group-hover:border-slate-500"}`}>
+              <div className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${checked ? "bg-indigo-600 border-indigo-700 text-white" : "bg-white border-slate-300 group-hover:border-slate-400"}`}>
                 {checked && <Check className="w-3 h-3" strokeWidth={4} />}
               </div>
-              <input type="checkbox" className="hidden" checked={checked} onChange={() => onToggle(opt)} />
+              <input type="checkbox" className="hidden" checked={checked} onChange={() => handleToggle(opt)} />
               <span className={`text-sm font-medium ${checked ? "text-slate-900" : "text-slate-600"}`}>{opt}</span>
             </label>
           );
