@@ -1,20 +1,19 @@
 import { create } from "zustand";
 
 interface FilterState {
-  selectedDepartment: string ;
+  selectedDepartment: string;
   selectedDomains: string[];
   selectedIndustries: string[];
   selectedYears: string[];
 
-  // Dropdown Actions
-  addDepartment: (dept: string) => void;
-  removeDepartment: (dept: string) => void;
-  addDomain: (domain: string) => void;
-  removeDomain: (domain: string) => void;
-
-  // Checkbox Actions
-  toggleIndustry: (industry: string) => void;
-  toggleYear: (year: string) => void;
+  // 1. Replaced add/remove with simple "Setters"
+  setDepartment: (dept: string) => void;
+  setDomains: (domains: string[]) => void;
+  
+  // 2. We can do the same for checkboxes if they also return arrays, 
+  // OR keep toggle if you are using standard single checkboxes
+  setIndustries: (industries: string[]) => void;
+  setYears: (years: string[]) => void;
 
   // Reset
   clearAll: () => void;
@@ -26,40 +25,16 @@ export const useFilterStore = create<FilterState>((set) => ({
   selectedIndustries: [],
   selectedYears: [],
 
-  addDepartment: (dept) => set({ selectedDepartment: dept }),
+  // --- THE NEW ACTIONS ---
+  // Just take the value and overwrite the state! So simple.
 
-  removeDepartment: () =>
-    set({
-      selectedDepartment: "",
-    }),
-
-  addDomain: (domain) =>
-    set((state) => ({
-      selectedDomains: state.selectedDomains.includes(domain)
-        ? state.selectedDomains
-        : [...state.selectedDomains, domain],
-    })),
-
-  removeDomain: (domainToRemove) =>
-    set((state) => ({
-      selectedDomains: state.selectedDomains.filter(
-        (domain) => domain !== domainToRemove,
-      ),
-    })),
-
-  toggleIndustry: (industry) =>
-    set((state) => ({
-      selectedIndustries: state.selectedIndustries.includes(industry)
-        ? state.selectedIndustries.filter((i) => i !== industry)
-        : [...state.selectedIndustries, industry],
-    })),
-
-  toggleYear: (year) =>
-    set((state) => ({
-      selectedYears: state.selectedYears.includes(year)
-        ? state.selectedYears.filter((y) => y !== year)
-        : [...state.selectedYears, year],
-    })),
+  setDepartment: (dept) => set({ selectedDepartment: dept }),
+  
+  setDomains: (domains) => set({ selectedDomains: domains }),
+  
+  setIndustries: (industries) => set({ selectedIndustries: industries }),
+  
+  setYears: (years) => set({ selectedYears: years }),
 
   clearAll: () =>
     set({

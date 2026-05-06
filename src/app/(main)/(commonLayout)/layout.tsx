@@ -10,7 +10,7 @@ export default function CommonLayout({
 }) {
   return (
     <>
-      <Navbar />
+      
       <div className="flex h-screen overflow-hidden">
         <PrimarySidebar />
         

@@ -24,23 +24,14 @@ export default function Navbar() {
 
       {/* RIGHT: Role Navigation Pills */}
       <nav className="flex items-center gap-3">
+        <RoleLink href="/admin/" label="Admin" active={isActive("/admin")} />
         <RoleLink
-          href="/protected/admin/"
-          label="Admin"
-          active={isActive("/admin")}
-        />
-        <RoleLink
-          href="/protected/faculty"
+          href="/faculty"
           label="Faculty"
-          active={isActive("/faculty")
-          }
+          active={isActive("/faculty")}
         />
-        <RoleLink
-          href="/protected/staff"
-          label="Staff"
-          active={isActive("/staff")}
-        />
-        <RoleLink href="/" label="Guest" active={isActive("/")} />
+        <RoleLink href="/staff" label="Staff" active={isActive("/staff")} />
+        <RoleLink href="/guest" label="Guest" active={isActive("/guest")} />
       </nav>
     </header>
   );

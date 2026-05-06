@@ -80,6 +80,456 @@ export default function MainWindow() {
       isSponsored: false,
       // Pure guest-level project: no comments, no resources.
     },
+    {
+      id: "proj-001",
+      title: "ProLog: Project Cataloging System",
+      abstract:
+        "A centralized digital archive and search engine for Final Year Design Projects, transitioning from manual storage to a digitized LAN-based application.",
+      department: "CIS - Computer & Info Systems",
+      domains: ["AI/ML", "Web Dev"],
+      supervisor: "Dr. Muhammad Numan",
+      batch: "2025-2026",
+      isSponsored: true,
+      resources: [
+        {
+          projectReport: "https://university-archive.edu/prolog-report.pdf",
+          other: "https://github.com/university/prolog-client",
+        },
+      ],
+      comment: [
+        {
+          id: "c-001",
+          text: "The search indexing is incredibly fast. Make sure to document the Zustand state management flow before final submission.",
+        },
+        {
+          id: "c-002",
+          text: "UI is looking very clean. Approved for Phase 2.",
+        },
+      ],
+    },
+    {
+      id: "proj-002",
+      title: "EcoWeave: Sustainable Dyeing Process",
+      abstract:
+        "Investigating the use of organic, plant-based dyes combined with ML-driven temperature control to reduce water waste in textile manufacturing.",
+      department: "TS - Textile Sciences",
+      domains: ["Chemical Processing", "Sustainability", "AI/ML"],
+      supervisor: "Dr. Aisha Khan",
+      batch: "2024-2025",
+      isSponsored: false,
+      resources: [
+        {
+          projectReport: "https://university-archive.edu/ecoweave-draft.pdf",
+          other: "Dataset: https://kaggle.com/datasets/textile-temps",
+        },
+      ],
+      // Notice: No comment array here, perfect for testing empty states!
+    },
+    {
+      id: "proj-003",
+      title: "DefectDetect: Real-time Fabric Inspection",
+      abstract:
+        "An FPGA-based computer vision system installed on looms to instantly detect thread breakages and weaving defects using neural networks.",
+      department: "TE - Textile Engineering",
+      domains: ["Quality Control", "AI/ML"],
+      supervisor: "Engr. Tariq Mehmood",
+      batch: "2025-2026",
+      isSponsored: true,
+      comment: [
+        {
+          id: "c-003",
+          text: "Industry sponsor has requested a demo next Tuesday. Please prepare the loom sensors.",
+        },
+      ],
+      // Notice: No resources array here
+    },
+    {
+      id: "proj-004",
+      title: "SecureCampus: Zero-Trust Network Architecture",
+      abstract:
+        "Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.",
+      department: "SE - Software Engineering",
+      domains: ["Cyber Security"],
+      supervisor: "Dr. Sarah Ahmed",
+      batch: "2023-2024",
+      isSponsored: false,
+      // Pure guest-level project: no comments, no resources.
+    },
+    {
+      id: "proj-001",
+      title: "ProLog: Project Cataloging System",
+      abstract:
+        "A centralized digital archive and search engine for Final Year Design Projects, transitioning from manual storage to a digitized LAN-based application.",
+      department: "CIS - Computer & Info Systems",
+      domains: ["AI/ML", "Web Dev"],
+      supervisor: "Dr. Muhammad Numan",
+      batch: "2025-2026",
+      isSponsored: true,
+      resources: [
+        {
+          projectReport: "https://university-archive.edu/prolog-report.pdf",
+          other: "https://github.com/university/prolog-client",
+        },
+      ],
+      comment: [
+        {
+          id: "c-001",
+          text: "The search indexing is incredibly fast. Make sure to document the Zustand state management flow before final submission.",
+        },
+        {
+          id: "c-002",
+          text: "UI is looking very clean. Approved for Phase 2.",
+        },
+      ],
+    },
+    {
+      id: "proj-002",
+      title: "EcoWeave: Sustainable Dyeing Process",
+      abstract:
+        "Investigating the use of organic, plant-based dyes combined with ML-driven temperature control to reduce water waste in textile manufacturing.",
+      department: "TS - Textile Sciences",
+      domains: ["Chemical Processing", "Sustainability", "AI/ML"],
+      supervisor: "Dr. Aisha Khan",
+      batch: "2024-2025",
+      isSponsored: false,
+      resources: [
+        {
+          projectReport: "https://university-archive.edu/ecoweave-draft.pdf",
+          other: "Dataset: https://kaggle.com/datasets/textile-temps",
+        },
+      ],
+      // Notice: No comment array here, perfect for testing empty states!
+    },
+    {
+      id: "proj-003",
+      title: "DefectDetect: Real-time Fabric Inspection",
+      abstract:
+        "An FPGA-based computer vision system installed on looms to instantly detect thread breakages and weaving defects using neural networks.",
+      department: "TE - Textile Engineering",
+      domains: ["Quality Control", "AI/ML"],
+      supervisor: "Engr. Tariq Mehmood",
+      batch: "2025-2026",
+      isSponsored: true,
+      comment: [
+        {
+          id: "c-003",
+          text: "Industry sponsor has requested a demo next Tuesday. Please prepare the loom sensors.",
+        },
+      ],
+      // Notice: No resources array here
+    },
+    {
+      id: "proj-004",
+      title: "SecureCampus: Zero-Trust Network Architecture",
+      abstract:
+        "Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.",
+      department: "SE - Software Engineering",
+      domains: ["Cyber Security"],
+      supervisor: "Dr. Sarah Ahmed",
+      batch: "2023-2024",
+      isSponsored: false,
+      // Pure guest-level project: no comments, no resources.
+    },
+    {
+      id: "proj-001",
+      title: "ProLog: Project Cataloging System",
+      abstract:
+        "A centralized digital archive and search engine for Final Year Design Projects, transitioning from manual storage to a digitized LAN-based application.",
+      department: "CIS - Computer & Info Systems",
+      domains: ["AI/ML", "Web Dev"],
+      supervisor: "Dr. Muhammad Numan",
+      batch: "2025-2026",
+      isSponsored: true,
+      resources: [
+        {
+          projectReport: "https://university-archive.edu/prolog-report.pdf",
+          other: "https://github.com/university/prolog-client",
+        },
+      ],
+      comment: [
+        {
+          id: "c-001",
+          text: "The search indexing is incredibly fast. Make sure to document the Zustand state management flow before final submission.",
+        },
+        {
+          id: "c-002",
+          text: "UI is looking very clean. Approved for Phase 2.",
+        },
+      ],
+    },
+    {
+      id: "proj-002",
+      title: "EcoWeave: Sustainable Dyeing Process",
+      abstract:
+        "Investigating the use of organic, plant-based dyes combined with ML-driven temperature control to reduce water waste in textile manufacturing.",
+      department: "TS - Textile Sciences",
+      domains: ["Chemical Processing", "Sustainability", "AI/ML"],
+      supervisor: "Dr. Aisha Khan",
+      batch: "2024-2025",
+      isSponsored: false,
+      resources: [
+        {
+          projectReport: "https://university-archive.edu/ecoweave-draft.pdf",
+          other: "Dataset: https://kaggle.com/datasets/textile-temps",
+        },
+      ],
+      // Notice: No comment array here, perfect for testing empty states!
+    },
+    {
+      id: "proj-003",
+      title: "DefectDetect: Real-time Fabric Inspection",
+      abstract:
+        "An FPGA-based computer vision system installed on looms to instantly detect thread breakages and weaving defects using neural networks.",
+      department: "TE - Textile Engineering",
+      domains: ["Quality Control", "AI/ML"],
+      supervisor: "Engr. Tariq Mehmood",
+      batch: "2025-2026",
+      isSponsored: true,
+      comment: [
+        {
+          id: "c-003",
+          text: "Industry sponsor has requested a demo next Tuesday. Please prepare the loom sensors.",
+        },
+      ],
+      // Notice: No resources array here
+    },
+    {
+      id: "proj-004",
+      title: "SecureCampus: Zero-Trust Network Architecture",
+      abstract:
+        "Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.",
+      department: "SE - Software Engineering",
+      domains: ["Cyber Security"],
+      supervisor: "Dr. Sarah Ahmed",
+      batch: "2023-2024",
+      isSponsored: false,
+      // Pure guest-level project: no comments, no resources.
+    },
+    {
+      id: "proj-001",
+      title: "ProLog: Project Cataloging System",
+      abstract:
+        "A centralized digital archive and search engine for Final Year Design Projects, transitioning from manual storage to a digitized LAN-based application.",
+      department: "CIS - Computer & Info Systems",
+      domains: ["AI/ML", "Web Dev"],
+      supervisor: "Dr. Muhammad Numan",
+      batch: "2025-2026",
+      isSponsored: true,
+      resources: [
+        {
+          projectReport: "https://university-archive.edu/prolog-report.pdf",
+          other: "https://github.com/university/prolog-client",
+        },
+      ],
+      comment: [
+        {
+          id: "c-001",
+          text: "The search indexing is incredibly fast. Make sure to document the Zustand state management flow before final submission.",
+        },
+        {
+          id: "c-002",
+          text: "UI is looking very clean. Approved for Phase 2.",
+        },
+      ],
+    },
+    {
+      id: "proj-002",
+      title: "EcoWeave: Sustainable Dyeing Process",
+      abstract:
+        "Investigating the use of organic, plant-based dyes combined with ML-driven temperature control to reduce water waste in textile manufacturing.",
+      department: "TS - Textile Sciences",
+      domains: ["Chemical Processing", "Sustainability", "AI/ML"],
+      supervisor: "Dr. Aisha Khan",
+      batch: "2024-2025",
+      isSponsored: false,
+      resources: [
+        {
+          projectReport: "https://university-archive.edu/ecoweave-draft.pdf",
+          other: "Dataset: https://kaggle.com/datasets/textile-temps",
+        },
+      ],
+      // Notice: No comment array here, perfect for testing empty states!
+    },
+    {
+      id: "proj-003",
+      title: "DefectDetect: Real-time Fabric Inspection",
+      abstract:
+        "An FPGA-based computer vision system installed on looms to instantly detect thread breakages and weaving defects using neural networks.",
+      department: "TE - Textile Engineering",
+      domains: ["Quality Control", "AI/ML"],
+      supervisor: "Engr. Tariq Mehmood",
+      batch: "2025-2026",
+      isSponsored: true,
+      comment: [
+        {
+          id: "c-003",
+          text: "Industry sponsor has requested a demo next Tuesday. Please prepare the loom sensors.",
+        },
+      ],
+      // Notice: No resources array here
+    },
+    {
+      id: "proj-004",
+      title: "SecureCampus: Zero-Trust Network Architecture",
+      abstract:
+        "Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.",
+      department: "SE - Software Engineering",
+      domains: ["Cyber Security"],
+      supervisor: "Dr. Sarah Ahmed",
+      batch: "2023-2024",
+      isSponsored: false,
+      // Pure guest-level project: no comments, no resources.
+    },
+    {
+      id: "proj-001",
+      title: "ProLog: Project Cataloging System",
+      abstract:
+        "A centralized digital archive and search engine for Final Year Design Projects, transitioning from manual storage to a digitized LAN-based application.",
+      department: "CIS - Computer & Info Systems",
+      domains: ["AI/ML", "Web Dev"],
+      supervisor: "Dr. Muhammad Numan",
+      batch: "2025-2026",
+      isSponsored: true,
+      resources: [
+        {
+          projectReport: "https://university-archive.edu/prolog-report.pdf",
+          other: "https://github.com/university/prolog-client",
+        },
+      ],
+      comment: [
+        {
+          id: "c-001",
+          text: "The search indexing is incredibly fast. Make sure to document the Zustand state management flow before final submission.",
+        },
+        {
+          id: "c-002",
+          text: "UI is looking very clean. Approved for Phase 2.",
+        },
+      ],
+    },
+    {
+      id: "proj-002",
+      title: "EcoWeave: Sustainable Dyeing Process",
+      abstract:
+        "Investigating the use of organic, plant-based dyes combined with ML-driven temperature control to reduce water waste in textile manufacturing.",
+      department: "TS - Textile Sciences",
+      domains: ["Chemical Processing", "Sustainability", "AI/ML"],
+      supervisor: "Dr. Aisha Khan",
+      batch: "2024-2025",
+      isSponsored: false,
+      resources: [
+        {
+          projectReport: "https://university-archive.edu/ecoweave-draft.pdf",
+          other: "Dataset: https://kaggle.com/datasets/textile-temps",
+        },
+      ],
+      // Notice: No comment array here, perfect for testing empty states!
+    },
+    {
+      id: "proj-003",
+      title: "DefectDetect: Real-time Fabric Inspection",
+      abstract:
+        "An FPGA-based computer vision system installed on looms to instantly detect thread breakages and weaving defects using neural networks.",
+      department: "TE - Textile Engineering",
+      domains: ["Quality Control", "AI/ML"],
+      supervisor: "Engr. Tariq Mehmood",
+      batch: "2025-2026",
+      isSponsored: true,
+      comment: [
+        {
+          id: "c-003",
+          text: "Industry sponsor has requested a demo next Tuesday. Please prepare the loom sensors.",
+        },
+      ],
+      // Notice: No resources array here
+    },
+    {
+      id: "proj-004",
+      title: "SecureCampus: Zero-Trust Network Architecture",
+      abstract:
+        "Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.",
+      department: "SE - Software Engineering",
+      domains: ["Cyber Security"],
+      supervisor: "Dr. Sarah Ahmed",
+      batch: "2023-2024",
+      isSponsored: false,
+      // Pure guest-level project: no comments, no resources.
+    },
+    {
+      id: "proj-001",
+      title: "ProLog: Project Cataloging System",
+      abstract:
+        "A centralized digital archive and search engine for Final Year Design Projects, transitioning from manual storage to a digitized LAN-based application.",
+      department: "CIS - Computer & Info Systems",
+      domains: ["AI/ML", "Web Dev"],
+      supervisor: "Dr. Muhammad Numan",
+      batch: "2025-2026",
+      isSponsored: true,
+      resources: [
+        {
+          projectReport: "https://university-archive.edu/prolog-report.pdf",
+          other: "https://github.com/university/prolog-client",
+        },
+      ],
+      comment: [
+        {
+          id: "c-001",
+          text: "The search indexing is incredibly fast. Make sure to document the Zustand state management flow before final submission.",
+        },
+        {
+          id: "c-002",
+          text: "UI is looking very clean. Approved for Phase 2.",
+        },
+      ],
+    },
+    {
+      id: "proj-002",
+      title: "EcoWeave: Sustainable Dyeing Process",
+      abstract:
+        "Investigating the use of organic, plant-based dyes combined with ML-driven temperature control to reduce water waste in textile manufacturing.",
+      department: "TS - Textile Sciences",
+      domains: ["Chemical Processing", "Sustainability", "AI/ML"],
+      supervisor: "Dr. Aisha Khan",
+      batch: "2024-2025",
+      isSponsored: false,
+      resources: [
+        {
+          projectReport: "https://university-archive.edu/ecoweave-draft.pdf",
+          other: "Dataset: https://kaggle.com/datasets/textile-temps",
+        },
+      ],
+      // Notice: No comment array here, perfect for testing empty states!
+    },
+    {
+      id: "proj-003",
+      title: "DefectDetect: Real-time Fabric Inspection",
+      abstract:
+        "An FPGA-based computer vision system installed on looms to instantly detect thread breakages and weaving defects using neural networks.",
+      department: "TE - Textile Engineering",
+      domains: ["Quality Control", "AI/ML"],
+      supervisor: "Engr. Tariq Mehmood",
+      batch: "2025-2026",
+      isSponsored: true,
+      comment: [
+        {
+          id: "c-003",
+          text: "Industry sponsor has requested a demo next Tuesday. Please prepare the loom sensors.",
+        },
+      ],
+      // Notice: No resources array here
+    },
+    {
+      id: "proj-004",
+      title: "SecureCampus: Zero-Trust Network Architecture",
+      abstract:
+        "Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.Implementing a zero-trust security model for the university's internal faculty network to prevent unauthorized data access and lateral movement.",
+      department: "SE - Software Engineering",
+      domains: ["Cyber Security"],
+      supervisor: "Dr. Sarah Ahmed",
+      batch: "2023-2024",
+      isSponsored: false,
+      // Pure guest-level project: no comments, no resources.
+    },
   ];
   return (
     <div className="h-[700px] overflow-y-auto overflow-scroll">
