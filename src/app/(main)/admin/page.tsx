@@ -1,9 +1,12 @@
-import React from 'react'
+import ProtectedRoute from "@/components/protectedRoutes/protectedRoutes";
+import React from "react";
 
 function page() {
   return (
-    <div>page</div>
-  )
+    <ProtectedRoute allowedRoles={["admin"]}>
+      <div>page</div>
+    </ProtectedRoute>
+  );
 }
 
-export default page
+export default page;

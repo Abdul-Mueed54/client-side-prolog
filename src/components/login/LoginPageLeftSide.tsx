@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-function LeftSide() {
+function LoginPageLeftSide() {
   return (
     <div className="w-full md:w-5/12 bg-slate-50 border-r border-slate-200 p-8 md:p-16 flex flex-col justify-between relative overflow-hidden">
       {/* Subtle decorative background element */}
@@ -50,4 +50,4 @@ function LeftSide() {
   );
 }
 
-export default LeftSide;
+export default LoginPageLeftSide;

@@ -10,15 +10,15 @@ export default function CommonLayout({
 }) {
   return (
     <>
-      
+
       <div className="flex h-screen overflow-hidden">
         <PrimarySidebar />
-        
+
         <main className="flex-1 min-w-0 p-4 bg-[#eeeeee]">
           <MainWindow />
         </main>
 
-        <div className="shrink-0 w-80 min-w-[20rem] max-w-[20rem]">
+        <div className="w-80 shrink-0 min-w-[20rem] max-w-[20rem]">
           {children}
         </div>
       </div>

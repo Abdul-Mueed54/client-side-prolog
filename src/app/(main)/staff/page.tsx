@@ -13,6 +13,7 @@ import {
 // Assuming you have these paths correct in your project
 import { generateAcademicYears } from "@/components/generateAcademicYears";
 import { UniversalDropdown } from "@/components/dropDown/universalDropDown";
+import ProtectedRoute from "@/components/protectedRoutes/protectedRoutes";
 
 export default function StaffUploadForm() {
   const academicYears = generateAcademicYears(5);
@@ -135,6 +136,8 @@ export default function StaffUploadForm() {
   };
 
   return (
+    // <ProtectedRoute allowedRoles={["staff", "admin"]}>
+
     <div className="min-h-screen bg-slate-50 py-12 px-4 md:px-8 font-sans text-slate-700 overflow-y-auto">
       <div className="max-w-4xl mx-auto bg-white border border-slate-200 shadow-sm rounded-xl p-8 md:p-12">
         <div className="mb-10 border-b border-slate-100 pb-6">
@@ -438,8 +441,9 @@ export default function StaffUploadForm() {
         </form>
       </div>
     </div>
+    // {/* </ProtectedRoute> */}
   );
 }
 
 
-// TODO: the form has became massively large will break it in components 
+// TODO: the form has became massively large will break it in components
