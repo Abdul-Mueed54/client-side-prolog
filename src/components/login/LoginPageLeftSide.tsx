@@ -13,10 +13,10 @@ function LoginPageLeftSide() {
         {/* Logo Integration */}
         <div className="mb-8">
           <Image
-            src="/prolog.png"
+            src="/prolog.svg"
             alt="ProLog University Project Catalog Logo"
-            width={500}
-            height={500}
+            width={700}
+            height={700}
             className="object-contain drop-shadow-sm"
             priority
           />

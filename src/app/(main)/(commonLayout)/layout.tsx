@@ -11,7 +11,7 @@ export default function CommonLayout({
   return (
     <>
 
-      <div className="flex h-screen overflow-hidden">
+      <div className="flex h-[91vh] overflow-y-hidden">
         <PrimarySidebar />
 
         <main className="flex-1 min-w-0 p-4 bg-[#eeeeee]">

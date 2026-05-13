@@ -16,7 +16,7 @@ export default function ProtectedRoute({
   const router = useRouter();
   const { role, token } = useAuthStore();
 
-  // We need this hydration state because Next.js server doesn't have access to your localStorage.
+  // We need this hydration state because Next.js server doesn't have access to localStorage.
   // This prevents UI mismatch errors between server and client.
   const [isHydrated, setIsHydrated] = useState(false);
 
@@ -37,7 +37,7 @@ export default function ProtectedRoute({
   if (!isHydrated || !token || !allowedRoles.includes(role)) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        {/* You can replace this with your own loading spinner */}
+
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#EF9F27]"></div>
       </div>
     );

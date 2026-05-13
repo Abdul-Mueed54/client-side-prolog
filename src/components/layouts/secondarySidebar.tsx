@@ -68,7 +68,7 @@ export default function SecondarySidebar() {
               Supervisor
             </h2>
             <p className="text-sm font-medium text-black break-words">
-              {selectedProject.supervisor}
+              {selectedProject.supervisors?.map((n) => n.name) || "NO"}
             </p>
           </div>
           <div>

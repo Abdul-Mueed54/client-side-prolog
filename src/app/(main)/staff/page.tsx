@@ -1,6 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
+
+export const dynamic = "force-dynamic";
+
 import {
   FileText,
   Users,
@@ -136,7 +139,7 @@ export default function StaffUploadForm() {
   };
 
   return (
-    // <ProtectedRoute allowedRoles={["staff", "admin"]}>
+    <ProtectedRoute allowedRoles={["staff", "admin"]}>
 
     <div className="min-h-screen bg-slate-50 py-12 px-4 md:px-8 font-sans text-slate-700 overflow-y-auto">
       <div className="max-w-4xl mx-auto bg-white border border-slate-200 shadow-sm rounded-xl p-8 md:p-12">
@@ -441,7 +444,7 @@ export default function StaffUploadForm() {
         </form>
       </div>
     </div>
-    // {/* </ProtectedRoute> */}
+     </ProtectedRoute>
   );
 }
 

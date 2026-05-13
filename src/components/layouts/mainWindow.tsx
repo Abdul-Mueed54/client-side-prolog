@@ -1,93 +1,94 @@
-"use client"; // Make sure this is a client component
+"use client";
 
 import React, { useState, useEffect } from "react";
-import ProjectCard from "../projects/ProjectCard";
-import { Project } from "@/../src/types";
 import SearchBar from "../searchBar/SearchBar";
-import { useAuthStore } from "@/store/useAuthStore";
+import ProjectCard from "../projects/ProjectCard";
+import { useDebounce } from "../../hooks/useDebounce";
+import { useProjectStore } from "@/store/useProjectStore";
 
 export default function MainWindow() {
-  // Set up state to hold the fetched projects
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const { token } = useAuthStore();
-
-  // used state for hydration so that on refreshing page the logic will not crash
   const [isHydrated, setIsHydrated] = useState(false);
+  const {
+    totalRecords,
+    fetchProjects,
+    currentPage,
+    totalPages,
+    projects,
+    error,
+    isLoading,
+  } = useProjectStore();
 
-  // This tells us when localStorage has successfully been read
+  // Search States
+  const [searchQuery, setSearchQuery] = useState("");
+  // This will only update 500ms AFTER the user stops typing
+  const debouncedSearch = useDebounce(searchQuery, 500);
+
   useEffect(() => {
     setIsHydrated(true);
   }, []);
-  //  Fetch data when the component loads
+
   useEffect(() => {
     if (!isHydrated) return;
-
-    const fetchProjects = async () => {
-      try {
-        setIsLoading(true);
-        const headers: any = {
-          "Content-Type": "application/json",
-        };
-        if (token) {
-          headers["Authorization"] = `Bearer ${token}`;
-        }
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/projects/`,
-          {
-            method: "GET",
-            headers: headers,
-          },
-        );
-
-        if (!response.ok) {
-          console.log(response);
-          throw new Error("Failed to fetch projects");
-        }
-
-        const json = await response.json();
-
-        setProjects(json.data);
-      } catch (err: any) {
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchProjects();
-  }, [isHydrated, token]); // the empty array means this runs exactly once when the page loads
+    // on search will back to page 1
+    fetchProjects(1, debouncedSearch);
+  }, [isHydrated, debouncedSearch, fetchProjects]); // Watch for search changes
 
   return (
-    <div className="h-[700px] overflow-y-auto overflow-scroll">
-      <SearchBar />
-
+    <div className="h-[700px] overflow-y-auto overflow-x-hidden">
+      <SearchBar
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
       <div className="mb-6">
-        <p className="text-slate-l font-medium">
+        <p className="text-slate-500 font-medium">
           {isLoading ? (
-            <span className="text-slate-400">Loading projects...</span>
+            <span>Loading projects...</span>
           ) : (
             <>
-              <strong className="text-slate-d">{projects.length}</strong>{" "}
+              <strong className="text-slate-800">{totalRecords}</strong>{" "}
               Projects Found
             </>
           )}
         </p>
       </div>
 
-      {/* Error State */}
       {error && (
         <div className="text-red-500 mb-4 p-4 bg-red-50 rounded-md border border-red-100">
           Error: {error}
         </div>
       )}
 
-      <div className="grid grid-cols-2 gap-4 p-3">
-        {projects.map((p) => (
-          <ProjectCard key={p.id} project={p} />
-        ))}
+      {/* Grid Container (Scrollable area) */}
+      <div className="flex-1  p-2">
+        <div className="grid grid-cols-2 gap-3">
+          {projects.map((p) => (
+            <ProjectCard key={p.id} project={p} />
+          ))}
+        </div>
+        {/* Pagination Controls */}
+        {!isLoading && projects.length > 0 && (
+          <div className="flex-none flex justify-between items-center pt-4 pb-4 border-t border-slate-200 mt-4">
+            <button
+              onClick={() => fetchProjects(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="px-4 py-2 text-sm bg-slate-100 rounded-md disabled:opacity-50"
+            >
+              Previous
+            </button>
+
+            <span className="text-sm text-slate-500">
+              Page {currentPage} of {totalPages}
+            </span>
+
+            <button
+              onClick={() => fetchProjects(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="px-4 py-2 text-sm bg-slate-100 rounded-md disabled:opacity-50"
+            >
+              Next
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

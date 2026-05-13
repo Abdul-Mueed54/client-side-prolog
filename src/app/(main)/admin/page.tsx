@@ -1,12 +1,14 @@
 import ProtectedRoute from "@/components/protectedRoutes/protectedRoutes";
 import React from "react";
 
-function page() {
+export default function Admin() {
   return (
+    <div className="h-screen">
+
     <ProtectedRoute allowedRoles={["admin"]}>
-      <div>page</div>
+      <h1>Hello </h1>
     </ProtectedRoute>
+    </div>
   );
 }
 
-export default page;

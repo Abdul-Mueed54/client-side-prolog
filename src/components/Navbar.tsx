@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
+// import ModeToggle from "./toggleMode/ModeToggle";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -16,7 +18,15 @@ export default function Navbar() {
   return (
     <header className="flex items-center justify-between px-8 py-4 bg-pwhite border-b border-black shrink-0">
       {/* LEFT: Branding */}
-      <div className="flex items-center">
+      <div className="flex items-center gap-2 drop-shadow-sm">
+        <Image
+                    src="/prolog_logo.png"
+                    alt="Logo"
+                    width={40}
+                    height={40}
+                    className="object-contain "
+                    priority
+                  />
         <h1 className="text-2xl font-serif text-gray-d">
           ProLog - Project Cataloging System
         </h1>

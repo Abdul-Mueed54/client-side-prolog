@@ -1,9 +1,9 @@
-export interface Resources{
+export interface Resources {
   projectReport: string;
   other: string;
 }
 
-export interface Comments{
+export interface Comments {
   id: string;
   text: string;
 }
@@ -13,9 +13,10 @@ export interface Project {
   abstract: string;
   department: string;
   domains: string[];
-  supervisor: string;
+  supervisors: { role: string; name: string }[];
   batch: string;
-  isSponsored: boolean;
-  comment?: Comments [];
-  resources?: Resources [];
+  grants?: { name: string; amount: number }[];
+  industries?: { name: string; association: string }[];
+  comment?: Comments[];
+  resources?: Resources[];
 }
