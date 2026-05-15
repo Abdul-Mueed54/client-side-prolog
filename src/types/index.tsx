@@ -23,9 +23,9 @@ export interface Project {
 }
 
 export interface Domains {
-  id: string;
-  name: string;
-  description: string;
+  domainId: string;
+  domainName: string;
+  domainDescription: string;
   deptAbbreviation: string;
 }
 
@@ -35,19 +35,18 @@ export interface Departments {
 }
 
 export interface Grants {
-  projectId: string;
+  projectId?: string;
   name: string;
-  recievedDate: Date;
   amount: number;
-  industryId: string;
+  industryName: string;
 }
 
-export interface Industries {
-  industryId: string;
-  industryName: string;
+export interface Industry {
+  id: string;
+  name: string;
   location: string;
-  industryType: string;
-  industryEmail: string;
+  type: string;
+  email: string;
 }
 
 export interface Externals {

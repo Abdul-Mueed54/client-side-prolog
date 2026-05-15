@@ -5,15 +5,15 @@ import { Domains } from "@/types";
 
 export const columns: ColumnDef<Domains>[] = [
   {
-    accessorKey: "id",
+    accessorKey: "domainId",
     header: "Domain ID",
   },
   {
-    accessorKey: "name",
+    accessorKey: "domainName",
     header: "Domain Name",
   },
   {
-    accessorKey: "description",
+    accessorKey: "domainDescription",
     header: "Domain Description",
   },
   {

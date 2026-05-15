@@ -38,8 +38,8 @@ export default function DomainDropdown({
 
   const availableOptions = options.filter(
     (opt) =>
-      !value.includes(opt.id) &&
-      opt.name.toLowerCase().includes(searchTerm.toLowerCase()),
+      !value.includes(opt.domainId) &&
+      opt.domainName.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   const handleRemove = (idToRemove: string, e: React.MouseEvent) => {
@@ -68,7 +68,7 @@ export default function DomainDropdown({
         >
           {/* Render selected tags */}
           {value.map((id) => {
-            const domainObj = options.find((opt) => opt.id === id);
+            const domainObj = options.find((opt) => opt.domainId === id);
             if (!domainObj) return null;
 
             return (
@@ -76,7 +76,7 @@ export default function DomainDropdown({
                 key={id}
                 className="flex items-center gap-1 bg-indigo-50 border border-indigo-200 text-indigo-700 text-xs font-semibold px-2.5 py-1 rounded-md shadow-sm"
               >
-                {domainObj.name}
+                {domainObj.domainName}
                 <X
                   className="w-3 h-3 cursor-pointer hover:text-red-500 transition-colors"
                   onClick={(e) => handleRemove(id, e)}
@@ -112,15 +112,15 @@ export default function DomainDropdown({
             {availableOptions.length > 0 ? (
               availableOptions.map((opt) => (
                 <div
-                  key={opt.id}
+                  key={opt.domainId}
                   className="px-3 py-2.5 text-sm text-slate-700 hover:bg-indigo-50 hover:text-indigo-900 rounded-md cursor-pointer transition-colors"
                   onClick={() => {
-                    onChange([...value, opt.id]); // Add ID to array
+                    onChange([...value, opt.domainId]); // Add ID to array
                     setSearchTerm("");
                     inputRef.current?.focus();
                   }}
                 >
-                  {opt.name}
+                  {opt.domainName}
                 </div>
               ))
             ) : (

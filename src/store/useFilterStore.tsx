@@ -84,9 +84,9 @@ export const useFilterStore = create<FilterState>((set) => ({
           newDomainMapping[deptKey] = [];
         }
         newDomainMapping[deptKey].push({
-          id: domain.domain_id,
-          name: domain.domain_name,
-          description: domain.domain_description,
+          domainId: domain.domain_id,
+          domainName: domain.domain_name,
+          domainDescription: domain.domain_description,
           deptAbbreviation: domain.dept_Abbreviation,
         });
       });

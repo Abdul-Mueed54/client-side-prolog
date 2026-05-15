@@ -1,15 +1,19 @@
 import { create } from "zustand";
 import { Domains } from "@/types";
 import { useAuthStore } from "./useAuthStore";
-import { promises } from "dns";
-import { error } from "console";
+
+export interface NewDomainPayload {
+  domainName: string;
+  domainDescription: string;
+  deptAbbreviation: string;
+}
 
 interface DomainStore {
   domains: Domains[];
   isLoading: boolean;
   error: null | string;
-
   fetchDomains: () => Promise<void>;
+  addDomain: (data: NewDomainPayload) => Promise<void>;
 }
 
 export const useDomainsStore = create<DomainStore>((set) => ({
@@ -40,9 +44,9 @@ export const useDomainsStore = create<DomainStore>((set) => ({
       }
 
       const formattedDomains = json.data.map((rawDomain: any) => ({
-        id: rawDomain.domain_id,
-        name: rawDomain.domain_name,
-        description: rawDomain.domain_description,
+        domainId: rawDomain.domain_id,
+        domainName: rawDomain.domain_name,
+        domainDescription: rawDomain.domain_description,
         deptAbbreviation: rawDomain.dept_abbreviation,
       }));
 
@@ -59,6 +63,49 @@ export const useDomainsStore = create<DomainStore>((set) => ({
           "An unexpected error occurred while fetching domains.",
         domains: [], // Optionally clear stale data
       });
+    }
+  },
+
+  addDomain: async (data: NewDomainPayload) => {
+    try {
+      const token = useAuthStore.getState().token;
+      const headers: any = { "Content-Type": "application/json" };
+
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/domains`,
+        {
+          method: "POST",
+          headers,
+          body: JSON.stringify(data),
+        },
+      );
+
+      const json = await response.json();
+      console.log(json);
+
+      if (!response.ok) {
+        throw new Error(json.message || "Failed to add domain");
+      }
+
+      const rawDomain = json.data;
+
+      const newDomain: Domains = {
+        domainId: rawDomain.domain_id,
+        domainName: rawDomain.domain_name,
+        domainDescription: rawDomain.domain_description,
+        deptAbbreviation: rawDomain.dept_abbreviation,
+      };
+
+      set((state) => ({
+        domains: [newDomain, ...state.domains],
+      }));
+    } catch (error: any) {
+      console.error("Error adding domain:", error);
+      throw error;
     }
   },
 }));

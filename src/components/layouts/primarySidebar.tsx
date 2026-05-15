@@ -3,8 +3,6 @@
 import React, { useEffect, useMemo } from "react";
 import { Funnel, Check, Loader2 } from "lucide-react";
 import { useFilterStore } from "../../store/useFilterStore";
-import { UniversalDropdown } from "../dropDown/universalDropDown";
-import { Domains } from "@/types";
 import DomainDropdown from "../dropDown/domainsDropdown";
 import DepartmentDropdown from "../dropDown/departmentsDropdown";
 
@@ -30,7 +28,7 @@ export default function PrimarySidebar() {
   useEffect(() => {
     1;
     const validSelectedDomains = store.selectedDomains.filter((domId) =>
-      availableDomains.some((domainObj) => domainObj.id === domId),
+      availableDomains.some((domainObj) => domainObj.domainId === domId),
     );
     if (validSelectedDomains.length !== store.selectedDomains.length) {
       store.setDomains(validSelectedDomains);
