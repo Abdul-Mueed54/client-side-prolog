@@ -33,3 +33,34 @@ export interface Departments {
   name: string;
   abbreviation: string;
 }
+
+export interface Grants {
+  projectId: string;
+  name: string;
+  recievedDate: Date;
+  amount: number;
+  industryId: string;
+}
+
+export interface Industries {
+  industryId: string;
+  industryName: string;
+  location: string;
+  industryType: string;
+  industryEmail: string;
+}
+
+export interface Externals {
+  extEmail: string;
+  extName: string;
+  extDesignation: string;
+  industryId: string;
+}
+
+export interface Groups {
+  groupLeader: string;
+  member2: string;
+  member3: string;
+  member4: string;
+  projectId: string;
+}

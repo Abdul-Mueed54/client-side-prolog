@@ -15,10 +15,12 @@ import {
   UserCog,
 } from "lucide-react";
 import { useAdminProjectStore } from "@/store/useAdminProjectStore";
+import { useDomainsStore } from "@/store/useDomainStore";
 
 export default function AdminSidebarNav() {
   const pathname = usePathname();
   const { totalRecords } = useAdminProjectStore();
+  const { domains } = useDomainsStore();
   // --- NAVIGATION DATA ---
   const ADMIN_NAV = [
     {
@@ -56,7 +58,12 @@ export default function AdminSidebarNav() {
           badge: 5,
         },
         { name: "Grants", href: "/admin/grants", icon: Banknote, badge: 3 },
-        { name: "Domains", href: "/admin/domains", icon: Network, badge: 8 },
+        {
+          name: "Domains",
+          href: "/admin/domains",
+          icon: Network,
+          badge: domains.length,
+        },
       ],
     },
     {

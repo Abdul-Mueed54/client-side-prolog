@@ -40,7 +40,9 @@ export const useAdminProjectStore = create<AdminProjectStore>((set) => ({
       if (!response.ok) {
         // Instead of throwing an error, we set the error state and EXIT the function safely.
         set({
-          error: `Failed to load data (Server Error: ${response.status}). Please try again later.`,
+          error:
+            json.message ||
+            `Failed to load data (Server Error: ${response.status}). Please try again later.`,
           isLoading: false, // Clear the table so they don't see old data
         });
         return;
