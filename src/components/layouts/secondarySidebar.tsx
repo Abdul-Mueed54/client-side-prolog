@@ -1,12 +1,38 @@
 "use client";
 
 import { useProjectDisplayStore } from "../../store/useProjectDisplayStore";
-import { useAuthStore } from "@/store/useAuthStore";
-import { Link, MessageSquare, Send } from "lucide-react"; // <-- Added 'Send' here!
+import { useEffect, useRef } from "react";
 
 export default function SecondarySidebar() {
-  const { selectedProject } = useProjectDisplayStore();
-  const { role } = useAuthStore();
+  const { selectedProject, closeSidebar } = useProjectDisplayStore();
+
+  const sideBarRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeSidebar();
+      }
+    };
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        sideBarRef.current &&
+        !sideBarRef.current.contains(event.target as Node)
+      ) {
+        closeSidebar();
+      }
+    };
+    // Listen for mouse clicks anywhere and esc key
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleKeyDown);
+
+    // Cleanup the listener when the component unmounts
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedProject]);
 
   // The Empty State
   if (!selectedProject) {
@@ -18,10 +44,12 @@ export default function SecondarySidebar() {
       </aside>
     );
   }
-
   // The Populated State
   return (
-    <aside className="w-80 min-w-80 max-w-80 h-screen flex flex-col bg-white border-l border-slate-d">
+    <aside
+      ref={sideBarRef}
+      className="w-80 min-w-80 max-w-80 h-screen flex flex-col bg-white border-l border-slate-d"
+    >
       {/* Scrollable Padding Container */}
       <div className="flex-1 min-w-0 overflow-hidden overflow-scroll p-8 flex flex-col gap-8">
         {/* Title Section */}
@@ -64,11 +92,24 @@ export default function SecondarySidebar() {
         {/* Meta Data Section */}
         <div className="pt-6 border-t border-slate-100 flex flex-col gap-4 min-w-0">
           <div>
+            <h2 className="text-sm font-bold text-slate-l tracking-widest  mb-2">
+              SUPERVISOR(s)
+            </h2>
+            <div className="flex flex-col text-sm font-medium text-black break-words">
+              {selectedProject.supervisors &&
+              selectedProject.supervisors.length > 0
+                ? selectedProject.supervisors.map((n, index) => (
+                    <span key={index}>{n.name}</span>
+                  ))
+                : "No"}
+            </div>
+          </div>
+          <div>
             <h2 className="text-sm font-bold text-slate-l tracking-widest uppercase mb-2">
-              Supervisor
+              Department
             </h2>
             <p className="text-sm font-medium text-black break-words">
-              {selectedProject.supervisors?.map((n) => n.name) || "NO"}
+              {selectedProject.department}
             </p>
           </div>
           <div>
@@ -84,9 +125,9 @@ export default function SecondarySidebar() {
         {/* ========================================= */}
         {/* 🔐 FACULTY ONLY SECTION                   */}
         {/* ========================================= */}
-        {(role === "faculty" || role === "admin") && (
+        {/* {(role === "faculty" || role === "admin") && (
           <div className="pt-6 border-t border-slate-200 flex flex-col gap-8 w-full mt-4">
-            {/* 1. Resources Area */}
+            1. Resources Area
             <div className="w-full">
               <h2 className="text-sm font-bold text-slate-l tracking-widest uppercase mb-2 flex gap-2">
                 <Link size={16} /> Resources
@@ -111,13 +152,13 @@ export default function SecondarySidebar() {
               )}
             </div>
 
-            {/* 2. Commenting Area */}
+            2. Commenting Area
             <div className="w-full">
               <h2 className="text-sm font-bold text-slate-l tracking-widest uppercase mb-2 flex gap-2">
                 <MessageSquare size={16} /> Faculty Notes
               </h2>
 
-              {/* Comment Input Box */}
+              Comment Input Box
               <div className="relative mb-4">
                 <textarea
                   placeholder="Any suggestion for the project above..."
@@ -130,7 +171,7 @@ export default function SecondarySidebar() {
             </div>
           </div>
         )}
-        {/* Comment List */}
+        Comment List
         {role === "admin" && (
           <div className="flex flex-col gap-4 pb-20">
             {selectedProject.comment?.map((comment) => (
@@ -144,7 +185,7 @@ export default function SecondarySidebar() {
               </div>
             ))}
           </div>
-        )}
+        )} */}
       </div>
     </aside>
   );

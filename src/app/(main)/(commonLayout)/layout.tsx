@@ -6,11 +6,10 @@ import SecondarySidebar from "@/components/layouts/secondarySidebar";
 export default function CommonLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <>
-
       <div className="flex h-[91vh] overflow-y-hidden">
         <PrimarySidebar />
 

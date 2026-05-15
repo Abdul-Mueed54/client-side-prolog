@@ -1,4 +1,3 @@
-
 export const generateAcademicYears = (yearsBack: number = 5) => {
   const currentYear = new Date().getFullYear();
   const years = [];

@@ -5,11 +5,12 @@ import SearchBar from "../searchBar/SearchBar";
 import ProjectCard from "../projects/ProjectCard";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useProjectStore } from "@/store/useProjectStore";
+import { useFilterStore } from "@/store/useFilterStore";
 
 export default function MainWindow() {
   const [isHydrated, setIsHydrated] = useState(false);
   const {
-    totalRecords,
+    totalRecords = 0,
     fetchProjects,
     currentPage,
     totalPages,
@@ -18,9 +19,15 @@ export default function MainWindow() {
     isLoading,
   } = useProjectStore();
 
+  const {
+    selectedDepartment,
+    selectedDomains,
+    selectedIndustries,
+    selectedYears,
+  } = useFilterStore();
+
   // Search States
   const [searchQuery, setSearchQuery] = useState("");
-  // This will only update 500ms AFTER the user stops typing
   const debouncedSearch = useDebounce(searchQuery, 500);
 
   useEffect(() => {
@@ -29,9 +36,17 @@ export default function MainWindow() {
 
   useEffect(() => {
     if (!isHydrated) return;
-    // on search will back to page 1
+    // Any time filters or search change, drop back to page 1
     fetchProjects(1, debouncedSearch);
-  }, [isHydrated, debouncedSearch, fetchProjects]); // Watch for search changes
+  }, [
+    isHydrated,
+    debouncedSearch,
+    fetchProjects,
+    selectedDepartment,
+    selectedDomains,
+    selectedIndustries,
+    selectedYears,
+  ]);
 
   return (
     <div className="h-[700px] overflow-y-auto overflow-x-hidden">
@@ -58,18 +73,19 @@ export default function MainWindow() {
         </div>
       )}
 
-      {/* Grid Container (Scrollable area) */}
-      <div className="flex-1  p-2">
+      {/* Grid Container */}
+      <div className="flex-1 p-2">
         <div className="grid grid-cols-2 gap-3">
           {projects.map((p) => (
             <ProjectCard key={p.id} project={p} />
           ))}
         </div>
+
         {/* Pagination Controls */}
         {!isLoading && projects.length > 0 && (
           <div className="flex-none flex justify-between items-center pt-4 pb-4 border-t border-slate-200 mt-4">
             <button
-              onClick={() => fetchProjects(currentPage - 1)}
+              onClick={() => fetchProjects(currentPage - 1, debouncedSearch)}
               disabled={currentPage === 1}
               className="px-4 py-2 text-sm bg-slate-100 rounded-md disabled:opacity-50"
             >
@@ -81,7 +97,7 @@ export default function MainWindow() {
             </span>
 
             <button
-              onClick={() => fetchProjects(currentPage + 1)}
+              onClick={() => fetchProjects(currentPage + 1, debouncedSearch)}
               disabled={currentPage === totalPages}
               className="px-4 py-2 text-sm bg-slate-100 rounded-md disabled:opacity-50"
             >

@@ -17,16 +17,15 @@ export default function Navbar() {
 
   return (
     <header className="flex items-center justify-between px-8 py-4 bg-pwhite border-b border-black shrink-0">
-      {/* LEFT: Branding */}
       <div className="flex items-center gap-2 drop-shadow-sm">
         <Image
-                    src="/prolog_logo.png"
-                    alt="Logo"
-                    width={40}
-                    height={40}
-                    className="object-contain "
-                    priority
-                  />
+          src="/prolog_logo.png"
+          alt="Logo"
+          width={30}
+          height={30}
+          className="object-contain h-auto w-auto"
+          priority
+        />
         <h1 className="text-2xl font-serif text-gray-d">
           ProLog - Project Cataloging System
         </h1>

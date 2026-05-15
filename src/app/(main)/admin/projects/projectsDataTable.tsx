@@ -67,13 +67,8 @@ export function DataTable<TData, TValue>({
     },
   });
 
-  const {
-    error,
-    fetchAdminProjects,
-    currentPage,
-    isLoading,
-    totalPages,
-  } = useAdminProjectStore();
+  const { error, fetchAdminProjects, currentPage, isLoading, totalPages } =
+    useAdminProjectStore();
 
   return (
     <div>
@@ -136,24 +131,22 @@ export function DataTable<TData, TValue>({
 
           <TableBody>
             {error ? (
-      <TableRow>
-        <TableCell
-          colSpan={columns.length}
-          className="h-24 text-center text-red-500 font-medium"
-        >
-          Failed to connect DB
-        </TableCell>
-      </TableRow>
-    ) :(
-
-      table.getRowModel().rows?.length ? (
-        table.getRowModel().rows.map((row) => (
-          <TableRow
-          key={row.id}
-          data-state={row.getIsSelected() && "selected"}
-          >
-          {row.getVisibleCells().map((cell) => (
-            <TableCell key={cell.id}>
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center text-red-500 font-medium"
+                >
+                  Failed to connect DB
+                </TableCell>
+              </TableRow>
+            ) : table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),
@@ -162,20 +155,18 @@ export function DataTable<TData, TValue>({
                   ))}
                 </TableRow>
               ))
-            ) :
-
-            <TableRow>
-              <TableCell
-              colSpan={columns.length}
-              className="h-24 text-center"
-              >
-              No results.
-              </TableCell>
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  No results.
+                </TableCell>
               </TableRow>
             )}
-            </TableBody>
-            </Table>
-          
+          </TableBody>
+        </Table>
 
         <div className="flex items-center justify-end p-3 space-x-2 py-4">
           <Button

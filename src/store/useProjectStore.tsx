@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { Project } from "@/types";
-import { useAuthStore } from "./useAuthStore"; // Import your auth store
+import { useAuthStore } from "./useAuthStore";
+import { useFilterStore } from "./useFilterStore";
 
 interface ProjectStore {
   projects: Project[];
@@ -25,33 +26,60 @@ export const useProjectStore = create<ProjectStore>((set) => ({
 
     try {
       const token = useAuthStore.getState().token;
+      const filters = useFilterStore.getState();
 
       const headers: any = { "Content-Type": "application/json" };
       if (token) {
         headers["Authorization"] = `Bearer ${token}`;
       }
 
-      const skipOffset = (page - 1) * 10;
-      let url = "";
-      if (search) {
-        url = `${process.env.NEXT_PUBLIC_API_URL}/projects/searchProjects/?search=${encodeURIComponent(search)}&offset=${skipOffset}&limit=10`;
-      } else {
-        url = `${process.env.NEXT_PUBLIC_API_URL}/projects/pageprojects/?offset=${skipOffset}&limit=10`;
-      }
-      const response = await fetch(url, { method: "GET", headers });
+      const url = new URL(
+        `${process.env.NEXT_PUBLIC_API_URL}/projects/getProjects`,
+      );
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch projects");
+      const skipOffset = (page - 1) * 10;
+      url.searchParams.append("limit", "10");
+      url.searchParams.append("offset", skipOffset.toString());
+
+      if (search) {
+        url.searchParams.append("search", search);
       }
+
+      if (filters.selectedDepartment) {
+        url.searchParams.append("deptAbbreviation", filters.selectedDepartment);
+      }
+      if (filters.selectedDomains.length > 0) {
+        url.searchParams.append("domainId", filters.selectedDomains.join(","));
+      }
+      if (filters.selectedIndustries.length > 0) {
+        url.searchParams.append(
+          "industries",
+          filters.selectedIndustries.join(","),
+        );
+      }
+      if (filters.selectedYears.length > 0) {
+        url.searchParams.append(
+          "academicYear",
+          filters.selectedYears.join(","),
+        );
+      }
+
+      console.log("Fetching Projects with URL:", url);
+
+      const response = await fetch(url, { method: "GET", headers });
 
       const json = await response.json();
 
-      // 3. Save everything to the store
+      if (!response.ok) {
+        throw new Error(json.message || "Failed to fetch projects");
+      }
+      // 5. Save everything to the store
       set({
-        projects: json.data,
-        totalPages: json.meta?.totalPages || 1,
+        projects: json.data.data || [],
+        totalPages: json.data.meta?.totalPages || 1,
         currentPage: page,
-        totalRecords: json.meta?.totalRecords || json.data.length,
+        totalRecords:
+          json.data.meta?.totalRecords || (json.data ? json.data.length : 0),
         isLoading: false,
       });
     } catch (error: any) {

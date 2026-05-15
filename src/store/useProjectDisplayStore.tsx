@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { Project } from '../types'; 
+import { create } from "zustand";
+import { Project } from "../types";
 
 interface ProjectDisplayState {
   selectedProject: Project | null;

@@ -18,8 +18,8 @@ export default function ProjectCard({ project }: { project: Project }) {
         bg-white rounded-xl p-5 flex flex-col h-full transition-all duration-300 cursor-pointer
         ${
           selectedProject?.id === project.id
-            // CHANGED: Replaced ring-indigo-700 with ring-brand
-            ? "ring-2 ring-brand shadow-2xl scale-[1.02] z-10 relative"
+            ? // CHANGED: Replaced ring-indigo-700 with ring-brand
+              "ring-2 ring-brand shadow-2xl scale-[1.02] z-10 relative"
             : "shadow-sm border border-slate-200 hover:shadow-md opacity-80 hover:opacity-100"
         }
       `}
@@ -28,11 +28,20 @@ export default function ProjectCard({ project }: { project: Project }) {
         <h3 className="font-bold text-slate-800 text-lg leading-tight">
           {project.title}
         </h3>
-        {project.isSponsored && (
-          <span className="bg-emerald-100 text-emerald-700 text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider shrink-0">
-            Sponsored
-          </span>
-        )}
+        <div className="">
+          {project.grants?.map((grant) =>
+            grant.name ? (
+              <span
+                key={grant.name}
+                className="bg-emerald-100 text-emerald-700 text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider shrink-0"
+              >
+                Sponsored
+              </span>
+            ) : (
+              <div></div>
+            ),
+          )}
+        </div>
       </div>
 
       <div className="flex flex-wrap gap-2 mb-4">
@@ -40,7 +49,7 @@ export default function ProjectCard({ project }: { project: Project }) {
           <span
             key={domain}
             // CHANGED: Using brand color with opacity for a soft badge look
-            className="bg-brand/10 text-brand border border-brand/20 text-xs font-semibold px-2 py-0.5 rounded-md"
+            className="bg-pink-400 text-black border border-pink-50 text-xs font-semibold px-2 py-0.5 rounded-md"
           >
             {domain}
           </span>
@@ -54,7 +63,8 @@ export default function ProjectCard({ project }: { project: Project }) {
       <div className="flex items-end justify-between mt-auto pt-4 border-t border-slate-100">
         <div className="flex flex-col gap-0.5">
           <span className="text-xs text-slate-500 font-medium">
-            {project.supervisors?.map(s => s.name).join(", ") || "No Supervisor"}
+            {project.supervisors?.map((s) => s.name).join(", ") ||
+              "No Supervisor"}
           </span>
           <span className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider">
             {/* CHANGED: Added the department right next to the batch! */}

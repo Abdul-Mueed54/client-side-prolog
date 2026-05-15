@@ -46,7 +46,7 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
-  --color-brand: #EF9F27;
+  --color-brand: #ef9f27;
   --color-indigo-l: var(--color-indigo-50);
   --color-indigo-m: var(--color-indigo-100);
   --color-indigo-d: var(--color-indigo-700);
@@ -54,7 +54,7 @@
   --color-slate-m: var(--color-slate-600);
   --color-slate-d: var(--color-slate-800);
   --color-pwhite: #ffffff;
-  --color-gray-d: var(--color-gray-900)
+  --color-gray-d: var(--color-gray-900);
 }
 
 body {

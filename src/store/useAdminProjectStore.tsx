@@ -36,7 +36,6 @@ export const useAdminProjectStore = create<AdminProjectStore>((set) => ({
         { method: "GET", headers },
       );
       const json = await response.json();
-      
 
       if (!response.ok) {
         // Instead of throwing an error, we set the error state and EXIT the function safely.

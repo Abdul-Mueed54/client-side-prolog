@@ -1,4 +1,4 @@
-import { Button } from "@/src/components/ui/button"
+import { Button } from "@/src/components/ui/button";
 import {
   Drawer,
   DrawerClose,
@@ -8,7 +8,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/src/components/ui/drawer"
+} from "@/src/components/ui/drawer";
 
 export function DetailsButton() {
   return (
@@ -35,12 +35,11 @@ export function DetailsButton() {
           ))}
         </div>
         <DrawerFooter>
-
           <DrawerClose asChild>
             <Button variant="outline">Close</Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
-  )
+  );
 }
