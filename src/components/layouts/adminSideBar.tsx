@@ -13,6 +13,7 @@ import {
   Banknote,
   Network,
   UserCog,
+  Hotel,
 } from "lucide-react";
 import { useAdminProjectStore } from "@/store/useAdminProjectStore";
 import { useDomainsStore } from "@/store/useDomainStore";
@@ -60,6 +61,12 @@ export default function AdminSidebarNav() {
           href: "/admin/industries",
           icon: Building2,
           badge: industries.length,
+        },
+        {
+          name: "Departments",
+          href: "/admin/departments",
+          icon: Hotel,
+          badge: 0,
         },
         {
           name: "Grants",

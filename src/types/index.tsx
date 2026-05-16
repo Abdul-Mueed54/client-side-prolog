@@ -30,8 +30,8 @@ export interface Domains {
 }
 
 export interface Departments {
-  name: string;
-  abbreviation: string;
+  deptAbbreviation: string;
+  deptName: string;
 }
 
 export interface Grants {

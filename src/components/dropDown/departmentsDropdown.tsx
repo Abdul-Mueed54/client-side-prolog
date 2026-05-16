@@ -7,7 +7,7 @@ interface DepartmentDropdownProps {
   placeholder?: string;
   options: Departments[];
   value: string;
-  onChange: (abbreviation: string) => void;
+  onChange: (deptAbbreviation: string) => void;
 }
 
 export default function DepartmentDropdown({
@@ -36,12 +36,12 @@ export default function DepartmentDropdown({
 
   const availableOptions = options.filter(
     (opt) =>
-      opt.abbreviation !== value &&
-      (opt.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        opt.abbreviation.toLowerCase().includes(searchTerm.toLowerCase())),
+      opt.deptAbbreviation !== value &&
+      (opt.deptName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        opt.deptAbbreviation.toLowerCase().includes(searchTerm.toLowerCase())),
   );
 
-  const selectedDepartment = options.find((opt) => opt.abbreviation === value);
+  const selectedDepartment = options.find((opt) => opt.deptAbbreviation === value);
 
   return (
     <div
@@ -65,9 +65,9 @@ export default function DepartmentDropdown({
               {/* The truncate class handles the "..." overflow */}
               <span className="truncate">
                 <strong className="font-bold">
-                  {selectedDepartment.abbreviation}
+                  {selectedDepartment.deptAbbreviation}
                 </strong>{" "}
-                - {selectedDepartment.name}
+                - {selectedDepartment.deptName}
               </span>
 
               {/* The X button clears the selection */}
@@ -108,19 +108,19 @@ export default function DepartmentDropdown({
             {availableOptions.length > 0 ? (
               availableOptions.map((opt) => (
                 <div
-                  key={opt.abbreviation}
+                  key={opt.deptAbbreviation}
                   className="px-3 py-2.5 text-sm text-slate-700 hover:bg-indigo-50 hover:text-indigo-900 rounded-md cursor-pointer transition-colors flex items-center"
                   onClick={() => {
-                    onChange(opt.abbreviation);
+                    onChange(opt.deptAbbreviation);
                     setSearchTerm("");
                     setIsOpen(false);
                   }}
                 >
                   <span className="font-bold text-indigo-600 mr-1">
-                    {opt.abbreviation}
+                    {opt.deptAbbreviation}
                   </span>
                   <span className="text-slate-400 mr-1">-</span>
-                  <span className="truncate">{opt.name}</span>
+                  <span className="truncate">{opt.deptName}</span>
                 </div>
               ))
             ) : (
