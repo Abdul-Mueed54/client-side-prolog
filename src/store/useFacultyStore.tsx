@@ -38,7 +38,9 @@ export const useFacultyStore = create<FacultyStore>((set, get) => ({
       const headers: any = { "Content-Type": "application/json" };
       if (token) headers["Authorization"] = `Bearer ${token}`;
 
-      const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/users/getUsers/?role=faculty`);
+      const url = new URL(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/getUsers/?role=faculty`,
+      );
 
       if (params.deptAbbreviation) {
         url.searchParams.append("deptAbbreviation", params.deptAbbreviation);

@@ -4,93 +4,50 @@ import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-import { Project } from "@/types";
+import { Staff } from "@/types";
 
-export const columns: ColumnDef<Project>[] = [
+export const columns: ColumnDef<Staff>[] = [
   {
-    accessorKey: "id",
-    header: "Project ID",
+    accessorKey: "staffId",
+    header: "Staff ID",
   },
   {
-    accessorKey: "title",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          // Automatically aligns the button to the left to match table headers
-          className="-ml-4"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Title
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    accessorKey: "staffName",
+    header: "Staff Name",
   },
   {
-    accessorKey: "department",
+    accessorKey: "staffEmail",
+    header: "Staff Email",
+  },
+  {
+    accessorKey: "staffContactNo",
+    header: "Contact No",
+  },
+  {
+    accessorKey: "deptAbbreviation",
     header: "Department",
   },
   {
-    accessorKey: "supervisors", // Make sure this matches your interface key
-    header: "Supervisors",
+    accessorKey: "isActive",
+    header: "Status",
     cell: ({ row }) => {
-      const supervisors = row.getValue("supervisors") as string[];
-
-      // Safety check in case the array is empty or undefined
-      if (!supervisors || supervisors.length === 0)
-        return <span className="text-muted-foreground">-</span>;
+      const isActive = row.getValue("isActive") as boolean;
 
       return (
-        <div className="flex flex-col space-y-1">
-          {supervisors.map((name, index) => (
-            <span key={index} className="text-sm">
-              {name}
-            </span>
-          ))}
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "batch",
-    header: "Batch",
-  },
-  {
-    accessorKey: "domains",
-    header: "Domains",
-    cell: ({ row }) => {
-      // Extract the array of domains from the row
-      const domains = row.getValue("domains") as string[];
-
-      return (
-        <div className="flex flex-wrap gap-1">
-          {domains.map((domain) => (
-            <Badge key={domain} variant="outline" className="text-[10px]">
-              {domain}
-            </Badge>
-          ))}
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "isSponsored",
-    header: "Sponsored",
-    cell: ({ row }) => {
-      // Extract the boolean value
-      const isSponsored = row.getValue("isSponsored") as boolean;
-
-      return isSponsored ? (
-        <Badge
-          variant="secondary"
-          className="bg-green-100 text-green-800 hover:bg-green-100 dark:bg-green-900 dark:text-green-100"
+        <div
+          className={`inline-flex items-center justify-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${
+            isActive
+              ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+              : "bg-red-50 text-red-700 border-red-200"
+          }`}
         >
-          Sponsored
-        </Badge>
-      ) : (
-        <span className="text-muted-foreground text-sm">-</span>
+          {isActive ? "Active" : "Inactive"}
+        </div>
       );
     },
+  },
+  {
+    accessorKey: "jobTitle",
+    header: "Job Title",
   },
 ];

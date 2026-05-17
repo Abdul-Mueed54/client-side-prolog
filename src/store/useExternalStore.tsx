@@ -32,7 +32,7 @@ export const useExternalStore = create<ExternalStore>((set, get) => ({
 
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/externals/getExternals/`,
-        { method: "GET", headers }
+        { method: "GET", headers },
       );
 
       const json = await response.json();
@@ -53,11 +53,12 @@ export const useExternalStore = create<ExternalStore>((set, get) => ({
         isLoading: false,
         error: null,
       });
-
     } catch (error: any) {
       set({
         isLoading: false,
-        error: error.message || "An unexpected error occurred while fetching externals.",
+        error:
+          error.message ||
+          "An unexpected error occurred while fetching externals.",
         externals: [],
       });
     }
@@ -69,13 +70,16 @@ export const useExternalStore = create<ExternalStore>((set, get) => ({
       const headers: any = { "Content-Type": "application/json" };
       if (token) headers["Authorization"] = `Bearer ${token}`;
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/externals/`, {
-        method: "POST",
-        headers,
-        body: JSON.stringify(data),
-      });
-      console.log("data", data)
-      console.log("body", response.body)
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/externals/`,
+        {
+          method: "POST",
+          headers,
+          body: JSON.stringify(data),
+        },
+      );
+      console.log("data", data);
+      console.log("body", response.body);
       const json = await response.json();
 
       if (!response.ok) {
@@ -95,7 +99,6 @@ export const useExternalStore = create<ExternalStore>((set, get) => ({
       set((state) => ({
         externals: [newExternal, ...state.externals],
       }));
-
     } catch (error: any) {
       console.error("Error adding external:", error);
       throw error;

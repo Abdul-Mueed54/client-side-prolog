@@ -23,9 +23,14 @@ import { useIndustryStore } from "@/store/useIndustryStore";
 import { useStudentStore } from "@/store/useStudentsStore";
 import { useDepartmentStore } from "@/store/useDeptStore";
 import { useGroupStore } from "@/store/useGroupStore";
+import { useFacultyStore } from "@/store/useFacultyStore";
+import { useExternalStore } from "@/store/useExternalStore";
+import { useStaffStore } from "@/store/useStaffStore";
 
 export default function AdminSidebarNav() {
   const pathname = usePathname();
+  const { faculty } = useFacultyStore();
+  const { externals } = useExternalStore();
   const { totalRecords } = useAdminProjectStore();
   const { departments } = useDepartmentStore();
   const { totalStudents } = useStudentStore();
@@ -33,6 +38,7 @@ export default function AdminSidebarNav() {
   const { grants } = useGrantStore();
   const { industries } = useIndustryStore();
   const { groups } = useGroupStore();
+  const { staff } = useStaffStore();
   // --- NAVIGATION DATA ---
   const ADMIN_NAV = [
     {
@@ -66,13 +72,13 @@ export default function AdminSidebarNav() {
           name: "Faculty",
           href: "/admin/faculty",
           icon: UserCheck,
-          badge: 6,
+          badge: faculty.length,
         },
         {
           name: "External Supervisors",
           href: "/admin/external",
           icon: Briefcase,
-          badge: 4,
+          badge: externals.length,
         },
         {
           name: "Industries",
@@ -103,7 +109,12 @@ export default function AdminSidebarNav() {
     {
       section: "System",
       items: [
-        { name: "Staff Users", href: "/admin/staff", icon: UserCog, badge: 3 },
+        {
+          name: "Staff Users",
+          href: "/admin/staff",
+          icon: UserCog,
+          badge: staff.length,
+        },
       ],
     },
   ];

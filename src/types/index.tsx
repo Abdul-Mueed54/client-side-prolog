@@ -80,3 +80,14 @@ export interface Faculty {
   facultyEmail: string;
   deptAbbreviation: string;
 }
+
+export interface Staff {
+  staffId: string;
+  staffName: string;
+  staffEmail: string;
+  staffContactNo: string;
+  deptAbbreviation: string;
+  role: string;
+  isActive: boolean;
+  jobTitle?: string;
+}

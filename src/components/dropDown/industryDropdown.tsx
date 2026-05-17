@@ -21,7 +21,10 @@ export default function IndustryDropdown({
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -31,7 +34,8 @@ export default function IndustryDropdown({
 
   const availableOptions = options.filter(
     (opt) =>
-      opt.industryName !== value && opt.industryName.toLowerCase().includes(searchTerm.toLowerCase())
+      opt.industryName !== value &&
+      opt.industryName.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   const selectedIndustry = options.find((opt) => opt.industryName === value);

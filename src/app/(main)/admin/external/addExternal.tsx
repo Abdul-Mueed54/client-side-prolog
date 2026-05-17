@@ -158,7 +158,7 @@ export default function AddExternalButton() {
             </Button>
             <Button
               type="submit"
-               className="px-4 py-2 text-sm font-semibold text-white bg-brand hover:bg-brand/90 rounded-md transition-colors shadow hover:shadow-2xl"
+              className="px-4 py-2 text-sm font-semibold text-white bg-brand hover:bg-brand/90 rounded-md transition-colors shadow hover:shadow-2xl"
             >
               Save External
             </Button>

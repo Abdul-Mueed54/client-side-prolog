@@ -6,21 +6,20 @@ import { DataTable } from "./groupsDataTable";
 import { useEffect } from "react";
 import AddGroupButton from "./addGroups";
 
-
-export default  function GroupsTable() {
+export default function GroupsTable() {
   const { groups, fetchGroups, addGroup } = useGroupStore();
 
   useEffect(() => {
     fetchGroups();
   }, [fetchGroups, addGroup]);
-return (
+  return (
     <>
       <div className="flex justify-end p-3 item-center">
         <AddGroupButton />
       </div>
-    <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={groups} />
-    </div>
+      <div className="container mx-auto py-10">
+        <DataTable columns={columns} data={groups} />
+      </div>
     </>
   );
 }

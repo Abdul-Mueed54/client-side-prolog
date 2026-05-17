@@ -46,7 +46,7 @@ export const useAdminProjectStore = create<AdminProjectStore>((set) => ({
         });
         return;
       }
-      console.log(json.data)
+      console.log(json.data);
 
       // Success: populate the store
       set({

@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { useStudentStore } from "@/store/useStudentsStore";
 import { useDepartmentStore } from "@/store/useDeptStore";
 import { X } from "lucide-react";
 import DepartmentDropdown from "@/components/dropDown/departmentsDropdown";
-import BatchDropdown from "@/components/dropDown/batchDropdown";
 import { useFacultyStore } from "@/store/useFacultyStore";
 
 export default function FacultyFilters() {
@@ -11,14 +9,6 @@ export default function FacultyFilters() {
   const { departments, fetchDepartments } = useDepartmentStore();
 
   const [selectedDept, setSelectedDept] = useState("");
-
-  // Auto-generate a clean list of batches
-  const batches = useMemo(() => {
-    const currentYear = new Date().getFullYear();
-    return Array.from({ length: 8 }, (_, i) =>
-      (currentYear - 3 + i).toString(),
-    );
-  }, []);
 
   // Fetch departments on mount if missing
   useEffect(() => {

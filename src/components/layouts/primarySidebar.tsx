@@ -15,12 +15,13 @@ export default function PrimarySidebar() {
     }
   }, [store.departments.length, store.fetchFilters]);
 
-
   const availableDomains = useMemo(() => {
     const dept = store.selectedDepartment;
     if (!dept) {
       const allDomains = Object.values(store.domainMapping).flat();
-      return Array.from(new Map(allDomains.map(d => [d.domainId, d])).values());
+      return Array.from(
+        new Map(allDomains.map((d) => [d.domainId, d])).values(),
+      );
     }
     return store.domainMapping[dept] || [];
   }, [store.selectedDepartment, store.domainMapping]);
@@ -64,7 +65,6 @@ export default function PrimarySidebar() {
         </div>
       ) : (
         <div className="flex flex-col p-5 gap-8">
-
           <div className="flex flex-col gap-3">
             <label className="text-slate-500 text-sm font-bold uppercase tracking-widest">
               Department

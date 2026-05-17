@@ -23,7 +23,10 @@ export default function DomainDropdown({
   // Close when clicking outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -34,7 +37,7 @@ export default function DomainDropdown({
   const availableOptions = options.filter(
     (opt) =>
       !value.includes(opt.domainId) &&
-      opt.domainName.toLowerCase().includes(searchTerm.toLowerCase())
+      opt.domainName.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   const handleRemove = (idToRemove: string, e: React.MouseEvent) => {
