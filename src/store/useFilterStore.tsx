@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { useAuthStore } from "./useAuthStore";
 import { Departments, Domains } from "@/types";
 
 interface FilterState {
@@ -52,11 +51,10 @@ export const useFilterStore = create<FilterState>((set) => ({
   fetchFilters: async () => {
     set({ isFiltersLoading: true });
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
 
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
+      console.log(API_URL)
 
       const [deptResponse, domainResponse] = await Promise.all([
         fetch(`${API_URL}/departments/getDepartments`, { headers }),

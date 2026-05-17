@@ -5,6 +5,7 @@ import { Funnel, Check, Loader2 } from "lucide-react";
 import { useFilterStore } from "../../store/useFilterStore";
 import DomainDropdown from "../dropDown/domainsDropdown";
 import DepartmentDropdown from "../dropDown/departmentsDropdown";
+import LogoutButton from "../logoutButton/logout";
 
 export default function PrimarySidebar() {
   const store = useFilterStore();
@@ -42,10 +43,10 @@ export default function PrimarySidebar() {
     store.selectedYears.length > 0;
 
   return (
-    <aside className="w-64 h-screen bg-slate-50 border-r border-slate-200 flex flex-col overflow-y-auto">
+    <aside className="w-64 h-screen bg-slate-50 border-r border-slate-200 flex flex-col">
       <div className="sticky top-0 bg-white z-20 flex items-center justify-between p-5 border-b border-slate-200">
         <div className="flex items-center gap-2 text-slate-700 text-xl font-bold">
-          <Funnel className="w-5 h-5 text-indigo-600" />
+          <Funnel className="w-5 h-5 text-brand" />
           <span className="tracking-tight">Filters</span>
         </div>
         {hasActiveFilters && (
@@ -58,50 +59,56 @@ export default function PrimarySidebar() {
         )}
       </div>
 
-      {store.isFiltersLoading ? (
-        <div className="flex flex-col items-center justify-center flex-1 text-slate-400 gap-3">
-          <Loader2 className="w-6 h-6 animate-spin" />
-          <span className="text-sm">Loading filters...</span>
-        </div>
-      ) : (
-        <div className="flex flex-col p-5 gap-8">
-          <div className="flex flex-col gap-3">
-            <label className="text-slate-500 text-sm font-bold uppercase tracking-widest">
-              Department
-            </label>
-            <DepartmentDropdown
-              options={store.departments}
-              value={store.selectedDepartment}
-              onChange={store.setDepartment}
+      <div className="flex-1 overflow-y-auto">
+        {store.isFiltersLoading ? (
+          <div className="flex flex-col items-center justify-center h-full text-slate-400 gap-3 mt-10">
+            <Loader2 className="w-6 h-6 animate-spin" />
+            <span className="text-sm">Loading filters...</span>
+          </div>
+        ) : (
+          <div className="flex flex-col p-5 gap-8">
+            <div className="flex flex-col gap-3">
+              <label className="text-slate-500 text-sm font-bold uppercase tracking-widest">
+                Department
+              </label>
+              <DepartmentDropdown
+                options={store.departments}
+                value={store.selectedDepartment}
+                onChange={store.setDepartment}
+              />
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <label className="text-slate-500 text-sm font-bold uppercase tracking-widest">
+                Domains
+              </label>
+              <DomainDropdown
+                options={availableDomains}
+                value={store.selectedDomains}
+                onChange={store.setDomains}
+              />
+            </div>
+
+            <FilterCheckboxGroup
+              label="Industry"
+              options={store.industries}
+              selectedItems={store.selectedIndustries}
+              onChange={store.setIndustries}
+            />
+
+            <FilterCheckboxGroup
+              label="Academic Year"
+              options={store.years}
+              selectedItems={store.selectedYears}
+              onChange={store.setYears}
             />
           </div>
+        )}
 
-          <div className="flex flex-col gap-3">
-            <label className="text-slate-500 text-sm font-bold uppercase tracking-widest">
-              Domains
-            </label>
-            <DomainDropdown
-              options={availableDomains}
-              value={store.selectedDomains}
-              onChange={store.setDomains}
-            />
-          </div>
-
-          <FilterCheckboxGroup
-            label="Industry"
-            options={store.industries}
-            selectedItems={store.selectedIndustries}
-            onChange={store.setIndustries}
-          />
-
-          <FilterCheckboxGroup
-            label="Academic Year"
-            options={store.years}
-            selectedItems={store.selectedYears}
-            onChange={store.setYears}
-          />
-        </div>
-      )}
+      <div className="p-4 border-t border-slate-200  mt-auto">
+        <LogoutButton />
+      </div>
+      </div>
     </aside>
   );
 }

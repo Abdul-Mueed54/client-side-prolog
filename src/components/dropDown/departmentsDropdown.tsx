@@ -86,7 +86,7 @@ export default function DepartmentDropdown({
             availableOptions.map((opt) => (
               <div
                 key={opt.deptAbbreviation}
-                className="px-3 py-2 text-sm text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors"
+                className="px-3 py-2 text-sm text-brand hover:bg-brand/10 cursor-pointer transition-colors"
                 onClick={() => {
                   onChange(opt.deptAbbreviation);
                   setSearchTerm("");

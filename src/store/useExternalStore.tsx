@@ -88,13 +88,6 @@ export const useExternalStore = create<ExternalStore>((set, get) => ({
 
       const newExternal = json.data;
 
-      // const newExternal: Externals = {
-      //   extEmail: rawExt.extEmail,
-      //   name: rawExt.extName,
-      //   designation: rawExt.extDesignation,
-      //   industryName: rawExt.industryName, // Grabbing the name the backend returns
-      //   industryId: data.industryId,       // Restoring the ID from our payload so the UI doesn't break!
-      // };
 
       set((state) => ({
         externals: [newExternal, ...state.externals],

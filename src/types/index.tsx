@@ -79,6 +79,11 @@ export interface Faculty {
   facultyName: string;
   facultyEmail: string;
   deptAbbreviation: string;
+  facultyContactNo: string;
+  designation?: string;
+  role: string;
+  isActive: boolean;
+  areaOfResearch?: string;
 }
 
 export interface Staff {

@@ -57,6 +57,8 @@ export const useFacultyStore = create<FacultyStore>((set, get) => ({
         facultyId: rawFac.user_id,
         facultyName: rawFac.user_name,
         facultyEmail: rawFac.user_email,
+        facultyContactNo: rawFac.user_contact_no,
+        isActive: rawFac.is_active,
         deptAbbreviation: rawFac.dept_abbreviation,
       }));
 
@@ -100,11 +102,15 @@ export const useFacultyStore = create<FacultyStore>((set, get) => ({
       }
 
       const rawFac = json.data;
+      console.log(rawFac)
 
       const newFaculty: Faculty = {
         facultyId: rawFac.userId,
         facultyName: rawFac.userName,
         facultyEmail: rawFac.userEmail,
+        facultyContactNo: rawFac.userContactNo,
+        role: rawFac.role,
+        isActive: rawFac.isActive,
         deptAbbreviation: data.deptAbbreviation,
       };
 

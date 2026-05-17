@@ -6,6 +6,7 @@ import ProjectCard from "../projects/ProjectCard";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useProjectStore } from "@/store/useProjectStore";
 import { useFilterStore } from "@/store/useFilterStore";
+import LogoutButton from "../logoutButton/logout";
 
 export default function MainWindow() {
   const [isHydrated, setIsHydrated] = useState(false);
