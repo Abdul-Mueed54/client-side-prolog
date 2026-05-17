@@ -23,6 +23,8 @@ interface FacultyStore {
   error: null | string;
   fetchFaculty: (params: FetchFacultyParams) => Promise<void>;
   addFaculty: (data: NewFacultyPayload) => Promise<void>;
+  updateFaculty: (facultyId: string, data: Partial<NewFacultyPayload>) => Promise<void>;
+  deleteFaculty: (facultyId: string) => Promise<void>;
 }
 
 export const useFacultyStore = create<FacultyStore>((set, get) => ({
@@ -119,6 +121,75 @@ export const useFacultyStore = create<FacultyStore>((set, get) => ({
       }));
     } catch (error: any) {
       console.error("Error adding faculty:", error);
+      throw error;
+    }
+  },
+  updateFaculty: async (facultyId: string, data: Partial<NewFacultyPayload>) => {
+    try {
+      const token = useAuthStore.getState().token;
+      const headers: any = { "Content-Type": "application/json" };
+      if (token) headers["Authorization"] = `Bearer ${token}`;
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/${facultyId}`,
+        {
+          method: "PATCH",
+          headers,
+          body: JSON.stringify(data),
+        }
+      );
+
+      const json = await response.json();
+
+      if (!response.ok) {
+        set({ error: json.message });
+        throw new Error(json.message || "Failed to update faculty");
+      }
+
+      set((state) => ({
+        faculty: state.faculty.map((fac) =>
+          fac.facultyId === facultyId
+            ? {
+              ...fac,
+              facultyName: data.userName || fac.facultyName,
+              facultyEmail: data.userEmail || fac.facultyEmail,
+              deptAbbreviation: data.deptAbbreviation || fac.deptAbbreviation,
+            }
+            : fac
+        ),
+      }));
+    } catch (error: any) {
+      console.error("Error updating faculty:", error);
+      throw error;
+    }
+  },
+
+  deleteFaculty: async (facultyId: string) => {
+    try {
+      const token = useAuthStore.getState().token;
+      const headers: any = { "Content-Type": "application/json" };
+      if (token) headers["Authorization"] = `Bearer ${token}`;
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/${facultyId}`,
+        {
+          method: "DELETE",
+          headers,
+        }
+      );
+
+      const json = await response.json();
+
+      if (!response.ok) {
+        set({ error: json.message });
+        throw new Error(json.message || "Failed to delete faculty");
+      }
+
+      set((state) => ({
+        faculty: state.faculty.filter((fac) => fac.facultyId !== facultyId),
+      }));
+    } catch (error: any) {
+      console.error("Error deleting faculty:", error);
       throw error;
     }
   },
