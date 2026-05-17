@@ -8,14 +8,12 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -32,7 +30,6 @@ import {
 
 import { Departments } from "@/types";
 import { useDepartmentStore } from "@/store/useDeptStore";
-import { useAuthStore } from "@/store/useAuthStore";
 import { toast } from "sonner";
 
 interface DepartmentActionsProps {
@@ -122,10 +119,7 @@ function EditDepartmentDialog({ department, open, onOpenChange }: EditDepartment
     setIsSubmitting(true);
 
     try {
-      // 1. Pass the original ID to tell the backend WHICH row to update
-      // 2. Pass the new formData which includes the potentially new abbreviation
       await updateDepartment(department.deptAbbreviation, formData);
-
       onOpenChange(false);
       toast.success("Department updated successfully!");
     } catch (error: any) {
