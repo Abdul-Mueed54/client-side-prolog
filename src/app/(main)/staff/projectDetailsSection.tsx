@@ -3,6 +3,7 @@ import { FileText } from "lucide-react";
 import DomainDropdown from "@/components/dropDown/domainsDropdown";
 import YearDropdown from "@/components/dropDown/batchDropdown";
 import { useDomainsStore } from "@/store/useDomainStore";
+import { generateAcademicYears } from "@/components/generateAcademicYears";
 
 export default function ProjectDetailsSection({
   formData,
@@ -13,8 +14,7 @@ export default function ProjectDetailsSection({
 }) {
   const { domains } = useDomainsStore();
 
-  // Static options for YearDropdown
-  const academicYears = ["2026", "2025", "2024", "2023", "2022"];
+  const academicYears = generateAcademicYears();
 
   return (
     <section>

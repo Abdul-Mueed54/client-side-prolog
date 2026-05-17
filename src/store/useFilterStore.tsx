@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { Departments, Domains } from "@/types";
+import { generateAcademicYears } from "@/components/generateAcademicYears";
 
 interface FilterState {
   selectedDepartment: string;
@@ -31,7 +32,7 @@ export const useFilterStore = create<FilterState>((set) => ({
   departments: [],
   domainMapping: {},
   industries: ["Industry-Linked", "Received Grant"],
-  years: ["2026", "2025", "2024", "2023", "2022"],
+  years: generateAcademicYears(),
 
   isFiltersLoading: false,
 

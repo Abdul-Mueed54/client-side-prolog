@@ -105,3 +105,18 @@ export interface AuditLog {
   newData: Record<string, any> | null;
   changedAt: string; // Date string
 }
+
+export interface DashboardStats {
+  totalFaculty: number;
+  totalSupervisingFaculty: number;
+  totalExternals: number;
+  totalIndustries: number;
+  totalDept: number;
+  totalDomain: number;
+  totalProject: number;
+  totalStaff: number;
+  totalUsers: number;
+  totalStudent: number;
+  projectsByDept: number;
+  studentsByFilter: number;
+}
