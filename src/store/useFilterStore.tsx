@@ -71,8 +71,8 @@ export const useFilterStore = create<FilterState>((set) => ({
       const domainsJson = await domainResponse.json();
 
       const formattedDepts = deptsJson.data.map((d: any) => ({
-        abbreviation: d.dept_abbreviation,
-        name: d.dept_name,
+        deptAbbreviation: d.dept_abbreviation,
+        deptName: d.dept_name,
       }));
 
       const newDomainMapping: Record<string, Domains[]> = {};
