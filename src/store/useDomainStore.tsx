@@ -61,7 +61,7 @@ export const useDomainsStore = create<DomainStore>((set) => ({
         error:
           error.message ||
           "An unexpected error occurred while fetching domains.",
-        domains: [], // Optionally clear stale data
+        domains: [], // clear stale data
       });
     }
   },

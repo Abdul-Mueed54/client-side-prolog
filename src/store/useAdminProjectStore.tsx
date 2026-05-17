@@ -10,7 +10,6 @@ interface AdminProjectStore {
   isLoading: boolean;
   error: string | null;
 
-  // Admin specific actions
   fetchAdminProjects: (page: number) => Promise<void>;
   deleteProject: (id: string) => Promise<void>;
 }
@@ -43,7 +42,7 @@ export const useAdminProjectStore = create<AdminProjectStore>((set) => ({
           error:
             json.message ||
             `Failed to load data (Server Error: ${response.status}). Please try again later.`,
-          isLoading: false, // Clear the table so they don't see old data
+          isLoading: false,
         });
         return;
       }
@@ -60,13 +59,12 @@ export const useAdminProjectStore = create<AdminProjectStore>((set) => ({
     } catch (error: any) {
       console.error("Fetch admin projects failed:", error);
 
-      // Failure: gracefully handle the error and clear previous potentially invalid state
       set({
         isLoading: false,
         error:
           error.message ||
           "An unexpected error occurred while fetching projects.",
-        adminProjects: [], // Optionally clear stale data
+        adminProjects: [], //  clear stale data
         totalRecords: 0,
         totalPages: 1,
       });

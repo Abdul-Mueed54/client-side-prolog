@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useDepartmentStore } from "@/store/useDeptStore";
 import AddDepartmentButton from "./addDepts";
 
-export default function DomainsTable() {
+export default function DeptTable() {
   const { departments, fetchDepartments, addDepartment } = useDepartmentStore();
 
   // Fetch data on mount

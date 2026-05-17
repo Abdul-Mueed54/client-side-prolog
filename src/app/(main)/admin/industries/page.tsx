@@ -6,7 +6,7 @@ import { DataTable } from "./industryDataTable";
 import { useEffect } from "react";
 import AddIndustryButton from "./addIndustry";
 
-export default function DemoPage() {
+export default function IndustryTable() {
   const { industries, fetchIndustries } = useIndustryStore();
 
   useEffect(() => {

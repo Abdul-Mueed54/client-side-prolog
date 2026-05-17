@@ -8,23 +8,23 @@ import { Industry } from "@/types";
 
 export const columns: ColumnDef<Industry>[] = [
   {
-    accessorKey: "id",
+    accessorKey: "industryId",
     header: "Industry ID",
   },
   {
-    accessorKey: "name",
+    accessorKey: "industryName",
     header: "Industry Name",
   },
   {
-    accessorKey: "email",
+    accessorKey: "industryEmail",
     header: "Industry Email",
   },
   {
-    accessorKey: "location",
+    accessorKey: "industryLocation",
     header: "Location",
   },
   {
-    accessorKey: "type",
+    accessorKey: "industryType",
     header: "Industry Type",
   },
 ];

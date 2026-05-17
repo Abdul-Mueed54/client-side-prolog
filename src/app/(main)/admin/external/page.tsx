@@ -1,5 +1,5 @@
 import { columns } from "./columns";
-import { DataTable } from "./projectsDataTable";
+import { DataTable } from "./externalsDataTable";
 import { Project } from "@/types";
 
 async function getData(): Promise<Project[]> {
@@ -9,7 +9,7 @@ async function getData(): Promise<Project[]> {
   ];
 }
 
-export default async function DemoPage() {
+export default async function ExternalSupervisorsTable() {
   const data = await getData();
   // const columns = await ProjectColumn()
   return (

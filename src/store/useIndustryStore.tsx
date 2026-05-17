@@ -34,7 +34,7 @@ export const useIndustryStore = create<IndustryStore>((set) => ({
       }
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/industries/getIndustries`, // Make sure this endpoint matches your backend route!
+        `${process.env.NEXT_PUBLIC_API_URL}/industries/getIndustries`,
         { method: "GET", headers },
       );
 
@@ -48,18 +48,16 @@ export const useIndustryStore = create<IndustryStore>((set) => ({
         return;
       }
 
-      // MAP THE DATA: Convert snake_case to our clean frontend interface
       const formattedIndustries: Industry[] = json.data.map(
         (rawIndustry: any) => ({
-          id: rawIndustry.industry_id,
-          name: rawIndustry.industry_name,
-          location: rawIndustry.location,
-          type: rawIndustry.industry_type,
-          email: rawIndustry.industry_email,
+          industryId: rawIndustry.industry_id,
+          industryName: rawIndustry.industry_name,
+          industryLocation: rawIndustry.location,
+          industryType: rawIndustry.industry_type,
+          industryEmail: rawIndustry.industry_email,
         }),
       );
 
-      // Save the clean data to the state
       set({
         industries: formattedIndustries,
         isLoading: false,
@@ -100,19 +98,10 @@ export const useIndustryStore = create<IndustryStore>((set) => ({
         throw new Error(json.message || "Failed to add industry");
       }
 
-      // === THE OPTIMIZATION ===
-      // Assuming `json.data` contains the newly created object from the backend:
-      const rawIndustry = json.data;
+      const newIndustry = json.data;
 
-      const newIndustry: Industry = {
-        id: rawIndustry.industry_id,
-        name: rawIndustry.industry_name,
-        location: rawIndustry.location,
-        type: rawIndustry.industry_type,
-        email: rawIndustry.industry_email,
-      };
+      // the problem is in the mapping and returning data
 
-      // Instantly inject it into the frontend state (putting it at the top of the list)
       set((state) => ({
         industries: [newIndustry, ...state.industries],
       }));

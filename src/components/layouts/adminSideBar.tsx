@@ -14,18 +14,25 @@ import {
   Network,
   UserCog,
   Hotel,
+  User,
 } from "lucide-react";
 import { useAdminProjectStore } from "@/store/useAdminProjectStore";
 import { useDomainsStore } from "@/store/useDomainStore";
 import { useGrantStore } from "@/store/useGrantsStore";
 import { useIndustryStore } from "@/store/useIndustryStore";
+import { useStudentStore } from "@/store/useStudentsStore";
+import { useDepartmentStore } from "@/store/useDeptStore";
+import { useGroupStore } from "@/store/useGroupStore";
 
 export default function AdminSidebarNav() {
   const pathname = usePathname();
   const { totalRecords } = useAdminProjectStore();
+  const { departments } = useDepartmentStore();
+  const { totalStudents } = useStudentStore();
   const { domains } = useDomainsStore();
   const { grants } = useGrantStore();
   const { industries } = useIndustryStore();
+  const { groups } = useGroupStore();
   // --- NAVIGATION DATA ---
   const ADMIN_NAV = [
     {
@@ -43,9 +50,20 @@ export default function AdminSidebarNav() {
     {
       section: "Master Records",
       items: [
-        { name: "Students", href: "/admin/students", icon: Users, badge: 8 },
         {
-          name: "Faculty Supervisors",
+          name: "Students",
+          href: "/admin/students",
+          icon: User,
+          badge: totalStudents,
+        },
+        {
+          name: "Groups",
+          href: "/admin/groups",
+          icon: Users,
+          badge: groups.length,
+        },
+        {
+          name: "Faculty",
           href: "/admin/faculty",
           icon: UserCheck,
           badge: 6,
@@ -66,7 +84,7 @@ export default function AdminSidebarNav() {
           name: "Departments",
           href: "/admin/departments",
           icon: Hotel,
-          badge: 0,
+          badge: departments.length,
         },
         {
           name: "Grants",

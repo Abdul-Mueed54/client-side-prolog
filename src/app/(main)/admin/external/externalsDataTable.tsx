@@ -30,7 +30,6 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-// import { ProjectColumn } from "./columns";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -69,7 +68,7 @@ export function DataTable<TData, TValue>({
     <div className="rounded-2xl p-4 bg-[#ffffff] m-4">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter projects..."
+          placeholder="Filter Externals..."
           value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("title")?.setFilterValue(event.target.value)

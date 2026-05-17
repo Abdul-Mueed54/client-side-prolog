@@ -26,14 +26,12 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       token: null,
 
-      // Call this when the Express API says "Success!"
       login: (userData, token, role) => set({ user: userData, token, role }),
 
-      // Call this when the user clicks "Sign Out"
       logout: () => set({ user: null, token: null, role: "guest" }),
     }),
     {
-      name: "prolog-auth", // This is the key it will use in localStorage
+      name: "prolog-auth", // this is the key it will use in localStorage
     },
   ),
 );

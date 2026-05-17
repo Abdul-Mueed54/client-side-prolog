@@ -1,13 +1,13 @@
 "use client";
 
 import { useGrantStore } from "@/store/useGrantsStore";
-import { columns } from "./columns";
+import { columns } from "./columns copy";
 import { DataTable } from "./grantsDataTable";
 import { Project } from "@/types";
 import { useEffect } from "react";
 import AddGrantButton from "./addGrants";
 
-export default function DemoPage() {
+export default function GrantsTable() {
   const { grants, fetchGrants } = useGrantStore();
 
   // Fetch data on mount

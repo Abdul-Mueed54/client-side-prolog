@@ -17,7 +17,7 @@ export default function AdminLayout({
       </div>
 
       {/* RIGHT COLUMN: Main Content */}
-      <main className="flex-1 flex flex-col overflow-hidden bg-[#eeeeee]">
+      <main className="flex-1 flex flex-col overflow-y-auto bg-[#eeeeee]">
         {children}
       </main>
     </div>

@@ -42,11 +42,11 @@ export interface Grants {
 }
 
 export interface Industry {
-  id: string;
-  name: string;
-  location: string;
-  type: string;
-  email: string;
+  industryId: string;
+  industryName: string;
+  industryLocation: string;
+  industryType: string;
+  industryEmail: string;
 }
 
 export interface Externals {
@@ -57,9 +57,25 @@ export interface Externals {
 }
 
 export interface Groups {
+  groupId: string;
   groupLeader: string;
-  member2: string;
-  member3: string;
-  member4: string;
-  projectId: string;
+  member2: string | null;
+  member3: string | null;
+  member4: string | null;
+  projectId: string | null;
+}
+
+export interface Students {
+  seatNo: string;
+  stdName: string;
+  stdEmail: string;
+  batch: string;
+  deptAbbreviation: string;
+}
+
+export interface Faculty {
+  facultyId: string;
+  facultyName: string;
+  facultyEmail: string;
+  deptAbbreviation: string;
 }

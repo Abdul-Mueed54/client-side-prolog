@@ -1,24 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
 import { ChevronDown, X } from "lucide-react";
 
-interface Department {
-  deptAbbreviation: string;
-  deptName: string;
-}
-
-interface DepartmentDropdownProps {
+interface BatchDropdownProps {
   placeholder?: string;
-  options: Department[];
+  options: string[];
   value: string;
-  onChange: (deptAbbreviation: string) => void;
+  onChange: (batch: string) => void;
 }
 
-export default function DepartmentDropdown({
-  placeholder = "Select department...",
+export default function BatchDropdown({
+  placeholder = "Select batch...",
   options = [],
   value,
   onChange,
-}: DepartmentDropdownProps) {
+}: BatchDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -38,13 +33,7 @@ export default function DepartmentDropdown({
 
   const availableOptions = options.filter(
     (opt) =>
-      opt.deptAbbreviation !== value &&
-      (opt.deptName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        opt.deptAbbreviation.toLowerCase().includes(searchTerm.toLowerCase())),
-  );
-
-  const selectedDepartment = options.find(
-    (opt) => opt.deptAbbreviation === value,
+      opt !== value && opt.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   return (
@@ -53,10 +42,9 @@ export default function DepartmentDropdown({
         onClick={() => setIsOpen(true)}
         className="w-full min-h-[38px] p-1.5 bg-white border border-slate-200 rounded-md flex items-center gap-1.5 focus-within:border-slate-400 focus-within:ring-1 focus-within:ring-slate-400 transition-all cursor-text shadow-sm"
       >
-        {selectedDepartment && (
-          <span className="flex items-center truncate bg-slate-100 text-slate-700 text-sm px-3 py-0.5 rounded ">
-            {selectedDepartment.deptAbbreviation} -{" "}
-            {selectedDepartment.deptName}
+        {value && (
+          <span className="flex items-center gap-1.5 bg-slate-100 text-slate-700 text-sm px-2 py-0.5 rounded">
+            {value}
           </span>
         )}
 
@@ -67,7 +55,7 @@ export default function DepartmentDropdown({
             setSearchTerm(e.target.value);
             if (!isOpen) setIsOpen(true);
           }}
-          placeholder={!selectedDepartment ? placeholder : ""}
+          placeholder={!value ? placeholder : ""}
           className="flex-1 bg-transparent min-w-[50px] outline-none text-sm text-slate-700 placeholder:text-slate-400 px-1"
         />
 
@@ -85,23 +73,20 @@ export default function DepartmentDropdown({
           {availableOptions.length > 0 ? (
             availableOptions.map((opt) => (
               <div
-                key={opt.deptAbbreviation}
+                key={opt}
                 className="px-3 py-2 text-sm text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors"
                 onClick={() => {
-                  onChange(opt.deptAbbreviation);
+                  onChange(opt);
                   setSearchTerm("");
                   setIsOpen(false);
                 }}
               >
-                <span className="font-medium mr-1">{opt.deptAbbreviation}</span>
-                <span className="text-slate-500 truncate">
-                  - {opt.deptName}
-                </span>
+                {opt}
               </div>
             ))
           ) : (
             <div className="px-3 py-2 text-sm text-slate-400 italic">
-              No departments found
+              No batches found
             </div>
           )}
         </div>
@@ -109,5 +94,3 @@ export default function DepartmentDropdown({
     </div>
   );
 }
-
-// TODO : will make the design minimalist this is very awkward  //done

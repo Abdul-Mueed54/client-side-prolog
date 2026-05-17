@@ -79,7 +79,6 @@ export const useGrantStore = create<GrantStore>((set) => ({
         headers["Authorization"] = `Bearer ${token}`;
       }
 
-      // Ensure this endpoint matches your backend route!
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/grants/create`,
         {
