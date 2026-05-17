@@ -1,20 +1,26 @@
+"use client";
+
+import { useExternalStore } from "@/store/useExternalStore";
 import { columns } from "./columns";
 import { DataTable } from "./externalsDataTable";
-import { Project } from "@/types";
+import { useEffect } from "react";
+import AddExternalButton from "./addExternal";
 
-async function getData(): Promise<Project[]> {
-  // Fetch data from your API here.
-  return [
-    // ...
-  ];
-}
 
-export default async function ExternalSupervisorsTable() {
-  const data = await getData();
-  // const columns = await ProjectColumn()
-  return (
+export default  function ExternalSupervisorsTable() {
+  const { externals, fetchExternals, addExternal } = useExternalStore();
+
+  useEffect(() => {
+    fetchExternals();
+  }, [fetchExternals, addExternal]);
+return (
+    <>
+      <div className="flex justify-end p-3 item-center">
+        <AddExternalButton />
+      </div>
     <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={data} />
+      <DataTable columns={columns} data={externals} />
     </div>
+    </>
   );
 }

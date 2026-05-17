@@ -4,32 +4,28 @@ import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-import { Groups } from "@/types";
+import { Externals } from "@/types";
 
-export const columns: ColumnDef<Groups>[] = [
+export const columns: ColumnDef<Externals>[] = [
   {
-    accessorKey: "groupId",
-    header: "Group ID",
+    accessorKey: "extName",
+    header: "External Name",
   },
 
   {
-    accessorKey: "groupLeader",
-    header: "Student 1",
+    accessorKey: "extEmail",
+    header: "External Email",
   },
   {
-    accessorKey: "member2",
-    header: "Student 2",
+    accessorKey: "extDesignation",
+    header: "Designation",
   },
   {
-    accessorKey: "member3",
-    header: "Student 3",
+    accessorKey: "industryId",
+    header: "Industry Id",
   },
   {
-    accessorKey: "member4",
-    header: "Student 4",
-  },
-  {
-    accessorKey: "projectId",
-    header: "Project Id",
+    accessorKey: "industryName",
+    header: "Industry Name",
   },
 ];

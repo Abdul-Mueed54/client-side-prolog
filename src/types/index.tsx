@@ -53,7 +53,8 @@ export interface Externals {
   extEmail: string;
   extName: string;
   extDesignation: string;
-  industryId: string;
+  industryId?: string;
+  industryName?: string;
 }
 
 export interface Groups {
