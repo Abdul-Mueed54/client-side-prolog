@@ -13,7 +13,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn("font-sans", geist.variable)}>
       {/* Just the body tag and children! */}
-      <body>{children}</body>
+      <body className="overflow-y-auto">{children}</body>
     </html>
   );
 }

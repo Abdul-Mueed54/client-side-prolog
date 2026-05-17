@@ -11,9 +11,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+   <div className={cn("flex flex-col h-screen overflow-hidden", geist.variable)}>
       <Navbar />
-      <main>{children}</main>
-    </>
+      <main className="flex-1 overflow-y-auto">
+        {children}
+      </main>
+    </div>
   );
 }

@@ -15,6 +15,7 @@ import {
   UserCog,
   Hotel,
   User,
+  ShieldCogCorner,
 } from "lucide-react";
 import { useAdminProjectStore } from "@/store/useAdminProjectStore";
 import { useDomainsStore } from "@/store/useDomainStore";
@@ -26,6 +27,7 @@ import { useGroupStore } from "@/store/useGroupStore";
 import { useFacultyStore } from "@/store/useFacultyStore";
 import { useExternalStore } from "@/store/useExternalStore";
 import { useStaffStore } from "@/store/useStaffStore";
+import { useAuditLogStore } from "@/store/useAuditLogStore";
 
 export default function AdminSidebarNav() {
   const pathname = usePathname();
@@ -39,6 +41,7 @@ export default function AdminSidebarNav() {
   const { industries } = useIndustryStore();
   const { groups } = useGroupStore();
   const { staff } = useStaffStore();
+  const { logs } = useAuditLogStore();
   // --- NAVIGATION DATA ---
   const ADMIN_NAV = [
     {
@@ -117,10 +120,22 @@ export default function AdminSidebarNav() {
         },
       ],
     },
+
+    {
+      section: "Audits",
+      items: [
+        {
+          name: "Audit Logs",
+          href: "/admin/auditlogs",
+          icon: ShieldCogCorner,
+          badge: logs.length,
+        },
+      ],
+    },
   ];
 
   return (
-    <div className="flex-1 overflow-y-auto py-2">
+    <div className="flex-1 overflow-hidden overflow-y-scroll max-h-140 py-2">
       {ADMIN_NAV.map((group, groupIdx) => (
         <div key={groupIdx} className="mb-4">
           {/* Section Header */}
@@ -140,7 +155,7 @@ export default function AdminSidebarNav() {
                   href={item.href}
                   className={`flex items-center justify-between px-2.5 py-2 rounded-md text-[15px] cursor-pointer mx-1.5 transition-colors ${
                     isActive
-                      ? "bg-[#FAEEDA] text-[#633806] font-medium" // Active styles from your HTML
+                      ? "bg-[#FAEEDA] text-[#633806] font-medium"
                       : "text-slate-600 hover:bg-slate-100 hover:text-slate-900" // Inactive styles
                   }`}
                 >

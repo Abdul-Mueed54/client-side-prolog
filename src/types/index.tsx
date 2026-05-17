@@ -91,3 +91,12 @@ export interface Staff {
   isActive: boolean;
   jobTitle?: string;
 }
+
+export interface AuditLog {
+  id: string;
+  tableName: string;
+  action: "INSERT" | "UPDATE" | "DELETE";
+  oldData: Record<string, any> | null;
+  newData: Record<string, any> | null;
+  changedAt: string; // Date string
+}

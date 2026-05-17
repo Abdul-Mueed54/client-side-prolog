@@ -10,7 +10,6 @@ import AddGrantButton from "./addGrants";
 export default function GrantsTable() {
   const { grants, fetchGrants } = useGrantStore();
 
-  // Fetch data on mount
   useEffect(() => {
     fetchGrants();
   }, [fetchGrants]);
