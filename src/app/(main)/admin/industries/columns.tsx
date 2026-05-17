@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
 import { Industry } from "@/types";
+import { IndustryActions } from "./actions";
 
 export const columns: ColumnDef<Industry>[] = [
   {
@@ -27,4 +28,17 @@ export const columns: ColumnDef<Industry>[] = [
     accessorKey: "industryType",
     header: "Industry Type",
   },
+  {
+    id: "actions",
+    header: "Actions",
+    cell: ({ row }) => {
+      const industry = row.original
+
+      return (
+        <IndustryActions industry={industry} />
+      )
+    },
+  },
+
+
 ];
