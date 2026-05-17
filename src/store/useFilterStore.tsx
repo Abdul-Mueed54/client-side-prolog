@@ -54,7 +54,7 @@ export const useFilterStore = create<FilterState>((set) => ({
       const headers: any = { "Content-Type": "application/json" };
 
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
-      console.log(API_URL)
+      console.log(API_URL);
 
       const [deptResponse, domainResponse] = await Promise.all([
         fetch(`${API_URL}/departments/getDepartments`, { headers }),

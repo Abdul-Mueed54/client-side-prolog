@@ -102,7 +102,7 @@ export const useFacultyStore = create<FacultyStore>((set, get) => ({
       }
 
       const rawFac = json.data;
-      console.log(rawFac)
+      console.log(rawFac);
 
       const newFaculty: Faculty = {
         facultyId: rawFac.userId,

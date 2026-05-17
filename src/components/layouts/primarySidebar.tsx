@@ -105,9 +105,9 @@ export default function PrimarySidebar() {
           </div>
         )}
 
-      <div className="p-4 border-t border-slate-200  mt-auto">
-        <LogoutButton />
-      </div>
+        <div className="p-4 border-t border-slate-200  mt-auto">
+          <LogoutButton />
+        </div>
       </div>
     </aside>
   );

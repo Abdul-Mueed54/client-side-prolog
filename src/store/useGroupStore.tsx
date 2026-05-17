@@ -26,7 +26,7 @@ export const useGroupStore = create<GroupStore>((set, get) => ({
     set({ isLoading: true, error: null });
 
     try {
-      const token = useAuthStore.getState().token;
+      const { token, role, user } = useAuthStore.getState();
       const headers: any = { "Content-Type": "application/json" };
       if (token) headers["Authorization"] = `Bearer ${token}`;
 

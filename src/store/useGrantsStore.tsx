@@ -72,6 +72,7 @@ export const useGrantStore = create<GrantStore>((set) => ({
 
   addGrant: async (data: NewGrantPayload) => {
     try {
+      console.log("i am here");
       const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
 
@@ -80,7 +81,7 @@ export const useGrantStore = create<GrantStore>((set) => ({
       }
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/grants/create`,
+        `${process.env.NEXT_PUBLIC_API_URL}/grants/`,
         {
           method: "POST",
           headers,
@@ -89,6 +90,7 @@ export const useGrantStore = create<GrantStore>((set) => ({
       );
 
       const json = await response.json();
+      console.log("json of grant", data);
 
       if (!response.ok) {
         throw new Error(json.message || "Failed to add grant");

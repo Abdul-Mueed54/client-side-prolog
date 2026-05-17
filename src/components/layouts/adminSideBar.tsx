@@ -161,7 +161,10 @@ export default function AdminSidebarNav() {
                     }`}
                   >
                     <div className="flex items-center gap-2.5">
-                      <Icon className="w-4 h-4" strokeWidth={isActive ? 2.5 : 2} />
+                      <Icon
+                        className="w-4 h-4"
+                        strokeWidth={isActive ? 2.5 : 2}
+                      />
                       <span>{item.name}</span>
                     </div>
 

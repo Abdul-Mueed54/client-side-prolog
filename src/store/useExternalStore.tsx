@@ -88,7 +88,6 @@ export const useExternalStore = create<ExternalStore>((set, get) => ({
 
       const newExternal = json.data;
 
-
       set((state) => ({
         externals: [newExternal, ...state.externals],
       }));

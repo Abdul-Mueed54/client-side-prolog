@@ -45,7 +45,11 @@ export const useAuditLogStore = create<AuditLogStore>((set) => ({
       }
 
       const rawLogs = json.data?.data || [];
-      const meta = json.data?.meta || { currentPage: 1, totalPages: 1, totalRecords: 0 };
+      const meta = json.data?.meta || {
+        currentPage: 1,
+        totalPages: 1,
+        totalRecords: 0,
+      };
 
       const formattedLogs: AuditLog[] = rawLogs.map((raw: any) => ({
         id: raw.log_id,
@@ -63,7 +67,6 @@ export const useAuditLogStore = create<AuditLogStore>((set) => ({
         totalLogs: meta.totalRecords,
         isLoading: false,
       });
-
     } catch (error: any) {
       set({
         isLoading: false,
