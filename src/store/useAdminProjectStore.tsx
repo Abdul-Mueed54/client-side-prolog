@@ -46,13 +46,14 @@ export const useAdminProjectStore = create<AdminProjectStore>((set) => ({
         });
         return;
       }
+      console.log(json.data)
 
       // Success: populate the store
       set({
-        adminProjects: json.data,
-        totalPages: json.meta?.totalPages || 1, // Safe navigation
+        adminProjects: json.data.data,
+        totalPages: json.data.meta?.totalPages || 1, // Safe navigation
         currentPage: page,
-        totalRecords: json.meta?.totalRecords || 0,
+        totalRecords: json.data.meta?.totalRecords || 0,
         isLoading: false,
         error: null,
       });

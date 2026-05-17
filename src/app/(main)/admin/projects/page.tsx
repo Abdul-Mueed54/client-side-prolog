@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useAdminProjectStore } from "../../../../store/useAdminProjectStore";
+import { useAdminProjectStore } from "@/store/useAdminProjectStore";
 import { columns } from "./columns";
 import { DataTable } from "./projectsDataTable";
 import Link from "next/link";
