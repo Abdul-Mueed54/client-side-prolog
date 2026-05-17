@@ -29,6 +29,8 @@ interface StudentStore {
 
   fetchStudents: (params?: FetchStudentsParams) => Promise<void>;
   addStudent: (data: NewStudentPayload) => Promise<void>;
+  updateStudent: (seatNo: string, data: Partial<NewStudentPayload>) => Promise<void>;
+  deleteStudent: (seatNo: string) => Promise<void>;
 }
 
 export const useStudentStore = create<StudentStore>((set, get) => ({
@@ -127,6 +129,76 @@ export const useStudentStore = create<StudentStore>((set, get) => ({
       }));
     } catch (error: any) {
       console.error("Error adding student:", error);
+      throw error;
+    }
+  },
+  updateStudent: async (seatNo: string, data: Partial<NewStudentPayload>) => {
+    try {
+      const token = useAuthStore.getState().token;
+      const headers: any = { "Content-Type": "application/json" };
+      if (token) headers["Authorization"] = `Bearer ${token}`;
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/students/${seatNo}`,
+        {
+          method: "PATCH",
+          headers,
+          body: JSON.stringify(data),
+        }
+      );
+
+      const json = await response.json();
+
+      if (!response.ok) {
+        throw new Error(json.message || "Failed to update student");
+      }
+
+      set((state) => ({
+        students: state.students.map((std) =>
+          std.seatNo === seatNo
+            ? {
+              ...std,
+              stdName: data.stdName ?? std.stdName,
+              stdEmail: data.stdEmail ?? std.stdEmail,
+              batch: data.batch ?? std.batch,
+              // Account for potential naming mismatches between frontend payload and backend response
+              deptAbbreviation: data.deptAbbr ?? std.deptAbbreviation ?? (std as any).deptAbbr,
+            }
+            : std
+        ),
+      }));
+    } catch (error: any) {
+      console.error("Error updating student:", error);
+      throw error;
+    }
+  },
+
+  deleteStudent: async (seatNo: string) => {
+    try {
+      const token = useAuthStore.getState().token;
+      const headers: any = { "Content-Type": "application/json" };
+      if (token) headers["Authorization"] = `Bearer ${token}`;
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/students/${seatNo}`,
+        {
+          method: "DELETE",
+          headers,
+        }
+      );
+
+      const json = await response.json();
+
+      if (!response.ok) {
+        throw new Error(json.message || "Failed to delete student");
+      }
+
+      set((state) => ({
+        students: state.students.filter((std) => std.seatNo !== seatNo),
+        totalStudents: Math.max(0, state.totalStudents - 1),
+      }));
+    } catch (error: any) {
+      console.error("Error deleting student:", error);
       throw error;
     }
   },

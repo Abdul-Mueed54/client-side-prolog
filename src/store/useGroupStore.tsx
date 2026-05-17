@@ -15,6 +15,9 @@ interface GroupStore {
   error: null | string;
   fetchGroups: () => Promise<void>;
   addGroup: (data: NewGroupPayload) => Promise<void>;
+  updateGroup: (seatNo: string, data: Partial<NewGroupPayload>) => Promise<void>;
+  deleteGroup: (seatNo: string) => Promise<void>;
+
 }
 
 export const useGroupStore = create<GroupStore>((set, get) => ({
@@ -103,6 +106,74 @@ export const useGroupStore = create<GroupStore>((set, get) => ({
       }));
     } catch (error: any) {
       console.error("Error adding group:", error);
+      throw error;
+    }
+  },
+  updateGroup: async (id: string, data: Partial<NewGroupPayload>) => {
+    try {
+      const token = useAuthStore.getState().token;
+      const headers: any = { "Content-Type": "application/json" };
+      if (token) headers["Authorization"] = `Bearer ${token}`;
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/group/${id}`,
+        {
+          method: "PATCH", // Ensure your router uses PATCH
+          headers,
+          body: JSON.stringify(data),
+        }
+      );
+
+      const json = await response.json();
+
+      if (!response.ok) {
+        throw new Error(json.message || "Failed to update group");
+      }
+
+      set((state) => ({
+        groups: state.groups.map((group) =>
+          group.groupId === id
+            ? {
+              ...group,
+              groupLeader: data.groupLeader ?? group.groupLeader,
+              member2: data.member2 ?? group.member2,
+              member3: data.member3 ?? group.member3,
+              member4: data.member4 ?? group.member4,
+            }
+            : group
+        ),
+      }));
+    } catch (error: any) {
+      console.error("Error updating group:", error);
+      throw error;
+    }
+  },
+
+  deleteGroup: async (id: string) => {
+    try {
+      const token = useAuthStore.getState().token;
+      const headers: any = { "Content-Type": "application/json" };
+      if (token) headers["Authorization"] = `Bearer ${token}`;
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/group/${id}`,
+        {
+          method: "DELETE",
+          headers,
+        }
+      );
+
+      const json = await response.json();
+
+      if (!response.ok) {
+        throw new Error(json.message || "Failed to delete group");
+      }
+
+      set((state) => ({
+        groups: state.groups.filter((group) => group.groupId !== id),
+      }));
+    } catch (error: any) {
+      console.error("Error deleting group:", error);
       throw error;
     }
   },

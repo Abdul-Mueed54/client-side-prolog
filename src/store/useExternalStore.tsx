@@ -15,6 +15,8 @@ interface ExternalStore {
   error: null | string;
   fetchExternals: () => Promise<void>;
   addExternal: (data: NewExternalPayload) => Promise<void>;
+  updateExternal: (email: string, data: Partial<NewExternalPayload>) => Promise<void>;
+  deleteExternal: (email: string) => Promise<void>;
 }
 
 export const useExternalStore = create<ExternalStore>((set, get) => ({
@@ -42,10 +44,11 @@ export const useExternalStore = create<ExternalStore>((set, get) => ({
       }
 
       const formattedExternals: Externals[] = json.data.map((rawExt: any) => ({
-        extEmail: rawExt.ext_email,
-        extName: rawExt.ext_name,
-        extDesignation: rawExt.ext_designation,
-        industryId: rawExt.industry_id,
+        extEmail: rawExt.extEmail,
+        extName: rawExt.extName,
+        extDesignation: rawExt.extDesignation,
+        industryId: rawExt.industryId,
+        industryName: rawExt.industryName
       }));
 
       set({
@@ -93,6 +96,73 @@ export const useExternalStore = create<ExternalStore>((set, get) => ({
       }));
     } catch (error: any) {
       console.error("Error adding external:", error);
+      throw error;
+    }
+  },
+  updateExternal: async (email: string, data: Partial<NewExternalPayload>) => {
+    try {
+      const token = useAuthStore.getState().token;
+      const headers: any = { "Content-Type": "application/json" };
+      if (token) headers["Authorization"] = `Bearer ${token}`;
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/externals/${email}`,
+        {
+          method: "PATCH",
+          headers,
+          body: JSON.stringify(data),
+        }
+      );
+
+      const json = await response.json();
+
+      if (!response.ok) {
+        throw new Error(json.message || "Failed to update external supervisor");
+      }
+
+      set((state) => ({
+        externals: state.externals.map((ext) =>
+          ext.extEmail === email
+            ? {
+              ...ext,
+              extName: data.extName ?? ext.extName,
+              extEmail: data.extEmail ?? ext.extEmail,
+              extDesignation: data.extDesignation ?? ext.extDesignation,
+              industryName: data.industryName ?? ext.industryName // Fixed key
+            }
+            : ext),
+      }));
+    } catch (error: any) {
+      console.error("Error updating external supervisor:", error);
+      throw error;
+    }
+  },
+
+  deleteExternal: async (email: string) => {
+    try {
+      const token = useAuthStore.getState().token;
+      const headers: any = { "Content-Type": "application/json" };
+      if (token) headers["Authorization"] = `Bearer ${token}`;
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/externals/${email}`,
+        {
+          method: "DELETE",
+          headers,
+        }
+      );
+
+      const json = await response.json();
+
+      if (!response.ok) {
+        throw new Error(json.message || "Failed to delete external supervisor");
+      }
+
+      set((state) => ({
+        externals: state.externals.filter((ext) => ext.extEmail !== email),
+      }));
+    } catch (error: any) {
+      console.error("Error deleting external supervisor:", error);
       throw error;
     }
   },

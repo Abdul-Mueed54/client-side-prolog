@@ -1,10 +1,7 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-
 import { Faculty } from "@/types";
+import { FacultyActions } from "./actions";
 
 export const columns: ColumnDef<Faculty>[] = [
   {
@@ -46,4 +43,16 @@ export const columns: ColumnDef<Faculty>[] = [
     accessorKey: "deptAbbreviation",
     header: "Department",
   },
+  {
+    id: "actions",
+    header: "Actions",
+    cell: ({ row }) => {
+      const faculty = row.original
+
+      return (
+        <FacultyActions faculty={faculty} />
+      )
+    },
+  },
+
 ];

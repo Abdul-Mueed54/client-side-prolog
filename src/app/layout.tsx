@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { Toaster } from "sonner";
 // import { ThemeProvider } from "@/components/toggleMode/ThemeProvider";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
@@ -13,7 +14,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={cn("font-sans", geist.variable)}>
       {/* Just the body tag and children! */}
-      <body className="overflow-y-auto">{children}</body>
+      <body>{children}
+        <Toaster richColors position="top-right" />
+      </body>
     </html>
   );
 }
