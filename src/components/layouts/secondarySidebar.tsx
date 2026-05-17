@@ -1,12 +1,17 @@
 "use client";
 
-import { Link } from "lucide-react"; // Removed 'Send' since comments are gone
+import {
+  Paperclip,
+  Download,
+  FileText,
+  FileArchive,
+  File
+} from "lucide-react";
 import { useProjectDisplayStore } from "../../store/useProjectDisplayStore";
 import { useEffect, useRef } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
 
 export default function SecondarySidebar() {
-  // 1. Hooks MUST be called inside the component
   const { role } = useAuthStore();
   const { selectedProject, closeSidebar } = useProjectDisplayStore();
 
@@ -28,18 +33,15 @@ export default function SecondarySidebar() {
       }
     };
 
-    // Listen for mouse clicks anywhere and esc key
     document.addEventListener("mousedown", handleClickOutside);
     document.addEventListener("keydown", handleKeyDown);
 
-    // Cleanup the listener when the component unmounts
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [selectedProject, closeSidebar]);
 
-  // The Empty State
   if (!selectedProject) {
     return (
       <aside className="w-80 min-w-80 max-w-80 h-screen flex items-center justify-center text-center bg-white border-l border-slate-200">
@@ -50,13 +52,11 @@ export default function SecondarySidebar() {
     );
   }
 
-  // The Populated State
   return (
     <aside
       ref={sideBarRef}
       className="w-80 min-w-80 max-w-80 h-screen flex flex-col bg-white border-l border-slate-200"
     >
-      {/* Scrollable Padding Container */}
       <div className="flex-1 min-w-0 overflow-y-auto p-8 flex flex-col gap-8">
 
         {/* Title Section */}
@@ -134,28 +134,63 @@ export default function SecondarySidebar() {
         {(role === "faculty" || role === "admin") && (
           <div className="pt-6 border-t border-slate-200 flex flex-col gap-8 w-full mt-4 pb-12">
             <div className="w-full">
-              <h2 className="text-sm font-bold text-slate-500 tracking-widest uppercase mb-2 flex items-center gap-2">
-                <Link size={16} /> Resources
+              <h2 className="text-sm font-bold text-slate-500 tracking-widest uppercase mb-4 flex items-center gap-2">
+                <Paperclip size={16} /> Resources
               </h2>
 
               {selectedProject.resources && selectedProject.resources.length > 0 ? (
                 <div className="flex flex-col gap-3">
-                  {selectedProject.resources.map((res: any, idx: number) => (
-                    <a
-                      key={idx}
-                      href={res.projectReport} // URL from backend
-                      target="_blank" // Opens file in a new tab safely
-                      rel="noopener noreferrer"
-                      className="text-sm text-blue-600 hover:text-blue-800 hover:underline break-words font-medium transition-colors"
-                    >
-                      {res.other || `Project Resource File ${idx + 1}`}
-                    </a>
-                  ))}
+                  {selectedProject.resources.map((res: any, idx: number) => {
+
+                    // Determine file type for styling
+                    const isZip = res.type === 'application/zip';
+                    const isPdf = res.type === 'application/pdf';
+
+                    // Select appropriate icon
+                    const FileIcon = isZip ? FileArchive : isPdf ? FileText : File;
+
+                    // Select appropriate color theme
+                    const iconColor = isZip
+                      ? 'bg-amber-100 text-amber-600'
+                      : isPdf
+                      ? 'bg-red-100 text-red-600'
+                      : 'bg-slate-200 text-slate-600';
+
+                    return (
+                      <a
+                        key={idx}
+                        href={res.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        download={res.name} // Prompts browser to download rather than navigate
+                        className="flex items-center justify-between p-3 border border-slate-200 rounded-xl bg-slate-50 hover:bg-white hover:border-[#EF9F27] hover:shadow-sm transition-all group"
+                      >
+                        <div className="flex items-center gap-3 overflow-hidden">
+                          <div className={`p-2.5 rounded-lg ${iconColor}`}>
+                            <FileIcon size={18} strokeWidth={2} />
+                          </div>
+                          <div className="flex flex-col truncate pr-2">
+                            <span className="text-sm font-bold text-slate-700 truncate group-hover:text-[#EF9F27] transition-colors">
+                              {res.name || `Resource File ${idx + 1}`}
+                            </span>
+                            <span className="text-xs font-medium text-slate-400 mt-0.5 uppercase tracking-wider">
+                              {isZip ? 'ZIP Archive' : isPdf ? 'PDF Document' : 'File'}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="p-1.5 text-slate-400 group-hover:text-[#EF9F27] group-hover:bg-orange-50 rounded-md transition-colors">
+                          <Download size={16} strokeWidth={2.5} />
+                        </div>
+                      </a>
+                    );
+                  })}
                 </div>
               ) : (
-                <p className="text-xs text-slate-400 italic">
-                  No resources attached to this project.
-                </p>
+                <div className="bg-slate-50 border border-slate-100 rounded-lg p-4 text-center">
+                  <p className="text-xs text-slate-500 italic">
+                    No resources attached to this project.
+                  </p>
+                </div>
               )}
             </div>
           </div>
