@@ -15,18 +15,17 @@ export default function PrimarySidebar() {
     }
   }, [store.departments.length, store.fetchFilters]);
 
+
   const availableDomains = useMemo(() => {
     const dept = store.selectedDepartment;
     if (!dept) {
-      return Array.from(
-        new Set(Object.values(store.domainMapping).flat()),
-      ).sort();
+      const allDomains = Object.values(store.domainMapping).flat();
+      return Array.from(new Map(allDomains.map(d => [d.domainId, d])).values());
     }
     return store.domainMapping[dept] || [];
   }, [store.selectedDepartment, store.domainMapping]);
 
   useEffect(() => {
-    1;
     const validSelectedDomains = store.selectedDomains.filter((domId) =>
       availableDomains.some((domainObj) => domainObj.domainId === domId),
     );
@@ -65,19 +64,28 @@ export default function PrimarySidebar() {
         </div>
       ) : (
         <div className="flex flex-col p-5 gap-8">
-          {/* DEPARTMENT */}
-          <DepartmentDropdown
-            options={store.departments}
-            value={store.selectedDepartment}
-            onChange={store.setDepartment}
-          />
 
-          {/* DOMAINS */}
-          <DomainDropdown
-            options={availableDomains}
-            value={store.selectedDomains}
-            onChange={store.setDomains}
-          />
+          <div className="flex flex-col gap-3">
+            <label className="text-slate-500 text-sm font-bold uppercase tracking-widest">
+              Department
+            </label>
+            <DepartmentDropdown
+              options={store.departments}
+              value={store.selectedDepartment}
+              onChange={store.setDepartment}
+            />
+          </div>
+
+          <div className="flex flex-col gap-3">
+            <label className="text-slate-500 text-sm font-bold uppercase tracking-widest">
+              Domains
+            </label>
+            <DomainDropdown
+              options={availableDomains}
+              value={store.selectedDomains}
+              onChange={store.setDomains}
+            />
+          </div>
 
           <FilterCheckboxGroup
             label="Industry"
