@@ -84,7 +84,7 @@ export const columns: ColumnDef<AuditLog>[] = [
               </button>
             }
           ></DialogTrigger>
-          <DialogContent className="max-w-[95vw] w-[95vw] h-[95vh] max-h-[95vh] overflow-hidden flex flex-col">
+          <DialogContent className="max-w-[95vw] w-[95vw] h-[70vh] max-h-[70vh] overflow-hidden flex flex-col">
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
                 Log Details{" "}

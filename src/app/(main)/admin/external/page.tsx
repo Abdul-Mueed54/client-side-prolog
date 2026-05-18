@@ -5,6 +5,7 @@ import { columns } from "./columns";
 import { DataTable } from "./externalsDataTable";
 import { useEffect } from "react";
 import AddExternalButton from "./addExternal";
+import ProtectedRoute from "@/components/protectedRoutes/protectedRoutes";
 
 export default function ExternalSupervisorsTable() {
   const { externals, fetchExternals, addExternal } = useExternalStore();
@@ -14,12 +15,15 @@ export default function ExternalSupervisorsTable() {
   }, [fetchExternals, addExternal]);
   return (
     <>
+    <ProtectedRoute allowedRoles={["admin"]}>
+
       <div className="flex justify-end p-3 item-center">
         <AddExternalButton />
       </div>
       <div className="container mx-auto py-10">
         <DataTable columns={columns} data={externals} />
       </div>
+    </ProtectedRoute>
     </>
   );
 }

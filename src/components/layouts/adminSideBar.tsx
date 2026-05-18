@@ -42,7 +42,7 @@ export default function AdminSidebarNav() {
   const { industries } = useIndustryStore();
   const { groups } = useGroupStore();
   const { staff } = useStaffStore();
-  const { logs } = useAuditLogStore();
+  const { totalLogs } = useAuditLogStore();
   // --- NAVIGATION DATA ---
   const ADMIN_NAV = [
     {
@@ -129,7 +129,7 @@ export default function AdminSidebarNav() {
           name: "Audit Logs",
           href: "/admin/auditlogs",
           icon: ShieldCogCorner,
-          badge: logs.length,
+          badge: totalLogs,
         },
       ],
     },

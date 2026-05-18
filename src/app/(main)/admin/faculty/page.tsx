@@ -6,6 +6,7 @@ import { DataTable } from "./facultyDataTable";
 import { useEffect } from "react";
 import AddFacultyButton from "./addFaculty";
 import FacultyFilters from "./facultyFilters";
+import ProtectedRoute from "@/components/protectedRoutes/protectedRoutes";
 
 export default function InternalSupervisorsTable() {
   const { faculty, fetchFaculty, addFaculty } = useFacultyStore();
@@ -15,6 +16,8 @@ export default function InternalSupervisorsTable() {
   }, [fetchFaculty, addFaculty]);
   return (
     <>
+    <ProtectedRoute allowedRoles={["admin"]}>
+
       <div className="flex justify-end p-3 item-center">
         <AddFacultyButton />
       </div>
@@ -24,6 +27,7 @@ export default function InternalSupervisorsTable() {
       <div className="container mx-auto">
         <DataTable columns={columns} data={faculty} />
       </div>
+    </ProtectedRoute>
     </>
   );
 }

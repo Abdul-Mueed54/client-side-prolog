@@ -29,18 +29,18 @@ export default function StudentFilters() {
 
   const handleDeptChange = (newDept: string) => {
     setSelectedDept(newDept);
-    fetchStudents({ deptAbbreviation: newDept, batch: selectedBatch, page: 1 });
+    fetchStudents(1, { deptAbbreviation: newDept, batch: selectedBatch });
   };
 
   const handleBatchChange = (newBatch: string) => {
     setSelectedBatch(newBatch);
-    fetchStudents({ deptAbbreviation: selectedDept, batch: newBatch, page: 1 });
+    fetchStudents(1, { deptAbbreviation: selectedDept, batch: newBatch });
   };
 
   const clearFilters = () => {
     setSelectedDept("");
     setSelectedBatch("");
-    fetchStudents({ page: 1 });
+    fetchStudents(1);
   };
 
   return (

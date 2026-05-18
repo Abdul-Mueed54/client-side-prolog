@@ -9,7 +9,8 @@ interface AuditLogStore {
   totalLogs: number;
   isLoading: boolean;
   error: null | string;
-  fetchLogs: (params?: { page?: number; limit?: number }) => Promise<void>;
+  
+  fetchLogs: (page: number, limit?: number, tableName?: string) => Promise<void>;
 }
 
 export const useAuditLogStore = create<AuditLogStore>((set) => ({
@@ -20,7 +21,7 @@ export const useAuditLogStore = create<AuditLogStore>((set) => ({
   isLoading: false,
   error: null,
 
-  fetchLogs: async (params = {}) => {
+  fetchLogs: async (page: number = 1, limit: number = 10, tableName?: string) => {
     set({ isLoading: true, error: null });
 
     try {
@@ -30,12 +31,15 @@ export const useAuditLogStore = create<AuditLogStore>((set) => ({
 
       const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/audit/getAudits`);
 
-      const page = params.page || 1;
-      const limit = params.limit || 10;
       const offset = (page - 1) * limit;
 
       url.searchParams.append("limit", limit.toString());
       url.searchParams.append("offset", offset.toString());
+
+      // 3. Append the tableName to the URL query if it exists
+      if (tableName) {
+        url.searchParams.append("tableName", tableName);
+      }
 
       const response = await fetch(url.toString(), { method: "GET", headers });
       const json = await response.json();
@@ -63,7 +67,7 @@ export const useAuditLogStore = create<AuditLogStore>((set) => ({
       set({
         logs: formattedLogs,
         totalPages: meta.totalPages,
-        currentPage: meta.currentPage,
+        currentPage: page,
         totalLogs: meta.totalRecords,
         isLoading: false,
       });

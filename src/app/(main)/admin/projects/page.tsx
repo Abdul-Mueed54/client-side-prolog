@@ -5,6 +5,7 @@ import { useAdminProjectStore } from "@/store/useAdminProjectStore";
 import { columns } from "./columns";
 import { DataTable } from "./projectsDataTable";
 import Link from "next/link";
+import ProtectedRoute from "@/components/protectedRoutes/protectedRoutes";
 
 export default function AdminProjectsTable() {
   // Pull from the ADMIN store, not the Main Window store
@@ -16,12 +17,14 @@ export default function AdminProjectsTable() {
   }, [fetchAdminProjects]);
 
   return (
+    <ProtectedRoute allowedRoles={["admin"]}>
+
     <div className="">
       <div className="flex justify-end p-5 item-center">
         <Link
           className="bg-brand rounded w-35 h-12 border border-black flex justify-center items-center hover:shadow-2xl transition"
           href={"/staff"}
-        >
+          >
           + Add Projects
         </Link>
       </div>
@@ -29,5 +32,6 @@ export default function AdminProjectsTable() {
         <DataTable columns={columns} data={adminProjects} />
       </div>
     </div>
+          </ProtectedRoute>
   );
 }

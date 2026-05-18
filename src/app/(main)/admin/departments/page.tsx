@@ -5,6 +5,7 @@ import { DataTable } from "./deptDataTable";
 import { useEffect } from "react";
 import { useDepartmentStore } from "@/store/useDeptStore";
 import AddDepartmentButton from "./addDepts";
+import ProtectedRoute from "@/components/protectedRoutes/protectedRoutes";
 
 export default function DeptTable() {
   const { departments, fetchDepartments, addDepartment } = useDepartmentStore();
@@ -15,12 +16,15 @@ export default function DeptTable() {
   }, [fetchDepartments, addDepartment]);
   return (
     <>
+    <ProtectedRoute allowedRoles={["admin"]}>
+
       <div className="flex justify-end p-5 item-center">
         <AddDepartmentButton />
       </div>
       <div className="container mx-auto py-10">
         <DataTable columns={columns} data={departments} />
       </div>
+    </ProtectedRoute>
     </>
   );
 }

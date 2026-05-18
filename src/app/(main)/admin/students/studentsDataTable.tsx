@@ -42,7 +42,7 @@ export function DataTable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const { error } = useStudentStore();
+  const { error, fetchStudents, currentPage, totalPages, isLoading } = useStudentStore();
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
   );
@@ -164,21 +164,27 @@ export function DataTable<TData, TValue>({
         </Table>
         <div className="flex items-center justify-end space-x-2 py-4">
           <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
+                      variant={"outline"}
+                      size={"sm"}
+                      onClick={() => fetchStudents(currentPage - 1)}
+                      disabled={currentPage === 1 || isLoading}
+                    >
+                      Previous
+                    </Button>
+
+                    <span className="text-sm text-slate-500">
+                      Page {currentPage} of {totalPages}
+                    </span>
+
+                    <Button
+                      variant={"outline"}
+                      size={"sm"}
+                      onClick={() => fetchStudents(currentPage + 1)}
+                      disabled={currentPage === totalPages || isLoading}
+                    >
+                      Next
+                    </Button>
+
         </div>
       </div>
     </div>

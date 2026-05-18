@@ -5,6 +5,7 @@ import { columns } from "./columns";
 import { DataTable } from "./industryDataTable";
 import { useEffect } from "react";
 import AddIndustryButton from "./addIndustry";
+import ProtectedRoute from "@/components/protectedRoutes/protectedRoutes";
 
 export default function IndustryTable() {
   const { industries, fetchIndustries } = useIndustryStore();
@@ -14,12 +15,15 @@ export default function IndustryTable() {
   }, [fetchIndustries]);
   return (
     <>
+    <ProtectedRoute allowedRoles={["admin"]}>
+
       <div className="flex justify-end p-5 item-center">
         <AddIndustryButton />
       </div>
       <div className="container mx-auto py-10">
         <DataTable columns={columns} data={industries} />
       </div>
+    </ProtectedRoute>
     </>
   );
 }

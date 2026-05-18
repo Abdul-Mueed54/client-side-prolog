@@ -146,7 +146,7 @@ function FilterCheckboxGroup({
               className="flex items-center gap-3 cursor-pointer group"
             >
               <div
-                className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${checked ? "bg-indigo-600 border-indigo-700 text-white" : "bg-white border-slate-300 group-hover:border-slate-400"}`}
+                className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${checked ? "bg-brand border-black text-white" : "bg-white border-slate-300 group-hover:border-slate-400"}`}
               >
                 {checked && <Check className="w-3 h-3" strokeWidth={4} />}
               </div>
