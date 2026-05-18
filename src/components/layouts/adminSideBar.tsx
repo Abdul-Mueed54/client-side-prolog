@@ -15,6 +15,7 @@ import {
   UserCog,
   Hotel,
   User,
+  CopyCheck,
   ShieldCogCorner,
 } from "lucide-react";
 import { useAdminProjectStore } from "@/store/useAdminProjectStore";
@@ -119,6 +120,11 @@ export default function AdminSidebarNav() {
           icon: UserCog,
           badge: staff.length,
         },
+        {
+          name: "Report",
+          href: "/admin/reports",
+          icon: CopyCheck
+        }
       ],
     },
 
@@ -154,11 +160,10 @@ export default function AdminSidebarNav() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    className={`flex items-center justify-between px-2.5 py-2 rounded-md text-[15px] cursor-pointer mx-1.5 transition-colors ${
-                      isActive
-                        ? "bg-[#FAEEDA] text-[#633806] font-medium"
-                        : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
-                    }`}
+                    className={`flex items-center justify-between px-2.5 py-2 rounded-md text-[15px] cursor-pointer mx-1.5 transition-colors ${isActive
+                      ? "bg-[#FAEEDA] text-[#633806] font-medium"
+                      : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                      }`}
                   >
                     <div className="flex items-center gap-2.5">
                       <Icon
@@ -170,11 +175,10 @@ export default function AdminSidebarNav() {
 
                     {item.badge !== undefined && (
                       <span
-                        className={`text-[10px] px-2 py-0.5 rounded-full ${
-                          isActive
-                            ? "bg-[#EF9F27] text-[#412402] font-bold"
-                            : "bg-slate-200 text-slate-500 font-medium"
-                        }`}
+                        className={`text-[10px] px-2 py-0.5 rounded-full ${isActive
+                          ? "bg-[#EF9F27] text-[#412402] font-bold"
+                          : "bg-slate-200 text-slate-500 font-medium"
+                          }`}
                       >
                         {item.badge}
                       </span>
