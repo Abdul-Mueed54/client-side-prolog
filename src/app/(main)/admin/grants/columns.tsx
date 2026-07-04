@@ -9,7 +9,7 @@ export const columns: ColumnDef<Grants>[] = [
     header: "Project ID",
   },
   {
-    accessorKey: "name",
+    accessorKey: "grantName",
     header: "Grant Name",
   },
   {
@@ -17,11 +17,11 @@ export const columns: ColumnDef<Grants>[] = [
     header: "Received Date",
   },
   {
-    accessorKey: "amount",
+    accessorKey: "grantAmount",
     header: "Amount",
   },
   {
-    accessorKey: "industryId",
-    header: "Industry ID",
+    accessorKey: "industryName",
+    header: "Industry Name",
   },
 ];

@@ -3,9 +3,7 @@ import { Grants } from "@/types";
 import { useAuthStore } from "./useAuthStore";
 
 export interface NewGrantPayload {
-  name: string;
-  amount: string;
-  industryName: string;
+  grants: Grants
 }
 
 interface GrantStore {
@@ -47,15 +45,10 @@ export const useGrantStore = create<GrantStore>((set) => ({
         return;
       }
 
-      const formattedGrants: Grants[] = json.data.map((rawGrant: any) => ({
-        projectId: rawGrant.project_id,
-        name: rawGrant.grant_name,
-        amount: rawGrant.grant_amount,
-        industryName: rawGrant.industry_name,
-      }));
+     const grants = json.data
 
       set({
-        grants: formattedGrants,
+        grants: grants,
         isLoading: false,
         error: null,
       });
@@ -72,7 +65,6 @@ export const useGrantStore = create<GrantStore>((set) => ({
 
   addGrant: async (data: NewGrantPayload) => {
     try {
-      console.log("i am here");
       const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
 
@@ -96,14 +88,9 @@ export const useGrantStore = create<GrantStore>((set) => ({
         throw new Error(json.message || "Failed to add grant");
       }
 
-      const rawGrant = json.data;
+      const newGrant = json.data;
 
-      const newGrant: Grants = {
-        projectId: rawGrant.project_id,
-        name: rawGrant.grant_name,
-        amount: rawGrant.grant_amount,
-        industryName: rawGrant.industry_name,
-      };
+
 
       set((state) => ({
         grants: [newGrant, ...state.grants],

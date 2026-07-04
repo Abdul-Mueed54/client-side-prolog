@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore, Role } from "@/store/useAuthStore";
+import { Loader } from "../loader/loader";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -36,9 +37,7 @@ export default function ProtectedRoute({
   // Show a loading state while we check their credentials
   if (!isHydrated || !token || !allowedRoles.includes(role)) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#EF9F27]"></div>
-      </div>
+      <Loader />
     );
   }
 

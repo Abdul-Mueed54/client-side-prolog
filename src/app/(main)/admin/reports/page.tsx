@@ -11,6 +11,8 @@ import { Button } from "@/components/ui/button";
 
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import { Loader } from "@/components/loader/loader";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function AdminReportsPage() {
   const { summary, departmentStats, actionItems, isLoading, error, fetchReportData } = useReportStore();
@@ -149,9 +151,7 @@ export default function AdminReportsPage() {
 
   if (isLoading && !summary) {
     return (
-      <div className="flex items-center justify-center h-full w-full min-h-[60vh]">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand"></div>
-      </div>
+      <Loader />
     );
   }
 
@@ -165,7 +165,9 @@ export default function AdminReportsPage() {
   }
 
   return (
+      <ScrollArea className="h-full flex-1">
     <div className="p-6 max-w-7xl mx-auto w-full flex flex-col gap-6">
+
       {/* HEADER */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
         <div>
@@ -337,6 +339,7 @@ export default function AdminReportsPage() {
         </div>
       )}
     </div>
+      </ScrollArea>
   );
 }
 
@@ -359,11 +362,11 @@ function ReportCard({ title, value, icon, bgClass }: { title: string, value: num
 function TabButton({ active, onClick, icon, label, badgeCount }: { active: boolean, onClick: () => void, icon: React.ReactNode, label: string, badgeCount?: number }) {
   return (
     <button
-      onClick={onClick}
-      className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${active
-          ? "border-brand text-brand bg-brand/5"
-          : "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300"
-        }`}
+    onClick={onClick}
+    className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${active
+      ? "border-brand text-brand bg-brand/5"
+      : "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300"
+      }`}
     >
       {icon}
       {label}
