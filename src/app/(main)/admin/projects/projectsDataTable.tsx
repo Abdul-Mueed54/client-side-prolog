@@ -32,6 +32,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Rows } from "lucide-react";
 import { useAdminProjectStore } from "@/store/useAdminProjectStore";
+import { ScrollArea } from "@/components/ui/scroll-area";
 // import { ProjectColumn } from "./columns";
 
 interface DataTableProps<TData, TValue> {
@@ -71,7 +72,7 @@ export function DataTable<TData, TValue>({
     useAdminProjectStore();
 
   return (
-    <div>
+  <div className="rounded-2xl p-4 bg-[#ffffff] ">
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter projects..."
@@ -108,90 +109,92 @@ export function DataTable<TData, TValue>({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="overflow-hidden rounded-md border">
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
 
-          <TableBody>
-            {error ? (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center text-red-500 font-medium"
-                >
-                  Failed to connect DB
-                </TableCell>
-              </TableRow>
-            ) : table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </TableCell>
-                  ))}
+
+        <div className="rounded-md border">
+          <Table className="">
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead key={header.id}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext(),
+                            )}
+                      </TableHead>
+                    );
+                  })}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+              ))}
+            </TableHeader>
 
-        <div className="flex items-center justify-end p-3 space-x-2 py-4">
-          <Button
-            variant={"outline"}
-            size={"sm"}
-            onClick={() => fetchAdminProjects(currentPage - 1)}
-            disabled={currentPage === 1 || isLoading}
-          >
-            Previous
-          </Button>
+            <TableBody>
+              {error ? (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center text-red-500 font-medium"
+                  >
+                    Failed to connect DB
+                  </TableCell>
+                </TableRow>
+              ) : table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    No results.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
 
-          <span className="text-sm text-slate-500">
-            Page {currentPage} of {totalPages}
-          </span>
+          <div className="flex items-center justify-end p-3 space-x-2 py-4">
+            <Button
+              variant={"outline"}
+              size={"sm"}
+              onClick={() => fetchAdminProjects(currentPage - 1)}
+              disabled={currentPage === 1 || isLoading}
+            >
+              Previous
+            </Button>
 
-          <Button
-            variant={"outline"}
-            size={"sm"}
-            onClick={() => fetchAdminProjects(currentPage + 1)}
-            disabled={currentPage === totalPages || isLoading}
-          >
-            Next
-          </Button>
+            <span className="text-sm text-slate-500">
+              Page {currentPage} of {totalPages}
+            </span>
+
+            <Button
+              variant={"outline"}
+              size={"sm"}
+              onClick={() => fetchAdminProjects(currentPage + 1)}
+              disabled={currentPage === totalPages || isLoading}
+            >
+              Next
+            </Button>
+          </div>
         </div>
-      </div>
     </div>
   );
 }

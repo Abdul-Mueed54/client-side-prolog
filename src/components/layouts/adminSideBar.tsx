@@ -30,6 +30,7 @@ import { useExternalStore } from "@/store/useExternalStore";
 import { useStaffStore } from "@/store/useStaffStore";
 import { useAuditLogStore } from "@/store/useAuditLogStore";
 import LogoutButton from "../logoutButton/logout";
+import { ScrollArea } from "../ui/scroll-area";
 
 export default function AdminSidebarNav() {
   const pathname = usePathname();
@@ -142,9 +143,11 @@ export default function AdminSidebarNav() {
   ];
 
   return (
-    <div className="flex flex-col flex-1 overflow-hidden max-h-160">
+<>
+    <div className="flex flex-col max-h-screen">
       {/* Scrollable Navigation Area */}
-      <div className="flex-1 overflow-y-scroll py-2">
+      <ScrollArea className="flex-1 h-full">
+      <div className="py-2 h-134">
         {ADMIN_NAV.map((group, groupIdx) => (
           <div key={groupIdx} className="mb-4">
             <div className="px-3.5 py-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
@@ -190,10 +193,13 @@ export default function AdminSidebarNav() {
           </div>
         ))}
       </div>
-
-      <div className="p-2 border-t border-slate-200 mb-2 mt-auto">
-        <LogoutButton />
+    </ScrollArea>
       </div>
+
+      <div className="p-2 border-t border-slate-200 mb-2">
+        <LogoutButton />
     </div>
+</>
+
   );
 }

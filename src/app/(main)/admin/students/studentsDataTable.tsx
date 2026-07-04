@@ -31,6 +31,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useStudentStore } from "@/store/useStudentsStore";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -67,7 +68,7 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="rounded-2xl p-4 bg-[#ffffff] m-4">
+    <div className="rounded-2xl p-4 bg-[#ffffff]">
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter Students..."
@@ -104,7 +105,9 @@ export function DataTable<TData, TValue>({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="overflow-hidden rounded-md border">
+      <ScrollArea>
+
+      <div className="rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -115,7 +118,7 @@ export function DataTable<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
+                          header.column.columnDef.header,
                             header.getContext(),
                           )}
                     </TableHead>
@@ -137,8 +140,8 @@ export function DataTable<TData, TValue>({
             ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
+                key={row.id}
+                data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
@@ -181,12 +184,13 @@ export function DataTable<TData, TValue>({
                       size={"sm"}
                       onClick={() => fetchStudents(currentPage + 1)}
                       disabled={currentPage === totalPages || isLoading}
-                    >
+                      >
                       Next
                     </Button>
 
         </div>
       </div>
+                      </ScrollArea>
     </div>
   );
 }

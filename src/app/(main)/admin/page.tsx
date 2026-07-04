@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import ProtectedRoute from "@/components/protectedRoutes/protectedRoutes";
 import { Loader } from "@/components/loader/loader";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function Dashboard() {
   const { stats, isLoading, error, fetchStats } = useDashboardStore();
@@ -78,6 +79,7 @@ export default function Dashboard() {
 
     return (
 
+
       <div className={`bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex items-start gap-4 transition-all duration-200 hover:shadow-md border-l-4 border-l-transparent ${theme.hover}`}>
         <div className={`p-3 rounded-lg border ${theme.bg} ${theme.text} ${theme.border}`}>
           <Icon size={22} strokeWidth={1.75} />
@@ -88,11 +90,13 @@ export default function Dashboard() {
           {subtitle && <span className="text-xs text-slate-400 mt-0.5">{subtitle}</span>}
         </div>
       </div>
+
     );
   };
 
   return (
     <ProtectedRoute allowedRoles={["admin"]}>
+         <ScrollArea className="h-full">
     <div className="min-h-screen bg-slate-50/50 p-8 font-sans">
 
       {/* Header */}
@@ -198,6 +202,7 @@ export default function Dashboard() {
 
       </div>
     </div>
+      </ScrollArea>
               </ProtectedRoute>
   );
 }
