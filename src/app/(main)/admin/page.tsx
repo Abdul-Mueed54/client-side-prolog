@@ -16,6 +16,7 @@ import {
   Briefcase
 } from "lucide-react";
 import ProtectedRoute from "@/components/protectedRoutes/protectedRoutes";
+import { Loader } from "@/components/loader/loader";
 
 export default function Dashboard() {
   const { stats, isLoading, error, fetchStats } = useDashboardStore();
@@ -29,9 +30,7 @@ export default function Dashboard() {
 
   if (isLoading) {
     return (
-      <div className="w-full h-[80vh] flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#E58B20]"></div>
-      </div>
+     <Loader />
     );
   }
 

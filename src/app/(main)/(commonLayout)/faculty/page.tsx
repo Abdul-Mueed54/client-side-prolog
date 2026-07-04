@@ -5,7 +5,7 @@ export default function Faculty() {
   return (
     <>
       <ProtectedRoute allowedRoles={["faculty", "admin"]}>
-        <SecondarySidebar />
+        <></>
       </ProtectedRoute>
     </>
   );

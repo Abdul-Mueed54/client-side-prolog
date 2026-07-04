@@ -6,6 +6,7 @@ import { useFilterStore } from "../../store/useFilterStore";
 import DomainDropdown from "../dropDown/domainsDropdown";
 import DepartmentDropdown from "../dropDown/departmentsDropdown";
 import LogoutButton from "../logoutButton/logout";
+import { ScrollArea } from "../ui/scroll-area";
 
 export default function PrimarySidebar() {
   const store = useFilterStore();
@@ -43,71 +44,72 @@ export default function PrimarySidebar() {
     store.selectedYears.length > 0;
 
   return (
-    <aside className="w-64 h-screen bg-slate-50 border-r border-slate-200 flex flex-col">
-      <div className="sticky top-0 bg-white z-20 flex items-center justify-between p-5 border-b border-slate-200">
-        <div className="flex items-center gap-2 text-slate-700 text-xl font-bold">
-          <Funnel className="w-5 h-5 text-brand" />
-          <span className="tracking-tight">Filters</span>
-        </div>
-        {hasActiveFilters && (
-          <button
-            onClick={store.clearAll}
-            className="text-[10px] uppercase font-bold text-slate-400 hover:text-red-500 transition-colors"
-          >
-            Clear All
-          </button>
-        )}
-      </div>
-
-      <div className="flex-1 overflow-y-auto">
-        {store.isFiltersLoading ? (
-          <div className="flex flex-col items-center justify-center h-full text-slate-400 gap-3 mt-10">
-            <Loader2 className="w-6 h-6 animate-spin" />
-            <span className="text-sm">Loading filters...</span>
+    <aside className="w-64 h-142 bg-white border-r border-slate-200 flex flex-col">
+      <ScrollArea className="flex-1 h-full">
+        <div className="sticky top-0 bg-white z-20 flex items-center justify-between p-5 border-b border-slate-200">
+          <div className="flex items-center gap-2 text-slate-700 text-xl font-bold">
+            <Funnel className="w-5 h-5 text-brand" />
+            <span className="tracking-tight">Filters</span>
           </div>
-        ) : (
-          <div className="flex flex-col p-5 gap-8">
-            <div className="flex flex-col gap-3">
-              <label className="text-slate-500 text-sm font-bold uppercase tracking-widest">
-                Department
-              </label>
-              <DepartmentDropdown
-                options={store.departments}
-                value={store.selectedDepartment}
-                onChange={store.setDepartment}
+          {hasActiveFilters && (
+            <button
+              onClick={store.clearAll}
+              className="text-[11px] uppercase font-bold text-slate-400 hover:text-red-500 transition-colors"
+            >
+              Clear All
+            </button>
+          )}
+        </div>
+
+        <div className="flex-1 overflow-y-auto">
+          {store.isFiltersLoading ? (
+            <div className="flex flex-col items-center justify-center h-full text-slate-400 gap-3 mt-10">
+              <Loader2 className="w-6 h-6 animate-spin text-brand" />
+              <span className="text-sm">Loading filters...</span>
+            </div>
+          ) : (
+            <div className="flex flex-col p-5 gap-8">
+              <div className="flex flex-col gap-3">
+                <label className="text-slate-500 text-sm font-bold uppercase tracking-widest">
+                  Department
+                </label>
+                <DepartmentDropdown
+                  options={store.departments}
+                  value={store.selectedDepartment}
+                  onChange={store.setDepartment}
+                />
+              </div>
+
+              <div className="flex flex-col gap-3">
+                <label className="text-slate-500 text-sm font-bold uppercase tracking-widest">
+                  Domains
+                </label>
+                <DomainDropdown
+                  options={availableDomains}
+                  value={store.selectedDomains}
+                  onChange={store.setDomains}
+                />
+              </div>
+
+              <FilterCheckboxGroup
+                label="Industry"
+                options={store.industries}
+                selectedItems={store.selectedIndustries}
+                onChange={store.setIndustries}
+              />
+
+              <FilterCheckboxGroup
+                label="Academic Year"
+                options={store.years}
+                selectedItems={store.selectedYears}
+                onChange={store.setYears}
               />
             </div>
-
-            <div className="flex flex-col gap-3">
-              <label className="text-slate-500 text-sm font-bold uppercase tracking-widest">
-                Domains
-              </label>
-              <DomainDropdown
-                options={availableDomains}
-                value={store.selectedDomains}
-                onChange={store.setDomains}
-              />
-            </div>
-
-            <FilterCheckboxGroup
-              label="Industry"
-              options={store.industries}
-              selectedItems={store.selectedIndustries}
-              onChange={store.setIndustries}
-            />
-
-            <FilterCheckboxGroup
-              label="Academic Year"
-              options={store.years}
-              selectedItems={store.selectedYears}
-              onChange={store.setYears}
-            />
-          </div>
-        )}
-
-        <div className="p-4 border-t border-slate-200  mt-auto">
-          <LogoutButton />
+          )}
         </div>
+      </ScrollArea>
+      <div className="p-4 flex justify-center border-t border-slate-200 ">
+        <LogoutButton />
       </div>
     </aside>
   );
@@ -133,38 +135,40 @@ function FilterCheckboxGroup({
   };
 
   return (
-    <div className="flex flex-col gap-3">
-      <label className="text-slate-500 text-sm font-bold uppercase tracking-widest">
-        {label}
-      </label>
-      <div className="flex flex-col gap-2.5">
-        {options.map((opt) => {
-          const checked = selectedItems.includes(opt);
-          return (
-            <label
-              key={opt}
-              className="flex items-center gap-3 cursor-pointer group"
-            >
-              <div
-                className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${checked ? "bg-brand border-black text-white" : "bg-white border-slate-300 group-hover:border-slate-400"}`}
+    <ScrollArea className="flex-1 h-full">
+      <div className="flex flex-col gap-3 ">
+        <label className="text-slate-500 text-sm font-bold uppercase tracking-widest">
+          {label}
+        </label>
+        <div className="flex flex-col gap-2.5">
+          {options.map((opt) => {
+            const checked = selectedItems.includes(opt);
+            return (
+              <label
+                key={opt}
+                className="flex items-center gap-3 cursor-pointer group"
               >
-                {checked && <Check className="w-3 h-3" strokeWidth={4} />}
-              </div>
-              <input
-                type="checkbox"
-                className="hidden"
-                checked={checked}
-                onChange={() => handleToggle(opt)}
-              />
-              <span
-                className={`text-sm font-medium ${checked ? "text-slate-900" : "text-slate-600"}`}
-              >
-                {opt}
-              </span>
-            </label>
-          );
-        })}
+                <div
+                  className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${checked ? "bg-brand border-black text-white" : "bg-white border-slate-300 group-hover:border-slate-400"}`}
+                >
+                  {checked && <Check className="w-3 h-3" strokeWidth={4} />}
+                </div>
+                <input
+                  type="checkbox"
+                  className="hidden"
+                  checked={checked}
+                  onChange={() => handleToggle(opt)}
+                />
+                <span
+                  className={`text-sm font-medium ${checked ? "text-slate-900" : "text-slate-600"}`}
+                >
+                  {opt}
+                </span>
+              </label>
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </ScrollArea>
   );
 }

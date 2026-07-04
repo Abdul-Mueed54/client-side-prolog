@@ -28,6 +28,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
+import { Loader } from "@/components/loader/loader";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -152,10 +153,7 @@ export function DataTable<TData, TValue>({
             ) : isLoading ? (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center text-slate-500">
-                  <div className="flex items-center justify-center gap-2">
-                    <div className="w-4 h-4 rounded-full border-2 border-[#EF9F27] border-t-transparent animate-spin" />
-                    Loading data...
-                  </div>
+                  <Loader/>
                 </TableCell>
               </TableRow>
             ) : table.getRowModel().rows?.length ? (

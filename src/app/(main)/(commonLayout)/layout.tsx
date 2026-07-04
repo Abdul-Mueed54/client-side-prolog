@@ -10,7 +10,7 @@ export default function CommonLayout({
 }) {
   return (
     <>
-      <div className="flex h-[91vh] overflow-y-hidden">
+      <div className="flex h-160 overflow-y-hidden">
         <PrimarySidebar />
 
         <main className="flex-1 min-w-0 p-4 bg-[#eeeeee]">
@@ -18,7 +18,7 @@ export default function CommonLayout({
         </main>
 
         <div className="w-80 shrink-0 min-w-[20rem] max-w-[20rem]">
-          {children}
+          <SecondarySidebar />
         </div>
       </div>
     </>

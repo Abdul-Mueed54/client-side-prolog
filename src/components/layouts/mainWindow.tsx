@@ -7,6 +7,8 @@ import { useDebounce } from "../../hooks/useDebounce";
 import { useProjectStore } from "@/store/useProjectStore";
 import { useFilterStore } from "@/store/useFilterStore";
 import LogoutButton from "../logoutButton/logout";
+import { Loader } from "../loader/loader";
+import { ScrollArea } from "../ui/scroll-area";
 
 export default function MainWindow() {
   const [isHydrated, setIsHydrated] = useState(false);
@@ -50,22 +52,23 @@ export default function MainWindow() {
   ]);
 
   return (
-    <div className="h-[700px] overflow-y-auto overflow-x-hidden">
+    <ScrollArea className="flex-1 h-full">
+
+    <div className="h-[700px]">
       <SearchBar
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
       <div className="mb-6">
-        <p className="text-slate-500 font-medium">
           {isLoading ? (
-            <span>Loading projects...</span>
+            <Loader />
           ) : (
             <>
-              <strong className="text-slate-800">{totalRecords}</strong>{" "}
+              <strong className="text-brand/700">{totalRecords}</strong>{" "}
               Projects Found
             </>
           )}
-        </p>
+
       </div>
 
       {error && (
@@ -108,5 +111,6 @@ export default function MainWindow() {
         )}
       </div>
     </div>
+    </ScrollArea>
   );
 }
