@@ -25,13 +25,9 @@ export const columns: ColumnDef<Students>[] = [
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
-      const student = row.original
+      const student = row.original;
 
-      return (
-        <StudentActions student={student} />
-      )
+      return <StudentActions student={student} />;
     },
   },
-
-
 ];

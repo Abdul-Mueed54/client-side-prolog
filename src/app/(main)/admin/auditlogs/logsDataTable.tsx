@@ -63,9 +63,9 @@ export function DataTable<TData, TValue>({
   onNextPage,
   onPreviousPage,
 }: DataTableProps<TData, TValue>) {
-
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({});
 
   const table = useReactTable({
     data,
@@ -85,12 +85,14 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="rounded-2xl p-6 bg-white shadow-sm border border-slate-200 m-4">
-
+    <div className="rounded-2xl p-6 bg-white">
       {/* Toolbar (Search & Column Toggle) */}
       <div className="flex items-center justify-between py-4 gap-4">
         <div className="relative w-full max-w-sm">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+          <Search
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+            size={16}
+          />
           <Input
             placeholder={searchPlaceholder}
             value={searchValue}
@@ -100,11 +102,13 @@ export function DataTable<TData, TValue>({
         </div>
 
         <DropdownMenu>
-          <DropdownMenuTrigger render={<Button variant="outline" className="ml-auto text-slate-600">
-              Toggle Columns
-            </Button>}>
-
-          </DropdownMenuTrigger>
+          <DropdownMenuTrigger
+            render={
+              <Button variant="outline" className="ml-auto text-slate-600">
+                Toggle Columns
+              </Button>
+            }
+          ></DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             {table
               .getAllColumns()
@@ -115,7 +119,9 @@ export function DataTable<TData, TValue>({
                     key={column.id}
                     className="capitalize"
                     checked={column.getIsVisible()}
-                    onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                    onCheckedChange={(value) =>
+                      column.toggleVisibility(!!value)
+                    }
                   >
                     {column.id}
                   </DropdownMenuCheckboxItem>
@@ -133,10 +139,16 @@ export function DataTable<TData, TValue>({
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="text-slate-600 font-bold tracking-wide">
+                    <TableHead
+                      key={header.id}
+                      className="text-slate-600 font-bold tracking-wide"
+                    >
                       {header.isPlaceholder
                         ? null
-                        : flexRender(header.column.columnDef.header, header.getContext())}
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext(),
+                          )}
                     </TableHead>
                   );
                 })}
@@ -146,29 +158,45 @@ export function DataTable<TData, TValue>({
           <TableBody>
             {error ? (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center text-red-500 font-medium bg-red-50/50">
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center text-red-500 font-medium bg-red-50/50"
+                >
                   {error}
                 </TableCell>
               </TableRow>
             ) : isLoading ? (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center text-slate-500">
-                  <Loader/>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center text-slate-500"
+                >
+                  <Loader />
                 </TableCell>
               </TableRow>
             ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"} className="hover:bg-slate-50/50 transition-colors">
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                  className="hover:bg-slate-50/50 transition-colors"
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className="py-3">
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center text-slate-500">
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center text-slate-500"
+                >
                   No results found.
                 </TableCell>
               </TableRow>

@@ -3,7 +3,7 @@ import { Grants } from "@/types";
 import { useAuthStore } from "./useAuthStore";
 
 export interface NewGrantPayload {
-  grants: Grants
+  grants: Grants;
 }
 
 interface GrantStore {
@@ -45,7 +45,7 @@ export const useGrantStore = create<GrantStore>((set) => ({
         return;
       }
 
-     const grants = json.data
+      const grants = json.data;
 
       set({
         grants: grants,
@@ -89,8 +89,6 @@ export const useGrantStore = create<GrantStore>((set) => ({
       }
 
       const newGrant = json.data;
-
-
 
       set((state) => ({
         grants: [newGrant, ...state.grants],

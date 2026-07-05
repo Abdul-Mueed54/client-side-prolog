@@ -33,13 +33,9 @@ export const columns: ColumnDef<Externals>[] = [
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
-      const external = row.original
+      const external = row.original;
 
-      return (
-        <ExternalActions external={external} />
-      )
+      return <ExternalActions external={external} />;
     },
   },
-
-
 ];

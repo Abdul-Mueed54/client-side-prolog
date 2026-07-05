@@ -37,7 +37,7 @@ export interface Departments {
 export interface Grants {
   projectId?: string;
   grantName: string;
-  recievedDate: Date
+  recievedDate: Date;
   grantAmount: number;
   industryName: string;
 }

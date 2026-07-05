@@ -38,13 +38,9 @@ export const columns: ColumnDef<Groups>[] = [
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
-      const group = row.original
+      const group = row.original;
 
-      return (
-        <GroupActions group={group} />
-      )
+      return <GroupActions group={group} />;
     },
   },
-
-
 ];

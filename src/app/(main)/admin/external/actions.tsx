@@ -45,14 +45,21 @@ export function ExternalActions({ external }: ExternalActionsProps) {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className={buttonVariants({ variant: "ghost", className: "h-8 w-8 p-0" })}>
+        <DropdownMenuTrigger
+          className={buttonVariants({
+            variant: "ghost",
+            className: "h-8 w-8 p-0",
+          })}
+        >
           <span className="sr-only">Open menu</span>
           <MoreHorizontal className="h-4 w-4" />
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="end">
           <DropdownMenuGroup>
-            <DropdownMenuLabel className="text-orange-400 font-bold">Actions</DropdownMenuLabel>
+            <DropdownMenuLabel className="text-orange-400 font-bold">
+              Actions
+            </DropdownMenuLabel>
           </DropdownMenuGroup>
 
           <DropdownMenuItem
@@ -108,7 +115,11 @@ interface EditExternalDialogProps {
   onOpenChange: (open: boolean) => void;
 }
 
-function EditExternalDialog({ external, open, onOpenChange }: EditExternalDialogProps) {
+function EditExternalDialog({
+  external,
+  open,
+  onOpenChange,
+}: EditExternalDialogProps) {
   const updateExternal = useExternalStore((state) => state.updateExternal);
   const { industries, fetchIndustries } = useIndustryStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -122,7 +133,8 @@ function EditExternalDialog({ external, open, onOpenChange }: EditExternalDialog
   // Derived State: Find the name if we only have the ID from the table row
   const initialIndustryName =
     external.industryName ||
-    industries.find((i) => i.industryId === external.industryId)?.industryName ||
+    industries.find((i) => i.industryId === external.industryId)
+      ?.industryName ||
     "";
 
   // State only tracks what the user changes
@@ -136,7 +148,9 @@ function EditExternalDialog({ external, open, onOpenChange }: EditExternalDialog
   // The actual value shown in the dropdown
   const currentIndustryName = formData.industryName || initialIndustryName;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -227,7 +241,9 @@ function EditExternalDialog({ external, open, onOpenChange }: EditExternalDialog
               onChange={handleChange}
               className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white"
             >
-              <option value="" disabled>Select an Industry</option>
+              <option value="" disabled>
+                Select an Industry
+              </option>
               {industries.map((ind) => (
                 <option key={ind.industryId} value={ind.industryName}>
                   {ind.industryName}
@@ -269,7 +285,11 @@ interface DeleteExternalDialogProps {
   onOpenChange: (open: boolean) => void;
 }
 
-function DeleteExternalDialog({ external, open, onOpenChange }: DeleteExternalDialogProps) {
+function DeleteExternalDialog({
+  external,
+  open,
+  onOpenChange,
+}: DeleteExternalDialogProps) {
   const deleteExternal = useExternalStore((state) => state.deleteExternal);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -293,8 +313,9 @@ function DeleteExternalDialog({ external, open, onOpenChange }: DeleteExternalDi
         <AlertDialogHeader>
           <AlertDialogTitle>Delete {external.extName}?</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you absolutely sure you want to delete the supervisor <strong>{external.extName}</strong>?
-            This action cannot be undone and may affect active projects they are evaluating.
+            Are you absolutely sure you want to delete the supervisor{" "}
+            <strong>{external.extName}</strong>? This action cannot be undone
+            and may affect active projects they are evaluating.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

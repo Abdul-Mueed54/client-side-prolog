@@ -66,7 +66,7 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="rounded-2xl p-4 bg-[#ffffff] m-4">
+    <div className="rounded-2xl p-4 bg-[#ffffff]">
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter Faculty..."
@@ -105,7 +105,7 @@ export function DataTable<TData, TValue>({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="overflow-hidden rounded-md border">
+      <div className="rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

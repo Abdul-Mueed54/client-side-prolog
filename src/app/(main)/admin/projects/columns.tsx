@@ -90,17 +90,14 @@ export const columns: ColumnDef<Project>[] = [
         | null;
 
       return (
-        <div className="bg-green-100 text-green-800 hover:bg-green-100 dark:bg-green-900 dark:text-green-100 flex justify-center items-center rounded">
+        <div className="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold border bg-emerald-50 text-emerald-700 border-emerald-200">
           {grantName?.map((grant, index) =>
             grant.name === null ? (
-              <span
-                key={index}
-                className="text-muted-foreground bg-black text-sm"
-              >
+              <span key={index} className="">
                 -
               </span>
             ) : (
-              <div key={index} className="text-[10px] p-1">
+              <div key={index} className="">
                 {grant.name}
               </div>
             ),
@@ -123,17 +120,14 @@ export const columns: ColumnDef<Project>[] = [
       // console.log(industryName);
 
       return (
-        <div className="bg-pink-100 text-pink-800 hover:bg-pink-100 dark:bg-pink-900 dark:text-pink-100 flex justify-center items-center rounded">
+        <div className="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold border bg-pink-50 text-pink-700 border-pink-200">
           {industryName?.map((industry, index) =>
             industry.name === null ? (
-              <span
-                key={index}
-                className="text-muted-foreground bg-black text-sm"
-              >
+              <span key={index} className="">
                 -
               </span>
             ) : (
-              <div key={index} className="text-[10px] p-1">
+              <div key={index} className="">
                 {industry.name}
               </div>
             ),

@@ -26,9 +26,15 @@ interface StudentStore {
   totalStudents: number;
 
   // 1. Updated signature: page is a direct number now
-  fetchStudents: (page?: number, filters?: FetchStudentsFilters) => Promise<void>;
+  fetchStudents: (
+    page?: number,
+    filters?: FetchStudentsFilters,
+  ) => Promise<void>;
   addStudent: (data: NewStudentPayload) => Promise<void>;
-  updateStudent: (seatNo: string, data: Partial<NewStudentPayload>) => Promise<void>;
+  updateStudent: (
+    seatNo: string,
+    data: Partial<NewStudentPayload>,
+  ) => Promise<void>;
   deleteStudent: (seatNo: string) => Promise<void>;
 }
 
@@ -41,7 +47,10 @@ export const useStudentStore = create<StudentStore>((set, get) => ({
   totalStudents: 0,
 
   // 2. Accept page directly, default to 1
-  fetchStudents: async (page: number = 1, filters: FetchStudentsFilters = {}) => {
+  fetchStudents: async (
+    page: number = 1,
+    filters: FetchStudentsFilters = {},
+  ) => {
     set({ isLoading: true, error: null });
 
     try {
@@ -50,7 +59,7 @@ export const useStudentStore = create<StudentStore>((set, get) => ({
       if (token) headers["Authorization"] = `Bearer ${token}`;
 
       const url = new URL(
-        `${process.env.NEXT_PUBLIC_API_URL}/students/getStudents/`
+        `${process.env.NEXT_PUBLIC_API_URL}/students/getStudents/`,
       );
 
       const limit = filters.limit || 10;
@@ -92,7 +101,9 @@ export const useStudentStore = create<StudentStore>((set, get) => ({
     } catch (error: any) {
       set({
         isLoading: false,
-        error: error.message || "An unexpected error occurred while fetching students.",
+        error:
+          error.message ||
+          "An unexpected error occurred while fetching students.",
         students: [],
       });
     }
@@ -104,11 +115,14 @@ export const useStudentStore = create<StudentStore>((set, get) => ({
       const headers: any = { "Content-Type": "application/json" };
       if (token) headers["Authorization"] = `Bearer ${token}`;
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/students/`, {
-        method: "POST",
-        headers,
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/students/`,
+        {
+          method: "POST",
+          headers,
+          body: JSON.stringify(data),
+        },
+      );
 
       const json = await response.json();
 
@@ -134,11 +148,14 @@ export const useStudentStore = create<StudentStore>((set, get) => ({
       const headers: any = { "Content-Type": "application/json" };
       if (token) headers["Authorization"] = `Bearer ${token}`;
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/students/${seatNo}`, {
-        method: "PATCH",
-        headers,
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/students/${seatNo}`,
+        {
+          method: "PATCH",
+          headers,
+          body: JSON.stringify(data),
+        },
+      );
 
       const json = await response.json();
 
@@ -154,9 +171,12 @@ export const useStudentStore = create<StudentStore>((set, get) => ({
                 stdName: data.stdName ?? std.stdName,
                 stdEmail: data.stdEmail ?? std.stdEmail,
                 batch: data.batch ?? std.batch,
-                deptAbbreviation: data.deptAbbr ?? std.deptAbbreviation ?? (std as any).deptAbbr,
+                deptAbbreviation:
+                  data.deptAbbr ??
+                  std.deptAbbreviation ??
+                  (std as any).deptAbbr,
               }
-            : std
+            : std,
         ),
       }));
     } catch (error: any) {
@@ -171,10 +191,13 @@ export const useStudentStore = create<StudentStore>((set, get) => ({
       const headers: any = { "Content-Type": "application/json" };
       if (token) headers["Authorization"] = `Bearer ${token}`;
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/students/${seatNo}`, {
-        method: "DELETE",
-        headers,
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/students/${seatNo}`,
+        {
+          method: "DELETE",
+          headers,
+        },
+      );
 
       const json = await response.json();
 

@@ -48,14 +48,21 @@ export function FacultyActions({ faculty }: FacultyActionsProps) {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className={buttonVariants({ variant: "ghost", className: "h-8 w-8 p-0" })}>
+        <DropdownMenuTrigger
+          className={buttonVariants({
+            variant: "ghost",
+            className: "h-8 w-8 p-0",
+          })}
+        >
           <span className="sr-only">Open menu</span>
           <MoreHorizontal className="h-4 w-4" />
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="end">
           <DropdownMenuGroup>
-            <DropdownMenuLabel className="text-orange-400 font-bold">Actions</DropdownMenuLabel>
+            <DropdownMenuLabel className="text-orange-400 font-bold">
+              Actions
+            </DropdownMenuLabel>
           </DropdownMenuGroup>
 
           <DropdownMenuItem
@@ -108,7 +115,11 @@ interface EditFacultyDialogProps {
   onOpenChange: (open: boolean) => void;
 }
 
-function EditFacultyDialog({ faculty, open, onOpenChange }: EditFacultyDialogProps) {
+function EditFacultyDialog({
+  faculty,
+  open,
+  onOpenChange,
+}: EditFacultyDialogProps) {
   const { departments, fetchDepartments } = useDepartmentStore();
   const updateFaculty = useFacultyStore((state) => state.updateFaculty);
   const token = useAuthStore((state) => state.token);
@@ -141,9 +152,12 @@ function EditFacultyDialog({ faculty, open, onOpenChange }: EditFacultyDialogPro
           const headers: any = { "Content-Type": "application/json" };
           if (token) headers["Authorization"] = `Bearer ${token}`;
 
-          const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${faculty.facultyId}`, {
-            headers
-          });
+          const res = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/users/${faculty.facultyId}`,
+            {
+              headers,
+            },
+          );
 
           const json = await res.json();
 
@@ -153,7 +167,8 @@ function EditFacultyDialog({ faculty, open, onOpenChange }: EditFacultyDialogPro
               userName: fullData.userName || faculty.facultyName,
               userEmail: fullData.userEmail || faculty.facultyEmail,
               userContactNo: fullData.userContactNo || "",
-              deptAbbreviation: fullData.deptAbbreviation || faculty.deptAbbreviation,
+              deptAbbreviation:
+                fullData.deptAbbreviation || faculty.deptAbbreviation,
               designation: fullData.designation || "",
               areaOfResearch: fullData.areaOfResearch || "",
             });
@@ -167,7 +182,14 @@ function EditFacultyDialog({ faculty, open, onOpenChange }: EditFacultyDialogPro
 
       fetchFullDetails();
     }
-  }, [open, faculty.facultyId, faculty.facultyName, faculty.facultyEmail, faculty.deptAbbreviation, token]);
+  }, [
+    open,
+    faculty.facultyId,
+    faculty.facultyName,
+    faculty.facultyEmail,
+    faculty.deptAbbreviation,
+    token,
+  ]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -187,7 +209,11 @@ function EditFacultyDialog({ faculty, open, onOpenChange }: EditFacultyDialogPro
       toast.success("Faculty profile updated successfully!");
     } catch (error) {
       console.error("Failed to update faculty:", error);
-      toast.error(error instanceof Error ? error.message : "Failed to update faculty profile.");
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Failed to update faculty profile.",
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -206,10 +232,15 @@ function EditFacultyDialog({ faculty, open, onOpenChange }: EditFacultyDialogPro
         {isLoadingData ? (
           <div className="flex flex-col items-center justify-center py-10">
             <Loader2 className="h-8 w-8 animate-spin text-slate-400" />
-            <p className="text-sm text-slate-500 mt-2">Loading full profile...</p>
+            <p className="text-sm text-slate-500 mt-2">
+              Loading full profile...
+            </p>
           </div>
         ) : (
-          <form onSubmit={handleEditSubmit} className="flex flex-col gap-4 mt-2">
+          <form
+            onSubmit={handleEditSubmit}
+            className="flex flex-col gap-4 mt-2"
+          >
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">
@@ -329,7 +360,11 @@ interface DeleteFacultyDialogProps {
   onOpenChange: (open: boolean) => void;
 }
 
-function DeleteFacultyDialog({ faculty, open, onOpenChange }: DeleteFacultyDialogProps) {
+function DeleteFacultyDialog({
+  faculty,
+  open,
+  onOpenChange,
+}: DeleteFacultyDialogProps) {
   const deleteFaculty = useFacultyStore((state) => state.deleteFaculty);
   const handleDelete = async () => {
     try {
@@ -338,7 +373,11 @@ function DeleteFacultyDialog({ faculty, open, onOpenChange }: DeleteFacultyDialo
       toast.success(`${faculty.facultyName} has been removed.`);
     } catch (error) {
       console.error("Failed to delete faculty:", error);
-      toast.error(error instanceof Error ? error.message : "Failed to delete faculty profile.");
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Failed to delete faculty profile.",
+      );
     }
     console.log("Deleting faculty:", faculty.facultyId);
     onOpenChange(false);
@@ -350,13 +389,17 @@ function DeleteFacultyDialog({ faculty, open, onOpenChange }: DeleteFacultyDialo
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This will permanently delete the faculty record for <strong>{faculty.facultyName}</strong>.
-            This action cannot be undone.
+            This will permanently delete the faculty record for{" "}
+            <strong>{faculty.facultyName}</strong>. This action cannot be
+            undone.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleDelete} className="bg-red-600 hover:bg-red-700">
+          <AlertDialogAction
+            onClick={handleDelete}
+            className="bg-red-600 hover:bg-red-700"
+          >
             Delete
           </AlertDialogAction>
         </AlertDialogFooter>

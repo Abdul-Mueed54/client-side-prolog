@@ -47,12 +47,9 @@ export const columns: ColumnDef<Faculty>[] = [
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
-      const faculty = row.original
+      const faculty = row.original;
 
-      return (
-        <FacultyActions faculty={faculty} />
-      )
+      return <FacultyActions faculty={faculty} />;
     },
   },
-
 ];

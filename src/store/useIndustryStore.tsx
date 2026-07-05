@@ -15,7 +15,10 @@ interface IndustryStore {
   error: null | string;
   fetchIndustries: () => Promise<void>;
   addIndustry: (data: NewIndustryPayload) => Promise<void>;
-  updateIndustry: (id: string, data: Partial<NewIndustryPayload>) => Promise<void>;
+  updateIndustry: (
+    id: string,
+    data: Partial<NewIndustryPayload>,
+  ) => Promise<void>;
   deleteIndustry: (id: string) => Promise<void>;
 }
 
@@ -127,7 +130,7 @@ export const useIndustryStore = create<IndustryStore>((set) => ({
           method: "PATCH",
           headers,
           body: JSON.stringify(data),
-        }
+        },
       );
 
       const json = await response.json();
@@ -140,15 +143,15 @@ export const useIndustryStore = create<IndustryStore>((set) => ({
         industries: state.industries.map((ind) =>
           ind.industryId === id
             ? {
-              ...ind,
-              // Merge new data, keeping existing data if the payload omitted it
-              industryName: data.industryName ?? ind.industryName,
-              // Map payload's 'location' to the state's 'industryLocation' mapping
-              industryLocation: data.location ?? ind.industryLocation,
-              industryType: data.industryType ?? ind.industryType,
-              industryEmail: data.industryEmail ?? ind.industryEmail,
-            }
-            : ind
+                ...ind,
+                // Merge new data, keeping existing data if the payload omitted it
+                industryName: data.industryName ?? ind.industryName,
+                // Map payload's 'location' to the state's 'industryLocation' mapping
+                industryLocation: data.location ?? ind.industryLocation,
+                industryType: data.industryType ?? ind.industryType,
+                industryEmail: data.industryEmail ?? ind.industryEmail,
+              }
+            : ind,
         ),
       }));
     } catch (error: any) {
@@ -171,7 +174,7 @@ export const useIndustryStore = create<IndustryStore>((set) => ({
         {
           method: "DELETE",
           headers,
-        }
+        },
       );
 
       const json = await response.json();

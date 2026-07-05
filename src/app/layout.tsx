@@ -12,9 +12,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={cn("font-sans", geist.variable)}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={cn("font-sans", geist.variable)}
+    >
       {/* Just the body tag and children! */}
-      <body>{children}
+      <body>
+        {children}
         <Toaster richColors position="top-right" />
       </body>
     </html>

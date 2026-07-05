@@ -18,24 +18,23 @@ export default function AdminProjectsTable() {
   }, [fetchAdminProjects]);
 
   return (
-    <div >
-    <ProtectedRoute allowedRoles={["admin"]}>
-
-      <div className="flex justify-end p-5 item-center">
-        <Link
-          className="bg-brand rounded w-35 h-12 border border-black flex justify-center items-center hover:shadow-2xl transition"
-          href={"/staff"}
+    <div>
+      <ProtectedRoute allowedRoles={["admin"]}>
+        <div className="flex justify-end p-5 item-center">
+          <Link
+            className="bg-brand rounded w-35 h-12 border border-black flex justify-center items-center hover:shadow-2xl transition"
+            href={"/staff"}
           >
-          + Add Projects
-        </Link>
-      </div>
+            + Add Projects
+          </Link>
+        </div>
 
-      <div className="space-y-4 h-125 max-w-280 rounded-md overflow-x-auto bg-[#ffffff] m-4">
-      <ScrollArea className=" h-full">
-        <DataTable columns={columns} data={adminProjects} />
-      </ScrollArea>
-      </div>
-          </ProtectedRoute>
+        <div className="space-y-4 h-125 max-w-280 rounded-md overflow-x-auto bg-[#ffffff] m-4">
+          <ScrollArea className=" h-full">
+            <DataTable columns={columns} data={adminProjects} />
+          </ScrollArea>
+        </div>
+      </ProtectedRoute>
     </div>
   );
 }

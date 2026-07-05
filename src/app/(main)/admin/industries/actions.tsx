@@ -44,14 +44,21 @@ export function IndustryActions({ industry }: IndustryActionsProps) {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className={buttonVariants({ variant: "ghost", className: "h-8 w-8 p-0" })}>
+        <DropdownMenuTrigger
+          className={buttonVariants({
+            variant: "ghost",
+            className: "h-8 w-8 p-0",
+          })}
+        >
           <span className="sr-only">Open menu</span>
           <MoreHorizontal className="h-4 w-4" />
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="end">
           <DropdownMenuGroup>
-            <DropdownMenuLabel className="text-orange-400 font-bold">Actions</DropdownMenuLabel>
+            <DropdownMenuLabel className="text-orange-400 font-bold">
+              Actions
+            </DropdownMenuLabel>
           </DropdownMenuGroup>
 
           <DropdownMenuItem
@@ -107,7 +114,11 @@ interface EditIndustryDialogProps {
   onOpenChange: (open: boolean) => void;
 }
 
-function EditIndustryDialog({ industry, open, onOpenChange }: EditIndustryDialogProps) {
+function EditIndustryDialog({
+  industry,
+  open,
+  onOpenChange,
+}: EditIndustryDialogProps) {
   const updateIndustry = useIndustryStore((state) => state.updateIndustry);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -235,7 +246,11 @@ interface DeleteIndustryDialogProps {
   onOpenChange: (open: boolean) => void;
 }
 
-function DeleteIndustryDialog({ industry, open, onOpenChange }: DeleteIndustryDialogProps) {
+function DeleteIndustryDialog({
+  industry,
+  open,
+  onOpenChange,
+}: DeleteIndustryDialogProps) {
   const deleteIndustry = useIndustryStore((state) => state.deleteIndustry);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -259,8 +274,10 @@ function DeleteIndustryDialog({ industry, open, onOpenChange }: DeleteIndustryDi
         <AlertDialogHeader>
           <AlertDialogTitle>Delete {industry.industryName}?</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you absolutely sure you want to delete <strong>{industry.industryName}</strong>?
-            This action cannot be undone and will fail if this industry is currently tied to active projects.
+            Are you absolutely sure you want to delete{" "}
+            <strong>{industry.industryName}</strong>? This action cannot be
+            undone and will fail if this industry is currently tied to active
+            projects.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

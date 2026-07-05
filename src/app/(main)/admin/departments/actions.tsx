@@ -43,14 +43,21 @@ export function DepartmentActions({ department }: DepartmentActionsProps) {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className={buttonVariants({ variant: "ghost", className: "h-8 w-8 p-0" })}>
+        <DropdownMenuTrigger
+          className={buttonVariants({
+            variant: "ghost",
+            className: "h-8 w-8 p-0",
+          })}
+        >
           <span className="sr-only">Open menu</span>
           <MoreHorizontal className="h-4 w-4" />
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="end">
           <DropdownMenuGroup>
-            <DropdownMenuLabel className="text-orange-400 font-bold">Actions</DropdownMenuLabel>
+            <DropdownMenuLabel className="text-orange-400 font-bold">
+              Actions
+            </DropdownMenuLabel>
           </DropdownMenuGroup>
 
           <DropdownMenuItem
@@ -89,15 +96,20 @@ export function DepartmentActions({ department }: DepartmentActionsProps) {
   );
 }
 
-
 interface EditDepartmentDialogProps {
   department: Departments;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-function EditDepartmentDialog({ department, open, onOpenChange }: EditDepartmentDialogProps) {
-  const updateDepartment = useDepartmentStore((state) => state.updateDepartment);
+function EditDepartmentDialog({
+  department,
+  open,
+  onOpenChange,
+}: EditDepartmentDialogProps) {
+  const updateDepartment = useDepartmentStore(
+    (state) => state.updateDepartment,
+  );
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -107,9 +119,10 @@ function EditDepartmentDialog({ department, open, onOpenChange }: EditDepartment
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // Auto-uppercase the abbreviation just like in your Add form
-    const value = e.target.name === "deptAbbreviation"
-      ? e.target.value.toUpperCase()
-      : e.target.value;
+    const value =
+      e.target.name === "deptAbbreviation"
+        ? e.target.value.toUpperCase()
+        : e.target.value;
 
     setFormData({ ...formData, [e.target.name]: value });
   };
@@ -153,7 +166,8 @@ function EditDepartmentDialog({ department, open, onOpenChange }: EditDepartment
               className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
             />
             <p className="text-[10px] text-orange-500 mt-1">
-              Warning: Changing this will update all related records across the system.
+              Warning: Changing this will update all related records across the
+              system.
             </p>
           </div>
 
@@ -202,8 +216,14 @@ interface DeleteDepartment {
   onOpenChange: (open: boolean) => void;
 }
 
-function DeleteDepartmentDialog({ department, open, onOpenChange }: DeleteDepartment) {
-  const deleteDepartment = useDepartmentStore((state) => state.deleteDepartment);
+function DeleteDepartmentDialog({
+  department,
+  open,
+  onOpenChange,
+}: DeleteDepartment) {
+  const deleteDepartment = useDepartmentStore(
+    (state) => state.deleteDepartment,
+  );
   const handleDelete = async () => {
     try {
       await deleteDepartment(department.deptAbbreviation);
@@ -211,7 +231,11 @@ function DeleteDepartmentDialog({ department, open, onOpenChange }: DeleteDepart
       toast.success(`${department.deptName} has been removed.`);
     } catch (error) {
       console.error("Failed to delete department:", error);
-      toast.error(error instanceof Error ? error.message : "Failed to delete department profile.");
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Failed to delete department profile.",
+      );
     }
     console.log("Deleting department:", department.deptName);
     onOpenChange(false);
@@ -223,13 +247,17 @@ function DeleteDepartmentDialog({ department, open, onOpenChange }: DeleteDepart
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This will permanently delete the department record for <strong>{department.deptName}</strong>.
-            This action cannot be undone.
+            This will permanently delete the department record for{" "}
+            <strong>{department.deptName}</strong>. This action cannot be
+            undone.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleDelete} className="bg-red-600 hover:bg-red-700">
+          <AlertDialogAction
+            onClick={handleDelete}
+            className="bg-red-600 hover:bg-red-700"
+          >
             Delete
           </AlertDialogAction>
         </AlertDialogFooter>

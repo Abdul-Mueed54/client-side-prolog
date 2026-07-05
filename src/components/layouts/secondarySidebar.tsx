@@ -6,7 +6,7 @@ import {
   FileText,
   FileArchive,
   File,
-  X
+  X,
 } from "lucide-react";
 import { useProjectDisplayStore } from "../../store/useProjectDisplayStore";
 import { useEffect, useRef } from "react";
@@ -45,7 +45,10 @@ export default function SecondarySidebar() {
   }
 
   return (
-    <div ref={sideBarRef} className="flex h-full flex-col bg-white overflow-hidden">
+    <div
+      ref={sideBarRef}
+      className="flex h-full flex-col bg-white overflow-hidden"
+    >
       {/* Sticky Header with Close Button */}
       <div className="flex items-start justify-between border-b border-slate-100  p-6 pb-4">
         <div className="flex-1 pr-4">
@@ -69,7 +72,6 @@ export default function SecondarySidebar() {
       {/* Sleek Scrollable Content */}
       <ScrollArea className="flex-1 p-6 h-full">
         <div className="flex flex-col gap-8 py-6">
-
           {/* Abstract Section */}
           <div className="space-y-3">
             <h3 className="text-xs font-bold tracking-widest text-slate-500 uppercase">
@@ -87,7 +89,11 @@ export default function SecondarySidebar() {
             </h3>
             <div className="flex flex-wrap gap-2">
               {selectedProject.domains?.map((domain: string) => (
-                <Badge key={domain} variant="secondary" className="bg-slate-100 text-slate-700 hover:bg-slate-200">
+                <Badge
+                  key={domain}
+                  variant="secondary"
+                  className="bg-slate-100 text-slate-700 hover:bg-slate-200"
+                >
                   {domain}
                 </Badge>
               ))}
@@ -103,11 +109,14 @@ export default function SecondarySidebar() {
                 Supervisor(s)
               </h3>
               <div className="flex flex-col text-sm font-medium text-slate-900">
-                {selectedProject.supervisors && selectedProject.supervisors.length > 0
-                  ? selectedProject.supervisors.map((n: any, index: number) => (
-                      <span key={index}>{n.name}</span>
-                    ))
-                  : <span className="text-slate-400 italic">None assigned</span>}
+                {selectedProject.supervisors &&
+                selectedProject.supervisors.length > 0 ? (
+                  selectedProject.supervisors.map((n: any, index: number) => (
+                    <span key={index}>{n.name}</span>
+                  ))
+                ) : (
+                  <span className="text-slate-400 italic">None assigned</span>
+                )}
               </div>
             </div>
 
@@ -130,18 +139,23 @@ export default function SecondarySidebar() {
                   <Paperclip className="h-4 w-4" /> Resources
                 </h3>
 
-                {selectedProject.resources && selectedProject.resources.length > 0 ? (
+                {selectedProject.resources &&
+                selectedProject.resources.length > 0 ? (
                   <div className="flex flex-col gap-3">
                     {selectedProject.resources.map((res: any, idx: number) => {
-                      const isZip = res.type === 'application/zip';
-                      const isPdf = res.type === 'application/pdf';
-                      const FileIcon = isZip ? FileArchive : isPdf ? FileText : File;
+                      const isZip = res.type === "application/zip";
+                      const isPdf = res.type === "application/pdf";
+                      const FileIcon = isZip
+                        ? FileArchive
+                        : isPdf
+                          ? FileText
+                          : File;
 
                       const iconColor = isZip
-                        ? 'bg-amber-100 text-amber-600'
+                        ? "bg-amber-100 text-amber-600"
                         : isPdf
-                        ? 'bg-red-100 text-red-600'
-                        : 'bg-slate-100 text-slate-600';
+                          ? "bg-red-100 text-red-600"
+                          : "bg-slate-100 text-slate-600";
 
                       return (
                         <a
@@ -161,7 +175,11 @@ export default function SecondarySidebar() {
                                 {res.name || `Resource File ${idx + 1}`}
                               </span>
                               <span className="mt-0.5 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-                                {isZip ? 'ZIP Archive' : isPdf ? 'PDF Document' : 'File'}
+                                {isZip
+                                  ? "ZIP Archive"
+                                  : isPdf
+                                    ? "PDF Document"
+                                    : "File"}
                               </span>
                             </div>
                           </div>

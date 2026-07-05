@@ -45,14 +45,21 @@ export function GroupActions({ group }: GroupActionsProps) {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className={buttonVariants({ variant: "ghost", className: "h-8 w-8 p-0" })}>
+        <DropdownMenuTrigger
+          className={buttonVariants({
+            variant: "ghost",
+            className: "h-8 w-8 p-0",
+          })}
+        >
           <span className="sr-only">Open menu</span>
           <MoreHorizontal className="h-4 w-4" />
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="end">
           <DropdownMenuGroup>
-            <DropdownMenuLabel className="text-orange-400 font-bold">Actions</DropdownMenuLabel>
+            <DropdownMenuLabel className="text-orange-400 font-bold">
+              Actions
+            </DropdownMenuLabel>
           </DropdownMenuGroup>
 
           <DropdownMenuItem
@@ -139,7 +146,7 @@ function EditGroupDialog({ group, open, onOpenChange }: EditGroupDialogProps) {
     } catch (error: any) {
       console.error("Failed to update group:", error);
       setApiError(
-        error.message || "Failed to update group. Please check seat numbers."
+        error.message || "Failed to update group. Please check seat numbers.",
       );
     } finally {
       setIsSubmitting(false);
@@ -254,7 +261,11 @@ interface DeleteGroupDialogProps {
   onOpenChange: (open: boolean) => void;
 }
 
-function DeleteGroupDialog({ group, open, onOpenChange }: DeleteGroupDialogProps) {
+function DeleteGroupDialog({
+  group,
+  open,
+  onOpenChange,
+}: DeleteGroupDialogProps) {
   const deleteGroup = useGroupStore((state) => state.deleteGroup);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -278,7 +289,9 @@ function DeleteGroupDialog({ group, open, onOpenChange }: DeleteGroupDialogProps
         <AlertDialogHeader>
           <AlertDialogTitle>Delete Group {group.groupId}?</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you absolutely sure you want to delete this group? This action will disband the students. If they are assigned to a project, the deletion will fail.
+            Are you absolutely sure you want to delete this group? This action
+            will disband the students. If they are assigned to a project, the
+            deletion will fail.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

@@ -15,9 +15,11 @@ interface GroupStore {
   error: null | string;
   fetchGroups: () => Promise<void>;
   addGroup: (data: NewGroupPayload) => Promise<void>;
-  updateGroup: (seatNo: string, data: Partial<NewGroupPayload>) => Promise<void>;
+  updateGroup: (
+    seatNo: string,
+    data: Partial<NewGroupPayload>,
+  ) => Promise<void>;
   deleteGroup: (seatNo: string) => Promise<void>;
-
 }
 
 export const useGroupStore = create<GroupStore>((set, get) => ({
@@ -121,7 +123,7 @@ export const useGroupStore = create<GroupStore>((set, get) => ({
           method: "PATCH", // Ensure your router uses PATCH
           headers,
           body: JSON.stringify(data),
-        }
+        },
       );
 
       const json = await response.json();
@@ -134,13 +136,13 @@ export const useGroupStore = create<GroupStore>((set, get) => ({
         groups: state.groups.map((group) =>
           group.groupId === id
             ? {
-              ...group,
-              groupLeader: data.groupLeader ?? group.groupLeader,
-              member2: data.member2 ?? group.member2,
-              member3: data.member3 ?? group.member3,
-              member4: data.member4 ?? group.member4,
-            }
-            : group
+                ...group,
+                groupLeader: data.groupLeader ?? group.groupLeader,
+                member2: data.member2 ?? group.member2,
+                member3: data.member3 ?? group.member3,
+                member4: data.member4 ?? group.member4,
+              }
+            : group,
         ),
       }));
     } catch (error: any) {
@@ -160,7 +162,7 @@ export const useGroupStore = create<GroupStore>((set, get) => ({
         {
           method: "DELETE",
           headers,
-        }
+        },
       );
 
       const json = await response.json();

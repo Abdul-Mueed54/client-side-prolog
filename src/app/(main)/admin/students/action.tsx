@@ -45,14 +45,21 @@ export function StudentActions({ student }: StudentActionsProps) {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className={buttonVariants({ variant: "ghost", className: "h-8 w-8 p-0" })}>
+        <DropdownMenuTrigger
+          className={buttonVariants({
+            variant: "ghost",
+            className: "h-8 w-8 p-0",
+          })}
+        >
           <span className="sr-only">Open menu</span>
           <MoreHorizontal className="h-4 w-4" />
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="end">
           <DropdownMenuGroup>
-            <DropdownMenuLabel className="text-orange-400 font-bold">Actions</DropdownMenuLabel>
+            <DropdownMenuLabel className="text-orange-400 font-bold">
+              Actions
+            </DropdownMenuLabel>
           </DropdownMenuGroup>
 
           <DropdownMenuItem
@@ -97,7 +104,11 @@ interface EditStudentDialogProps {
   onOpenChange: (open: boolean) => void;
 }
 
-function EditStudentDialog({ student, open, onOpenChange }: EditStudentDialogProps) {
+function EditStudentDialog({
+  student,
+  open,
+  onOpenChange,
+}: EditStudentDialogProps) {
   const updateStudent = useStudentStore((state) => state.updateStudent);
   const { departments, fetchDepartments } = useDepartmentStore();
 
@@ -110,7 +121,8 @@ function EditStudentDialog({ student, open, onOpenChange }: EditStudentDialogPro
     stdEmail: student.stdEmail || "",
     batch: student.batch || "",
     // Fallbacks depending on what your backend returns
-    deptAbbr: (student as any).deptAbbreviation || (student as any).deptAbbr || "",
+    deptAbbr:
+      (student as any).deptAbbreviation || (student as any).deptAbbr || "",
   });
 
   useEffect(() => {
@@ -119,7 +131,9 @@ function EditStudentDialog({ student, open, onOpenChange }: EditStudentDialogPro
     }
   }, [departments.length, fetchDepartments, open]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -233,9 +247,14 @@ function EditStudentDialog({ student, open, onOpenChange }: EditStudentDialogPro
               onChange={handleChange}
               className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white text-slate-700"
             >
-              <option value="" disabled>Select a Department...</option>
+              <option value="" disabled>
+                Select a Department...
+              </option>
               {departments.map((dept) => (
-                <option key={dept.deptAbbreviation} value={dept.deptAbbreviation}>
+                <option
+                  key={dept.deptAbbreviation}
+                  value={dept.deptAbbreviation}
+                >
                   {dept.deptAbbreviation} - {dept.deptName}
                 </option>
               ))}
@@ -272,7 +291,11 @@ interface DeleteStudentDialogProps {
   onOpenChange: (open: boolean) => void;
 }
 
-function DeleteStudentDialog({ student, open, onOpenChange }: DeleteStudentDialogProps) {
+function DeleteStudentDialog({
+  student,
+  open,
+  onOpenChange,
+}: DeleteStudentDialogProps) {
   const deleteStudent = useStudentStore((state) => state.deleteStudent);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -296,7 +319,9 @@ function DeleteStudentDialog({ student, open, onOpenChange }: DeleteStudentDialo
         <AlertDialogHeader>
           <AlertDialogTitle>Delete {student.seatNo}?</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you absolutely sure you want to delete <strong>{student.stdName}</strong>? This action cannot be undone. If they are assigned to a group, deletion will be blocked.
+            Are you absolutely sure you want to delete{" "}
+            <strong>{student.stdName}</strong>? This action cannot be undone. If
+            they are assigned to a group, deletion will be blocked.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

@@ -13,7 +13,10 @@ interface DepartmentStore {
   error: null | string;
   fetchDepartments: () => Promise<void>;
   addDepartment: (data: NewDepartmentPayload) => Promise<void>;
-  updateDepartment: (id: string, data: Partial<NewDepartmentPayload>) => Promise<void>;
+  updateDepartment: (
+    id: string,
+    data: Partial<NewDepartmentPayload>,
+  ) => Promise<void>;
   deleteDepartment: (id: string) => Promise<void>;
 }
 
@@ -118,7 +121,7 @@ export const useDepartmentStore = create<DepartmentStore>((set, get) => ({
           method: "PATCH",
           headers,
           body: JSON.stringify(data),
-        }
+        },
       );
 
       const json = await response.json();
@@ -132,7 +135,7 @@ export const useDepartmentStore = create<DepartmentStore>((set, get) => ({
         departments: state.departments.map((dept) =>
           dept.deptAbbreviation === id
             ? { ...dept, ...data } // Merges updated fields into the existing object
-            : dept
+            : dept,
         ),
       }));
     } catch (error: any) {
@@ -155,7 +158,7 @@ export const useDepartmentStore = create<DepartmentStore>((set, get) => ({
         {
           method: "DELETE",
           headers,
-        }
+        },
       );
 
       const json = await response.json();
@@ -167,7 +170,7 @@ export const useDepartmentStore = create<DepartmentStore>((set, get) => ({
       // Remove the deleted department from the UI instantly
       set((state) => ({
         departments: state.departments.filter(
-          (dept) => dept.deptAbbreviation !== id
+          (dept) => dept.deptAbbreviation !== id,
         ),
       }));
     } catch (error: any) {

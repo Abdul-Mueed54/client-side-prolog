@@ -7,6 +7,7 @@ import { Project } from "@/types";
 import { useEffect } from "react";
 import AddGrantButton from "./addGrants";
 import ProtectedRoute from "@/components/protectedRoutes/protectedRoutes";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function GrantsTable() {
   const { grants, fetchGrants } = useGrantStore();
@@ -15,13 +16,14 @@ export default function GrantsTable() {
     fetchGrants();
   }, [fetchGrants]);
   return (
-    <>
-    <ProtectedRoute allowedRoles={["admin"]}>
-
-      <div className="container mx-auto py-10">
-        <DataTable columns={columns} data={grants} />
-      </div>
-    </ProtectedRoute>
-    </>
+    <div>
+      <ProtectedRoute allowedRoles={["admin"]}>
+        <div className="space-y-4 mt-25 h-125 max-w-280 rounded-md overflow-x-auto bg-[#ffffff] m-4">
+          <ScrollArea className="h-full">
+            <DataTable columns={columns} data={grants} />
+          </ScrollArea>
+        </div>
+      </ProtectedRoute>
+    </div>
   );
 }

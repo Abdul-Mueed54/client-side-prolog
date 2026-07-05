@@ -9,8 +9,12 @@ interface AuditLogStore {
   totalLogs: number;
   isLoading: boolean;
   error: null | string;
-  
-  fetchLogs: (page: number, limit?: number, tableName?: string) => Promise<void>;
+
+  fetchLogs: (
+    page: number,
+    limit?: number,
+    tableName?: string,
+  ) => Promise<void>;
 }
 
 export const useAuditLogStore = create<AuditLogStore>((set) => ({
@@ -21,7 +25,11 @@ export const useAuditLogStore = create<AuditLogStore>((set) => ({
   isLoading: false,
   error: null,
 
-  fetchLogs: async (page: number = 1, limit: number = 10, tableName?: string) => {
+  fetchLogs: async (
+    page: number = 1,
+    limit: number = 10,
+    tableName?: string,
+  ) => {
     set({ isLoading: true, error: null });
 
     try {

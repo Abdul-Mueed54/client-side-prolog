@@ -65,7 +65,7 @@ export function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="rounded-2xl p-4 bg-[#ffffff] m-4">
+    <div className="rounded-2xl p-4 bg-[#ffffff]">
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter Externals..."

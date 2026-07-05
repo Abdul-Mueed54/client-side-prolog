@@ -46,7 +46,7 @@ export const useReportStore = create<ReportStore>((set) => ({
 
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/reports/comprehensive`,
-        { method: "GET", headers }
+        { method: "GET", headers },
       );
 
       const json = await response.json();

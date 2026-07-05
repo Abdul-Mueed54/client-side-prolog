@@ -72,7 +72,7 @@ export function DataTable<TData, TValue>({
     useAdminProjectStore();
 
   return (
-  <div className="rounded-2xl p-4 bg-[#ffffff] ">
+    <div className="rounded-2xl p-4 bg-[#ffffff] ">
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter projects..."
@@ -110,91 +110,90 @@ export function DataTable<TData, TValue>({
         </DropdownMenu>
       </div>
 
+      <div className="rounded-md border">
+        <Table className="">
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext(),
+                          )}
+                    </TableHead>
+                  );
+                })}
+              </TableRow>
+            ))}
+          </TableHeader>
 
-        <div className="rounded-md border">
-          <Table className="">
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <TableHead key={header.id}>
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext(),
-                            )}
-                      </TableHead>
-                    );
-                  })}
+          <TableBody>
+            {error ? (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center text-red-500 font-medium"
+                >
+                  Failed to connect DB
+                </TableCell>
+              </TableRow>
+            ) : table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </TableCell>
+                  ))}
                 </TableRow>
-              ))}
-            </TableHeader>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  No results.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
 
-            <TableBody>
-              {error ? (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center text-red-500 font-medium"
-                  >
-                    Failed to connect DB
-                  </TableCell>
-                </TableRow>
-              ) : table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                  >
-                    No results.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+        <div className="flex items-center justify-end p-3 space-x-2 py-4">
+          <Button
+            variant={"outline"}
+            size={"sm"}
+            onClick={() => fetchAdminProjects(currentPage - 1)}
+            disabled={currentPage === 1 || isLoading}
+          >
+            Previous
+          </Button>
 
-          <div className="flex items-center justify-end p-3 space-x-2 py-4">
-            <Button
-              variant={"outline"}
-              size={"sm"}
-              onClick={() => fetchAdminProjects(currentPage - 1)}
-              disabled={currentPage === 1 || isLoading}
-            >
-              Previous
-            </Button>
+          <span className="text-sm text-slate-500">
+            Page {currentPage} of {totalPages}
+          </span>
 
-            <span className="text-sm text-slate-500">
-              Page {currentPage} of {totalPages}
-            </span>
-
-            <Button
-              variant={"outline"}
-              size={"sm"}
-              onClick={() => fetchAdminProjects(currentPage + 1)}
-              disabled={currentPage === totalPages || isLoading}
-            >
-              Next
-            </Button>
-          </div>
+          <Button
+            variant={"outline"}
+            size={"sm"}
+            onClick={() => fetchAdminProjects(currentPage + 1)}
+            disabled={currentPage === totalPages || isLoading}
+          >
+            Next
+          </Button>
         </div>
+      </div>
     </div>
   );
 }

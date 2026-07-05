@@ -32,13 +32,9 @@ export const columns: ColumnDef<Industry>[] = [
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
-      const industry = row.original
+      const industry = row.original;
 
-      return (
-        <IndustryActions industry={industry} />
-      )
+      return <IndustryActions industry={industry} />;
     },
   },
-
-
 ];

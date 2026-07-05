@@ -36,9 +36,7 @@ export default function ProtectedRoute({
 
   // Show a loading state while we check their credentials
   if (!isHydrated || !token || !allowedRoles.includes(role)) {
-    return (
-      <Loader />
-    );
+    return <Loader />;
   }
 
   // If they pass all checks, let them see the page!

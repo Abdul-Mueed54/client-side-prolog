@@ -23,7 +23,10 @@ interface FacultyStore {
   error: null | string;
   fetchFaculty: (params: FetchFacultyParams) => Promise<void>;
   addFaculty: (data: NewFacultyPayload) => Promise<void>;
-  updateFaculty: (facultyId: string, data: Partial<NewFacultyPayload>) => Promise<void>;
+  updateFaculty: (
+    facultyId: string,
+    data: Partial<NewFacultyPayload>,
+  ) => Promise<void>;
   deleteFaculty: (facultyId: string) => Promise<void>;
 }
 
@@ -124,7 +127,10 @@ export const useFacultyStore = create<FacultyStore>((set, get) => ({
       throw error;
     }
   },
-  updateFaculty: async (facultyId: string, data: Partial<NewFacultyPayload>) => {
+  updateFaculty: async (
+    facultyId: string,
+    data: Partial<NewFacultyPayload>,
+  ) => {
     try {
       const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
@@ -136,7 +142,7 @@ export const useFacultyStore = create<FacultyStore>((set, get) => ({
           method: "PATCH",
           headers,
           body: JSON.stringify(data),
-        }
+        },
       );
 
       const json = await response.json();
@@ -150,12 +156,12 @@ export const useFacultyStore = create<FacultyStore>((set, get) => ({
         faculty: state.faculty.map((fac) =>
           fac.facultyId === facultyId
             ? {
-              ...fac,
-              facultyName: data.userName || fac.facultyName,
-              facultyEmail: data.userEmail || fac.facultyEmail,
-              deptAbbreviation: data.deptAbbreviation || fac.deptAbbreviation,
-            }
-            : fac
+                ...fac,
+                facultyName: data.userName || fac.facultyName,
+                facultyEmail: data.userEmail || fac.facultyEmail,
+                deptAbbreviation: data.deptAbbreviation || fac.deptAbbreviation,
+              }
+            : fac,
         ),
       }));
     } catch (error: any) {
@@ -175,7 +181,7 @@ export const useFacultyStore = create<FacultyStore>((set, get) => ({
         {
           method: "DELETE",
           headers,
-        }
+        },
       );
 
       const json = await response.json();

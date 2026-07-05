@@ -15,7 +15,10 @@ interface ExternalStore {
   error: null | string;
   fetchExternals: () => Promise<void>;
   addExternal: (data: NewExternalPayload) => Promise<void>;
-  updateExternal: (email: string, data: Partial<NewExternalPayload>) => Promise<void>;
+  updateExternal: (
+    email: string,
+    data: Partial<NewExternalPayload>,
+  ) => Promise<void>;
   deleteExternal: (email: string) => Promise<void>;
 }
 
@@ -48,7 +51,7 @@ export const useExternalStore = create<ExternalStore>((set, get) => ({
         extName: rawExt.extName,
         extDesignation: rawExt.extDesignation,
         industryId: rawExt.industryId,
-        industryName: rawExt.industryName
+        industryName: rawExt.industryName,
       }));
 
       set({
@@ -111,7 +114,7 @@ export const useExternalStore = create<ExternalStore>((set, get) => ({
           method: "PATCH",
           headers,
           body: JSON.stringify(data),
-        }
+        },
       );
 
       const json = await response.json();
@@ -124,13 +127,14 @@ export const useExternalStore = create<ExternalStore>((set, get) => ({
         externals: state.externals.map((ext) =>
           ext.extEmail === email
             ? {
-              ...ext,
-              extName: data.extName ?? ext.extName,
-              extEmail: data.extEmail ?? ext.extEmail,
-              extDesignation: data.extDesignation ?? ext.extDesignation,
-              industryName: data.industryName ?? ext.industryName // Fixed key
-            }
-            : ext),
+                ...ext,
+                extName: data.extName ?? ext.extName,
+                extEmail: data.extEmail ?? ext.extEmail,
+                extDesignation: data.extDesignation ?? ext.extDesignation,
+                industryName: data.industryName ?? ext.industryName, // Fixed key
+              }
+            : ext,
+        ),
       }));
     } catch (error: any) {
       console.error("Error updating external supervisor:", error);
@@ -149,7 +153,7 @@ export const useExternalStore = create<ExternalStore>((set, get) => ({
         {
           method: "DELETE",
           headers,
-        }
+        },
       );
 
       const json = await response.json();

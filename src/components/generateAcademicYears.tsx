@@ -5,7 +5,7 @@ export const generateAcademicYears = (yearsBack: number = 10) => {
   // Loop backwards from 0 to n
   for (let i = 4; i <= yearsBack; i++) {
     const Year = currentYear - i;
-    years.push((Year).toString());
+    years.push(Year.toString());
   }
 
   return years;
