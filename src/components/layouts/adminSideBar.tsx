@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -17,6 +17,7 @@ import {
   User,
   CopyCheck,
   ShieldCogCorner,
+  Loader2,
 } from "lucide-react";
 import { useAdminProjectStore } from "@/store/useAdminProjectStore";
 import { useDomainsStore } from "@/store/useDomainStore";
@@ -31,20 +32,55 @@ import { useStaffStore } from "@/store/useStaffStore";
 import { useAuditLogStore } from "@/store/useAuditLogStore";
 import LogoutButton from "../logoutButton/logout";
 import { ScrollArea } from "../ui/scroll-area";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useDashboardStore } from "@/store/useDashboardStore";
+import { Loader } from "../loader/loader";
 
 export default function AdminSidebarNav() {
   const pathname = usePathname();
-  const { faculty } = useFacultyStore();
-  const { externals } = useExternalStore();
-  const { totalRecords } = useAdminProjectStore();
-  const { departments } = useDepartmentStore();
-  const { totalStudents } = useStudentStore();
-  const { domains } = useDomainsStore();
   const { grants } = useGrantStore();
-  const { industries } = useIndustryStore();
   const { groups } = useGroupStore();
-  const { staff } = useStaffStore();
   const { totalLogs } = useAuditLogStore();
+  const { stats, isLoading, error, fetchStats } = useDashboardStore();
+  const token = useAuthStore((state) => state.token);
+
+  useEffect(() => {
+    if (token) {
+      fetchStats(token);
+    }
+  }, [token, fetchStats]);
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full text-slate-400 gap-3 mt-10">
+        <Loader2 className="w-6 h-6 animate-spin text-brand" />
+        <span className="text-sm">Loading...</span>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="p-8">
+        <div className="bg-red-50 text-red-600 p-4 rounded-md border border-red-100">
+          Failed to load dashboard: {error}
+        </div>
+      </div>
+    );
+  }
+
+  const data = stats || {
+    totalProject: 0,
+    totalStudent: 0,
+    totalFaculty: 0,
+    totalSupervisingFaculty: 0,
+    totalIndustries: 0,
+    totalExternals: 0,
+    totalDept: 0,
+    totalDomain: 0,
+    totalUsers: 0,
+    totalStaff: 0,
+  };
   // --- NAVIGATION DATA ---
   const ADMIN_NAV = [
     {
@@ -55,7 +91,7 @@ export default function AdminSidebarNav() {
           name: "Project Catalog",
           href: "/admin/projects",
           icon: FolderOpen,
-          badge: totalRecords,
+          badge: data.totalProject,
         },
       ],
     },
@@ -66,7 +102,7 @@ export default function AdminSidebarNav() {
           name: "Students",
           href: "/admin/students",
           icon: User,
-          badge: totalStudents,
+          badge: data.totalStudent,
         },
         {
           name: "Groups",
@@ -78,25 +114,25 @@ export default function AdminSidebarNav() {
           name: "Faculty",
           href: "/admin/faculty",
           icon: UserCheck,
-          badge: faculty.length,
+          badge: data.totalFaculty,
         },
         {
           name: "External Supervisors",
           href: "/admin/external",
           icon: Briefcase,
-          badge: externals.length,
+          badge: data.totalExternals,
         },
         {
           name: "Industries",
           href: "/admin/industries",
           icon: Building2,
-          badge: industries.length,
+          badge: data.totalIndustries,
         },
         {
           name: "Departments",
           href: "/admin/departments",
           icon: Hotel,
-          badge: departments.length,
+          badge: data.totalDept,
         },
         {
           name: "Grants",
@@ -108,7 +144,7 @@ export default function AdminSidebarNav() {
           name: "Domains",
           href: "/admin/domains",
           icon: Network,
-          badge: domains.length,
+          badge: data.totalDomain,
         },
       ],
     },
@@ -119,7 +155,7 @@ export default function AdminSidebarNav() {
           name: "Staff Users",
           href: "/admin/staff",
           icon: UserCog,
-          badge: staff.length,
+          badge: data.totalStaff,
         },
         {
           name: "Report",
