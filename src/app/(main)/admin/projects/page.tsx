@@ -22,7 +22,7 @@ export default function AdminProjectsTable() {
       <ProtectedRoute allowedRoles={["admin"]}>
         <div className="flex justify-end p-5 item-center">
           <Link
-            className="bg-brand rounded w-35 h-12 border border-black flex justify-center items-center hover:shadow-2xl transition"
+            className="bg-brand rounded w-35 h-12 border border-black flex justify-center items-center hover:bg-brand/90 hover:shadow-2xl transition"
             href={"/staff"}
           >
             + Add Projects

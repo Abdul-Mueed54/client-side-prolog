@@ -70,7 +70,7 @@ export default function AddExternalButton() {
     >
       <DialogTrigger
         render={
-          <Button className="bg-brand text-black rounded w-35 h-12 border border-black flex justify-center items-center hover:shadow-2xl transition">
+          <Button className="bg-brand hover:bg-brand/90 text-black rounded w-35 h-12 border border-black flex justify-center items-center hover:shadow-2xl transition">
             <Plus className="w-4 h-4" />
             Add External
           </Button>
