@@ -58,7 +58,7 @@ export const useFacultyStore = create<FacultyStore>((set, get) => ({
         throw new Error(json.message || "Failed to fetch faculty");
       }
 
-      const formattedFaculty: Faculty[] = json.data.map((rawFac: any) => ({
+      const formattedFaculty: Faculty[] = json.data.data.map((rawFac: any) => ({
         facultyId: rawFac.user_id,
         facultyName: rawFac.user_name,
         facultyEmail: rawFac.user_email,
@@ -106,7 +106,7 @@ export const useFacultyStore = create<FacultyStore>((set, get) => ({
         throw new Error(json.message || "Failed to add faculty");
       }
 
-      const rawFac = json.data;
+      const rawFac = json.data.data;
       console.log(rawFac);
 
       const newFaculty: Faculty = {

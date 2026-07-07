@@ -46,7 +46,7 @@ export const useExternalStore = create<ExternalStore>((set, get) => ({
         throw new Error(json.message || "Failed to fetch external supervisors");
       }
 
-      const formattedExternals: Externals[] = json.data.map((rawExt: any) => ({
+      const formattedExternals: Externals[] = json.data.data.map((rawExt: any) => ({
         extEmail: rawExt.extEmail,
         extName: rawExt.extName,
         extDesignation: rawExt.extDesignation,
@@ -84,15 +84,13 @@ export const useExternalStore = create<ExternalStore>((set, get) => ({
           body: JSON.stringify(data),
         },
       );
-      console.log("data", data);
-      console.log("body", response.body);
       const json = await response.json();
 
       if (!response.ok) {
         throw new Error(json.message || "Failed to add external supervisor");
       }
 
-      const newExternal = json.data;
+      const newExternal = json.data.data;
 
       set((state) => ({
         externals: [newExternal, ...state.externals],

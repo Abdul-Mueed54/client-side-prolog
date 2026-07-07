@@ -85,12 +85,12 @@ export const useDomainsStore = create<DomainStore>((set) => ({
       );
 
       const json = await response.json();
-      console.log(json);
+
 
       if (!response.ok) {
         throw new Error(json.message || "Failed to add domain");
       }
-      const domains = json.data;
+      const domains = json.data.data;
       set((state) => ({
         domains: [domains, ...state.domains],
       }));
