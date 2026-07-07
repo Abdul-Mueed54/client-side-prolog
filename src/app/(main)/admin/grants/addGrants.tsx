@@ -15,8 +15,8 @@ export default function AddGrantButton() {
   const addGrant = useGrantStore((state) => state.addGrant);
 
   const [formData, setFormData] = useState<NewGrantPayload>({
-    name: "",
-    amount: "",
+    grantName: "",
+    grantAmount: 0,
     industryName: "",
   });
 
@@ -29,7 +29,7 @@ export default function AddGrantButton() {
     try {
       await addGrant(formData);
       // Reset form and close the shadcn dialog on success
-      setFormData({ name: "", amount: "", industryName: "" });
+      setFormData({ grantName: "", grantAmount: 0, industryName: "" });
       setIsOpen(false);
     } catch (error) {
       // If the backend rejects it, the modal stays open so the user can fix the error!
@@ -62,7 +62,7 @@ export default function AddGrantButton() {
               required
               type="text"
               name="grantName"
-              value={formData.name}
+              value={formData.grantName}
               onChange={handleChange}
               placeholder="e.g. Ignite FYP Fund"
               className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
@@ -77,7 +77,7 @@ export default function AddGrantButton() {
               required
               type="number"
               name="grantAmount"
-              value={formData.amount}
+              value={formData.grantAmount}
               onChange={handleChange}
               placeholder="e.g. 100000"
               className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"

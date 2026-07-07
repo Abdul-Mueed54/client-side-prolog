@@ -3,7 +3,9 @@ import { Grants } from "@/types";
 import { useAuthStore } from "./useAuthStore";
 
 export interface NewGrantPayload {
-  grants: Grants;
+  grantName: string;
+  grantAmount: number;
+  industryName: string;
 }
 
 interface GrantStore {
