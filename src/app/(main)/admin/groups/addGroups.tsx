@@ -96,7 +96,6 @@ export default function AddGroupButton() {
               Student 2 (Seat No)
             </label>
             <input
-              required
               type="text"
               name="member2"
               value={formData.member2}
@@ -110,7 +109,7 @@ export default function AddGroupButton() {
               Student 3 (Seat No)
             </label>
             <input
-              required
+
               type="text"
               name="member3"
               value={formData.member3}
@@ -124,7 +123,7 @@ export default function AddGroupButton() {
               Student 4 (Seat No)
             </label>
             <input
-              required
+              
               type="text"
               name="member4"
               value={formData.member4}

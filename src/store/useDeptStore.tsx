@@ -51,7 +51,7 @@ export const useDepartmentStore = create<DepartmentStore>((set, get) => ({
         return;
       }
 
-      const formattedDepts: Departments[] = json.data.map((rawDept: any) => ({
+      const formattedDepts: Departments[] = json.data.data.map((rawDept: any) => ({
         deptAbbreviation: rawDept.dept_abbreviation,
         deptName: rawDept.dept_name,
       }));

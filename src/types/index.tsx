@@ -61,10 +61,10 @@ export interface Externals {
 export interface Groups {
   groupId: string;
   groupLeader: string;
-  member2: string | null;
-  member3: string | null;
-  member4: string | null;
-  projectId: string | null;
+  member2: string;
+  member3: string;
+  member4: string;
+  projectId: string;
 }
 
 export interface Students {

@@ -53,7 +53,7 @@ export const useIndustryStore = create<IndustryStore>((set) => ({
         return;
       }
 
-      const formattedIndustries: Industry[] = json.data.map(
+      const formattedIndustries: Industry[] = json.data.data.map(
         (rawIndustry: any) => ({
           industryId: rawIndustry.industry_id,
           industryName: rawIndustry.industry_name,

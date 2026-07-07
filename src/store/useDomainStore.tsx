@@ -43,7 +43,7 @@ export const useDomainsStore = create<DomainStore>((set) => ({
         return;
       }
 
-      const formattedDomains = json.data.map((rawDomain: any) => ({
+      const formattedDomains = json.data.data.map((rawDomain: any) => ({
         domainId: rawDomain.domain_id,
         domainName: rawDomain.domain_name,
         domainDescription: rawDomain.domain_description,
@@ -90,18 +90,9 @@ export const useDomainsStore = create<DomainStore>((set) => ({
       if (!response.ok) {
         throw new Error(json.message || "Failed to add domain");
       }
-
-      const rawDomain = json.data;
-
-      const newDomain: Domains = {
-        domainId: rawDomain.domain_id,
-        domainName: rawDomain.domain_name,
-        domainDescription: rawDomain.domain_description,
-        deptAbbreviation: rawDomain.dept_abbreviation,
-      };
-
+      const domains = json.data;
       set((state) => ({
-        domains: [newDomain, ...state.domains],
+        domains: [domains, ...state.domains],
       }));
     } catch (error: any) {
       console.error("Error adding domain:", error);

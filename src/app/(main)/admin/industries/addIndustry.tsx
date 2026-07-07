@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Plus } from "lucide-react";
+import { AlertCircle, Plus } from "lucide-react";
 import { useIndustryStore } from "@/store/useIndustryStore";
 import {
   Dialog,
@@ -13,7 +13,9 @@ import { Button } from "@/components/ui/button";
 export default function AddIndustryButton() {
   const [isOpen, setIsOpen] = useState(false);
   const addIndustry = useIndustryStore((state) => state.addIndustry);
+  const {error} = useIndustryStore()
 
+  const [apiError, setApiError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     industryName: "",
     location: "",
@@ -27,16 +29,22 @@ export default function AddIndustryButton() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await addIndustry(formData);
-    setFormData({
-      industryName: "",
-      location: "",
-      industryType: "",
-      industryEmail: "",
-    });
-    setIsOpen(false); // Closes the shadcn dialog!
+    setApiError(null);
+    try {
+      await addIndustry(formData);
+      setFormData({
+        industryName: "",
+        location: "",
+        industryType: "",
+        industryEmail: "",
+      });
+      setApiError(null);
+      setIsOpen(false); // Closes the shadcn dialog!
+    } catch (error: any) {
+      setApiError(error.message || "Failed to add Industry.");
+    }
   };
-
+console.log(apiError)
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger
@@ -54,6 +62,12 @@ export default function AddIndustryButton() {
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          {apiError && (
+            <div className="flex items-center gap-2 p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md">
+              <AlertCircle className="w-4 h-4 shrink-0" />
+              <p>{apiError}</p>
+            </div>
+          )}
           <div>
             <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">
               Industry Name

@@ -10,21 +10,19 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import DepartmentDropdown from "@/components/dropDown/departmentsDropdown";
+import { useDepartmentStore } from "@/store/useDeptStore";
 
 export default function AddDomainButton() {
   const [isOpen, setIsOpen] = useState(false);
   const addDomain = useDomainsStore((state) => state.addDomain);
-
-  // Bring in the departments and the fetch function from your filter store
   const { departments, fetchFilters } = useFilterStore();
-
   const [formData, setFormData] = useState<NewDomainPayload>({
     domainName: "",
     domainDescription: "",
     deptAbbreviation: "",
   });
 
-  // Fetch departments when the component mounts so the dropdown is populated
   useEffect(() => {
     if (departments.length === 0) {
       fetchFilters();
@@ -41,7 +39,6 @@ export default function AddDomainButton() {
     e.preventDefault();
     try {
       await addDomain(formData);
-      // Reset form and close the dialog
       setFormData({
         domainName: "",
         domainDescription: "",
@@ -90,7 +87,6 @@ export default function AddDomainButton() {
               Description
             </label>
             <input
-              required
               type="text"
               name="domainDescription"
               value={formData.domainDescription}
@@ -104,25 +100,14 @@ export default function AddDomainButton() {
             <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">
               Department
             </label>
-            {/* Dynamic Select dropdown using the filter store data */}
-            <select
-              required
-              name="deptAbbreviation"
+            <DepartmentDropdown
+              options={departments}
               value={formData.deptAbbreviation}
-              onChange={handleChange}
-              className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white text-slate-700"
-            >
-              <option value="" disabled>
-                Select a Department...
-              </option>
-              {departments.map((dept: any) => (
-                <option key={dept.abbreviation} value={dept.abbreviation}>
-                  {dept.abbreviation} - {dept.name}
-                </option>
-              ))}
-            </select>
+              onChange={(val) =>
+                setFormData({ ...formData, deptAbbreviation: val })
+              }
+            />
           </div>
-
           <div className="mt-4 flex justify-end gap-3">
             <Button
               type="button"

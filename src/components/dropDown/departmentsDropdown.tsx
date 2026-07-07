@@ -38,9 +38,9 @@ export default function DepartmentDropdown({
 
   const availableOptions = options.filter(
     (opt) =>
-      opt.deptAbbreviation !== value &&
-      (opt.deptName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        opt.deptAbbreviation.toLowerCase().includes(searchTerm.toLowerCase())),
+   opt.deptAbbreviation !== value &&
+      ((opt.deptName || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (opt.deptAbbreviation || "").toLowerCase().includes(searchTerm.toLowerCase())),
   );
 
   const selectedDepartment = options.find(

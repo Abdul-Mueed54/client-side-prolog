@@ -69,14 +69,14 @@ export const useFilterStore = create<FilterState>((set) => ({
       const deptsJson = await deptResponse.json();
       const domainsJson = await domainResponse.json();
 
-      const formattedDepts = deptsJson.data.map((d: any) => ({
+      const formattedDepts = deptsJson.data.data.map((d: any) => ({
         deptAbbreviation: d.dept_abbreviation,
         deptName: d.dept_name,
       }));
 
       const newDomainMapping: Record<string, Domains[]> = {};
 
-      domainsJson.data.forEach((domain: any) => {
+      domainsJson.data.data.forEach((domain: any) => {
         const deptKey = domain.dept_abbreviation;
 
         if (!newDomainMapping[deptKey]) {

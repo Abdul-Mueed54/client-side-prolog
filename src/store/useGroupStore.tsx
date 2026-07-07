@@ -31,7 +31,7 @@ export const useGroupStore = create<GroupStore>((set, get) => ({
     set({ isLoading: true, error: null });
 
     try {
-      const { token, role, user } = useAuthStore.getState();
+      const { token } = useAuthStore.getState();
       const headers: any = { "Content-Type": "application/json" };
       if (token) headers["Authorization"] = `Bearer ${token}`;
 
@@ -46,7 +46,7 @@ export const useGroupStore = create<GroupStore>((set, get) => ({
         throw new Error(json.message || "Failed to fetch groups");
       }
 
-      const formattedGroups: Groups[] = json.data.map((rawGroup: any) => ({
+      const formattedGroups: Groups[] = json.data.data.map((rawGroup: any) => ({
         groupId: rawGroup.group_id,
         groupLeader: rawGroup.group_leader,
         member2: rawGroup.member_2 || null,

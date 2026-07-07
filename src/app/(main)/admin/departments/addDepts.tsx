@@ -70,7 +70,7 @@ export default function AddDepartmentButton() {
               value={formData.deptAbbreviation}
               onChange={handleChange}
               placeholder="e.g. CIS or MY"
-              maxLength={10} // Good practice to limit abbreviation length
+              maxLength={2} // Good practice to limit abbreviation length
               className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
             />
           </div>
