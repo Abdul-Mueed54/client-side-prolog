@@ -17,8 +17,18 @@ import ProjectDetailsSection from "./projectDetailsSection";
 import StudentsInfoSection from "./studentsInfoSection";
 import SupervisorInfoSection from "./supervisorInforSection";
 import IndustryInfoSection from "./industryInfoSection";
-import GrantInfoSection from "./grantInfoSection";
 import ProjectResourcesSection from "./projectResourcesSection";
+import { Loader2 } from "lucide-react";
+import GrantInfoSection from "./grantInfoSection";
+
+export interface IndustryPayload {
+  industryName: string;
+  associationType: string;
+  extEmail: string;
+  grantName: string;
+  grantAmount: string;
+  recievedDate: string;
+}
 
 export default function StaffUploadForm() {
   const { fetchDomains } = useDomainsStore();
@@ -44,12 +54,17 @@ export default function StaffUploadForm() {
     groupId: "",
     domainIds: [] as string[],
     facultySupervisors: [{ userId: "", role: "", remark: "" }],
-    industryName: "",
-    associationType: "",
-    extEmail: "",
+    industries: [] as {
+      industryName: string;
+      associationType: string;
+      extEmail: string;
+    }[],
+
+    // Grant specific states
+    grantIndustryName: "",
     grantName: "",
     grantAmount: "",
-    recievedDate: "",
+    recievedDate: "", // Replaced flat strings with an array of objects
     reportFile: null as File | null,
     resourceFile: null as File | null,
   });
@@ -60,17 +75,12 @@ export default function StaffUploadForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     setIsSubmitting(true);
     const toastId = toast.loading("Uploading project and resources...");
 
     const targetForm = e.currentTarget;
-    const HTMLData = new FormData(targetForm);
-
-    const verifiedIndustryName =
-      (HTMLData.get("industryName") as string) || formData.industryName;
-
     const payload = new FormData();
+
     payload.append("projectTitle", formData.projectTitle);
     payload.append("abstract", formData.abstract);
     payload.append("academicYear", formData.academicYear);
@@ -81,16 +91,15 @@ export default function StaffUploadForm() {
       JSON.stringify(formData.facultySupervisors),
     );
 
-    if (verifiedIndustryName)
-      payload.append("industryName", verifiedIndustryName);
-    if (formData.associationType)
-      payload.append("associationType", formData.associationType);
-    if (formData.extEmail) payload.append("extEmail", formData.extEmail);
+    // Append the entire industries array as a JSON string
+    if (formData.industries && formData.industries.length > 0) {
+      payload.append("industries", JSON.stringify(formData.industries));
+    }
+    if (formData.grantIndustryName) payload.append("grantIndustryName", formData.grantIndustryName);
     if (formData.grantName) payload.append("grantName", formData.grantName);
-    if (formData.grantAmount)
-      payload.append("grantAmount", formData.grantAmount);
-    if (formData.recievedDate)
-      payload.append("recievedDate", formData.recievedDate);
+    if (formData.grantAmount) payload.append("grantAmount", formData.grantAmount);
+    if (formData.recievedDate) payload.append("recievedDate", formData.recievedDate);
+
     if (formData.reportFile) payload.append("reportFile", formData.reportFile);
     if (formData.resourceFile)
       payload.append("resourceFile", formData.resourceFile);
@@ -112,17 +121,6 @@ export default function StaffUploadForm() {
       const result = await response.json();
       const newProjectId = result.data?.projectId;
 
-      console.log(
-        "Verified Industry Name being passed to Grant:",
-        verifiedIndustryName,
-      );
-
-      // CREATE THE GRANT
-      if (formData.grantName && formData.grantAmount) {
-        toast.loading("Linking grant information...", { id: toastId });
-      }
-
-      // SUCCESS & CLEANUP
       toast.success(
         `Success! Project ${newProjectId || "Created"} registered.`,
         {
@@ -140,10 +138,9 @@ export default function StaffUploadForm() {
         groupId: "",
         domainIds: [],
         facultySupervisors: [{ userId: "", role: "", remark: "" }],
-        industryName: "",
-        associationType: "",
-        extEmail: "",
+        industries: [],
         grantName: "",
+        grantIndustryName: "",
         grantAmount: "",
         recievedDate: "",
         reportFile: null,
@@ -159,7 +156,6 @@ export default function StaffUploadForm() {
           "Please check your network connection or form data and try again.",
       });
     } finally {
-      // ALWAYS unlock the form when finished, even if it failed
       setIsSubmitting(false);
     }
   };
@@ -188,8 +184,11 @@ export default function StaffUploadForm() {
               formData={formData}
               updateForm={updateForm}
             />
+
+            {/* Unified Industry & Grant Section */}
             <IndustryInfoSection formData={formData} updateForm={updateForm} />
-            <GrantInfoSection formData={formData} updateForm={updateForm} />
+            <GrantInfoSection formData={formData} updateForm={updateForm}/>
+
             <ProjectResourcesSection
               formData={formData}
               updateForm={updateForm}
@@ -199,31 +198,12 @@ export default function StaffUploadForm() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="flex items-center gap-2 px-8 py-3 bg-[#EF9F27] hover:bg-[#d88c20] disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold text-sm tracking-widest uppercase rounded-md transition-colors shadow-sm"
+                className="flex items-center gap-2 px-8 py-3 bg-brand hover:bg-[#d88c20] disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold text-sm tracking-widest uppercase rounded-md transition-colors shadow-sm"
               >
                 {isSubmitting ? (
                   <>
-                    {/* SVG Loading Spinner */}
-                    <svg
-                      className="w-5 h-5 animate-spin text-white"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      ></circle>
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      ></path>
-                    </svg>
-                    Uploading...
+                    <Loader2 className="w-6 h-6 animate-spin text-brand" />
+                    <span className="text-sm">Uploading...</span>
                   </>
                 ) : (
                   "Upload to Repository"

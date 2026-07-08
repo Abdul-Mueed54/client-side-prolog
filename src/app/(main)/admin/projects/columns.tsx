@@ -63,7 +63,6 @@ export const columns: ColumnDef<Project>[] = [
     accessorKey: "domains",
     header: "Domains",
     cell: ({ row }) => {
-      // Extract the array of domains from the row
       const domains = row.getValue("domains") as string[];
 
       return (
@@ -78,62 +77,47 @@ export const columns: ColumnDef<Project>[] = [
     },
   },
   {
-    accessorKey: "grants",
-    header: "Grant",
-    cell: ({ row }) => {
-      // Extract the garnts name
-      const grantName = row.getValue("grants") as
-        | {
-            name: string;
-            amount: number;
-          }[]
-        | null;
+  accessorKey: "grants",
+  header: "Grant",
+  cell: ({ row }) => {
+    const grants = row.getValue("grants") as | { name: string; association: string }[] | null;
+    if (!grants || grants.length === 0) {
+      return <span className="text-slate-400">-</span>;
+    }
 
-      return (
-        <div className="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold border bg-emerald-50 text-emerald-700 border-emerald-200">
-          {grantName?.map((grant, index) =>
-            grant.name === null ? (
-              <span key={index} className="">
-                -
-              </span>
-            ) : (
-              <div key={index} className="">
-                {grant.name}
-              </div>
-            ),
-          )}
-        </div>
-      );
-    },
+    return (
+      <div className="flex flex-wrap gap-2">
+        {grants.map((grant, index) =>
+          !grant.name ? (
+            <span key={index} className="text-slate-400"> - </span>) : (
+            <div key={index} className="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold border bg-green-50 text-green-700 border-green-200">
+              {grant.name}
+            </div> ))}
+      </div>
+    );
+  },
   },
   {
-    accessorKey: "industries",
-    header: "Industry",
-    cell: ({ row }) => {
-      // Extract the industry name
-      const industryName = row.getValue("industries") as
-        | {
-            name: string;
-            association: string;
-          }[]
-        | null;
-      // console.log(industryName);
+  accessorKey: "industries",
+  header: "Industry",
+  cell: ({ row }) => {
+    const industries = row.getValue("industries") as | { name: string; association: string }[] | null;
 
-      return (
-        <div className="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold border bg-pink-50 text-pink-700 border-pink-200">
-          {industryName?.map((industry, index) =>
-            industry.name === null ? (
-              <span key={index} className="">
-                -
-              </span>
-            ) : (
-              <div key={index} className="">
-                {industry.name}
-              </div>
-            ),
-          )}
-        </div>
-      );
-    },
+    if (!industries || industries.length === 0) {
+      return <span className="text-slate-400">-</span>;
+    }
+
+    return (
+      <div className="flex flex-wrap gap-2">
+        {industries.map((industry, index) =>
+          !industry.name ? (
+            <span key={index} className="text-slate-400">-</span> ) : (
+            <div key={index} className="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold border bg-pink-50 text-pink-700 border-pink-200">
+              {industry.name}
+            </div> ) )}
+      </div>
+    );
+  },
+
   },
 ];

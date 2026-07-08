@@ -36,7 +36,7 @@ export default function ProjectDetailsSection({
             value={formData.projectTitle}
             onChange={(e) => updateForm("projectTitle", e.target.value)}
             placeholder="e.g. ProLog - Project Cataloging System"
-            className="w-full p-3 bg-white border border-slate-200 rounded-md text-sm outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 shadow-sm transition-all"
+            className="w-full p-3 bg-white border border-slate-200 rounded-md text-sm outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 shadow-sm transition-all"
           />
         </div>
 
@@ -50,7 +50,7 @@ export default function ProjectDetailsSection({
             onChange={(e) => updateForm("abstract", e.target.value)}
             rows={4}
             placeholder="Enter the complete project abstract..."
-            className="w-full p-3 bg-white border border-slate-200 rounded-md text-sm outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 shadow-sm transition-all resize-y"
+            className="w-full p-3 bg-white border border-slate-200 rounded-md text-sm outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400 shadow-sm transition-all resize-y"
           />
         </div>
 

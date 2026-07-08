@@ -16,7 +16,7 @@ export interface Project {
   domains: string[];
   supervisors: { role: string; name: string }[];
   batch: string;
-  grants?: { name: string; amount: number }[];
+  grantDetails?: { grantName: string; grantIndustryName: string; grantAmount: number; }[];
   industries?: { name: string; association: string }[];
   comment?: Comments[];
   resources?: Resources[];
