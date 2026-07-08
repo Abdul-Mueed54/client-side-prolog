@@ -118,6 +118,9 @@ export interface DashboardStats {
   totalStaff: number;
   totalUsers: number;
   totalStudent: number;
+  totalGrants: number;
+  totalGroups: number;
+  totalLogs: number,
   projectsByDept: number;
   studentsByFilter: number;
 }

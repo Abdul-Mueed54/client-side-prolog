@@ -19,28 +19,13 @@ import {
   ShieldCogCorner,
   Loader2,
 } from "lucide-react";
-import { useAdminProjectStore } from "@/store/useAdminProjectStore";
-import { useDomainsStore } from "@/store/useDomainStore";
-import { useGrantStore } from "@/store/useGrantsStore";
-import { useIndustryStore } from "@/store/useIndustryStore";
-import { useStudentStore } from "@/store/useStudentsStore";
-import { useDepartmentStore } from "@/store/useDeptStore";
-import { useGroupStore } from "@/store/useGroupStore";
-import { useFacultyStore } from "@/store/useFacultyStore";
-import { useExternalStore } from "@/store/useExternalStore";
-import { useStaffStore } from "@/store/useStaffStore";
-import { useAuditLogStore } from "@/store/useAuditLogStore";
 import LogoutButton from "../logoutButton/logout";
 import { ScrollArea } from "../ui/scroll-area";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useDashboardStore } from "@/store/useDashboardStore";
-import { Loader } from "../loader/loader";
 
 export default function AdminSidebarNav() {
   const pathname = usePathname();
-  const { grants } = useGrantStore();
-  const { groups } = useGroupStore();
-  const { totalLogs } = useAuditLogStore();
   const { stats, isLoading, error, fetchStats } = useDashboardStore();
   const token = useAuthStore((state) => state.token);
 
@@ -80,6 +65,9 @@ export default function AdminSidebarNav() {
     totalDomain: 0,
     totalUsers: 0,
     totalStaff: 0,
+    totalGrants: 0,
+    totalGroups: 0,
+    totalLogs: 0,
   };
   // --- NAVIGATION DATA ---
   const ADMIN_NAV = [
@@ -108,7 +96,7 @@ export default function AdminSidebarNav() {
           name: "Groups",
           href: "/admin/groups",
           icon: Users,
-          badge: groups.length,
+          badge: data.totalGroups,
         },
         {
           name: "Faculty",
@@ -138,7 +126,7 @@ export default function AdminSidebarNav() {
           name: "Grants",
           href: "/admin/grants",
           icon: Banknote,
-          badge: grants.length,
+          badge: data.totalGrants,
         },
         {
           name: "Domains",
@@ -172,7 +160,7 @@ export default function AdminSidebarNav() {
           name: "Audit Logs",
           href: "/admin/auditlogs",
           icon: ShieldCogCorner,
-          badge: totalLogs,
+          badge: data.totalLogs,
         },
       ],
     },
