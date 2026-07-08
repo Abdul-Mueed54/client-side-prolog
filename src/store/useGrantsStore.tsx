@@ -47,7 +47,7 @@ export const useGrantStore = create<GrantStore>((set) => ({
         return;
       }
 
-      const grants = json.data;
+      const grants = json.data.data;
 
       set({
         grants: grants,

@@ -16,7 +16,6 @@ export default function AddExternalButton() {
   const [isOpen, setIsOpen] = useState(false);
   const addExternal = useExternalStore((state) => state.addExternal);
   const { industries, fetchIndustries } = useIndustryStore();
-
   const [apiError, setApiError] = useState<string | null>(null);
   const [formData, setFormData] = useState<NewExternalPayload>({
     extName: "",
@@ -64,7 +63,7 @@ export default function AddExternalButton() {
     <Dialog
       open={isOpen}
       onOpenChange={(open) => {
-        setIsOpen(open);
+        setIsOpen(true);
         if (!open) setApiError(null);
       }}
     >

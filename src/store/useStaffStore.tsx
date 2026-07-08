@@ -50,7 +50,7 @@ export const useStaffStore = create<StaffStore>((set, get) => ({
         throw new Error(json.message || "Failed to fetch staff");
       }
 
-      const formattedStaff: Staff[] = json.data.map((rawStaff: any) => ({
+      const formattedStaff: Staff[] = json.data.data.map((rawStaff: any) => ({
         staffId: rawStaff.user_id,
         staffName: rawStaff.user_name,
         staffEmail: rawStaff.user_email,

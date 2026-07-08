@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Plus } from "lucide-react";
+import { AlertCircle, Plus } from "lucide-react";
 import { useDepartmentStore, NewDepartmentPayload } from "@/store/useDeptStore";
 import {
   Dialog,
@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 export default function AddDepartmentButton() {
   const [isOpen, setIsOpen] = useState(false);
   const addDepartment = useDepartmentStore((state) => state.addDepartment);
-
+  const [apiError, setApiError] = useState<string | null>(null)
   const [formData, setFormData] = useState<NewDepartmentPayload>({
     deptAbbreviation: "",
     deptName: "",
@@ -33,12 +33,13 @@ export default function AddDepartmentButton() {
     e.preventDefault();
     try {
       await addDepartment(formData);
-      // Reset form and close the dialog on success
       setFormData({ deptAbbreviation: "", deptName: "" });
       setIsOpen(false);
-    } catch (error) {
-      console.error("Submission failed");
-      // The modal stays open so the user can fix any errors!
+    }catch (error: any) {
+      setApiError(
+        error.message ||
+          "Failed to create group. Please check the seat number.",
+      );
     }
   };
 
@@ -59,6 +60,12 @@ export default function AddDepartmentButton() {
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-2">
+          {apiError && (
+            <div className="flex items-center gap-2 p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md">
+              <AlertCircle className="w-4 h-4 shrink-0" />
+              <p>{apiError}</p>
+            </div>
+          )}
           <div>
             <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">
               Abbreviation

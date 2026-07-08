@@ -17,6 +17,7 @@ export default function AddDomainButton() {
   const [isOpen, setIsOpen] = useState(false);
   const addDomain = useDomainsStore((state) => state.addDomain);
   const { departments, fetchFilters } = useFilterStore();
+  const [apiError, setApiError] =useState<string | null>(null);
   const [formData, setFormData] = useState<NewDomainPayload>({
     domainName: "",
     domainDescription: "",
@@ -45,8 +46,9 @@ export default function AddDomainButton() {
         deptAbbreviation: "",
       });
       setIsOpen(false);
-    } catch (error) {
-      console.error("Submission failed");
+      setApiError(null);
+    } catch (error: any) {
+      setApiError(error.message || "failed to add domain");
     }
   };
 
@@ -96,7 +98,7 @@ export default function AddDomainButton() {
             />
           </div>
 
-          <div>
+          <div className="max-w-97">
             <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">
               Department
             </label>
@@ -119,6 +121,8 @@ export default function AddDomainButton() {
             </Button>
             <Button
               type="submit"
+
+              onClick={() => setIsOpen(false)}
               className="px-4 py-2 text-sm font-semibold text-white bg-brand hover:bg-brand/90 rounded-md transition-colors shadow hover:shadow-2xl"
             >
               Save Domain

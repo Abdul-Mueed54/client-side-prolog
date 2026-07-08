@@ -14,8 +14,7 @@ import { Button } from "@/components/ui/button";
 
 export default function AddFacultyButton() {
   const [isOpen, setIsOpen] = useState(false);
-  const error = useFacultyStore();
-  // console.log(error)
+  const [apiError, setApiError] = useState<string | null>(null);
   const addFaculty = useFacultyStore((state) => state.addFaculty);
   const { departments, fetchDepartments } = useDepartmentStore();
 
@@ -56,9 +55,13 @@ export default function AddFacultyButton() {
         designation: "",
         areaOfResearch: "",
       });
+      setApiError(null);
       setIsOpen(false);
-    } catch (error) {
-      console.error("Submission failed");
+    } catch (error: any) {
+      setApiError(
+        error.message ||
+          "Failed to create group. Please check the seat number.",
+      );
     }
   };
 
@@ -80,6 +83,12 @@ export default function AddFacultyButton() {
           </DialogHeader>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-2">
+            {apiError && (
+              <div className="flex items-center gap-2 p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md">
+                <AlertCircle className="w-4 h-4 shrink-0" />
+                <p>{apiError}</p>
+              </div>
+            )}
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">
