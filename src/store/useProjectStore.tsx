@@ -11,6 +11,7 @@ interface ProjectStore {
   isLoading: boolean;
   error: string | null;
   fetchProjects: (page: number, search?: string) => Promise<void>;
+  archiveProject: (projectId: string) => Promise<void>;
 }
 
 export const useProjectStore = create<ProjectStore>((set) => ({
@@ -64,16 +65,13 @@ export const useProjectStore = create<ProjectStore>((set) => ({
         );
       }
 
-      console.log("Fetching Projects with URL:", url);
-
       const response = await fetch(url, { method: "GET", headers });
-
       const json = await response.json();
 
       if (!response.ok) {
         throw new Error(json.message || "Failed to fetch projects");
       }
-      // 5. Save everything to the store
+
       set({
         projects: json.data.data || [],
         totalPages: json.data.meta?.totalPages || 1,
@@ -84,6 +82,39 @@ export const useProjectStore = create<ProjectStore>((set) => ({
       });
     } catch (error: any) {
       set({ error: error.message, isLoading: false });
+    }
+  },
+
+  archiveProject: async (projectId: string) => {
+    try {
+      const token = useAuthStore.getState().token;
+      const headers: any = { "Content-Type": "application/json" };
+      if (token) headers["Authorization"] = `Bearer ${token}`;
+
+      // Calling a dedicated archive endpoint
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/projects/${projectId}/archive`,
+        {
+          method: "PATCH",
+          headers,
+        }
+      );
+
+      const json = await response.json();
+
+      if (!response.ok) {
+        throw new Error(json.message || "Failed to archive project");
+      }
+
+      // Optimistic UI update: instantly remove the project from the table
+      set((state) => ({
+        projects: state.projects.filter((p) => p.id !== projectId),
+        totalRecords: Math.max(0, state.totalRecords - 1),
+      }));
+
+    } catch (error: any) {
+      console.error("Error archiving project:", error);
+      throw error; // Throw to allow the component's toast.error to catch it
     }
   },
 }));

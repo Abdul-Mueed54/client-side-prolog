@@ -70,6 +70,12 @@ export default function ProjectResourcesSection({
               className="absolute block w-full h-full opacity-0 cursor-pointer"
             />
           </div>
+          {formData.existingReportUrl && !formData.reportFile && (
+            <p className="text-xs text-slate-500 mt-1">
+              Current File: <a href={formData.existingReportUrl} target="_blank" className="text-blue-500 underline">View Report</a>
+              <br/> (Uploading a new file will overwrite this)
+            </p>
+          )}
         </div>
 
         {/* ZIP Upload Box */}
@@ -115,6 +121,12 @@ export default function ProjectResourcesSection({
               className="absolute block w-full h-full opacity-0 cursor-pointer"
             />
           </div>
+          {formData.existingResourceUrl && !formData.resourceFile && (
+            <p className="text-xs text-slate-500 mt-1">
+              Current File: <a href={formData.existingResourceUrl} target="_blank" className="text-blue-500 underline">View Resource</a>
+              <br/> (Uploading a new file will overwrite this)
+            </p>
+          )}
         </div>
       </div>
     </section>

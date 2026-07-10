@@ -3,8 +3,8 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-
 import { Project } from "@/types";
+import { ProjectActions } from "./actions";
 
 export const columns: ColumnDef<Project>[] = [
   {
@@ -17,7 +17,6 @@ export const columns: ColumnDef<Project>[] = [
       return (
         <Button
           variant="ghost"
-          // Automatically aligns the button to the left to match table headers
           className="-ml-4"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
@@ -118,6 +117,14 @@ export const columns: ColumnDef<Project>[] = [
       </div>
     );
   },
-
   },
+  {
+      id: "actions",
+      header: "Actions",
+      cell: ({ row }) => {
+        const industry = row.original;
+
+        return <ProjectActions project={industry} />;
+      },
+    },
 ];

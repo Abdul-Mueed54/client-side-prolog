@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import DepartmentDropdown from "@/components/dropDown/departmentsDropdown";
-import { useDepartmentStore } from "@/store/useDeptStore";
 
 export default function AddDomainButton() {
   const [isOpen, setIsOpen] = useState(false);
@@ -80,7 +79,7 @@ export default function AddDomainButton() {
               value={formData.domainName}
               onChange={handleChange}
               placeholder="e.g. AI/ML or Cloud Computing"
-              className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+              className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400"
             />
           </div>
 
@@ -94,7 +93,7 @@ export default function AddDomainButton() {
               value={formData.domainDescription}
               onChange={handleChange}
               placeholder="e.g. Artificial Intelligence & Deep Learning"
-              className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+              className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400"
             />
           </div>
 

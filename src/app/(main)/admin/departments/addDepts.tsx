@@ -77,8 +77,8 @@ export default function AddDepartmentButton() {
               value={formData.deptAbbreviation}
               onChange={handleChange}
               placeholder="e.g. CIS or MY"
-              maxLength={2} // Good practice to limit abbreviation length
-              className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+              maxLength={2}
+              className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400"
             />
           </div>
 
@@ -93,7 +93,7 @@ export default function AddDepartmentButton() {
               value={formData.deptName}
               onChange={handleChange}
               placeholder="e.g. Computer and Information Systems"
-              className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+              className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400"
             />
           </div>
 

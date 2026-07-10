@@ -104,7 +104,7 @@ export default function AddStudentButton() {
                 value={formData.seatNo}
                 onChange={handleChange}
                 placeholder="e.g. CS-24117"
-                className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400"
               />
             </div>
 
@@ -120,7 +120,7 @@ export default function AddStudentButton() {
                 onChange={handleChange}
                 placeholder="e.g. 2024"
                 maxLength={4}
-                className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400"
               />
             </div>
           </div>
@@ -136,7 +136,7 @@ export default function AddStudentButton() {
               value={formData.stdName}
               onChange={handleChange}
               placeholder="e.g. Abdul Mueed"
-              className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+              className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400"
             />
           </div>
 
@@ -151,7 +151,7 @@ export default function AddStudentButton() {
               value={formData.stdEmail}
               onChange={handleChange}
               placeholder="e.g. student@neduet.edu.pk"
-              className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+              className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400"
             />
           </div>
 

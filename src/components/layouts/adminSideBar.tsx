@@ -152,7 +152,17 @@ export default function AdminSidebarNav() {
         },
       ],
     },
-
+    {
+      section: "Archive",
+      items: [
+        {
+          name: "Projects",
+          href: "/admin/archive-projects",
+          icon: ShieldCogCorner,
+          
+        },
+      ],
+    },
     {
       section: "Audits",
       items: [

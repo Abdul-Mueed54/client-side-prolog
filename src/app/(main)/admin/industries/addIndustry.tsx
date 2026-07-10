@@ -79,7 +79,7 @@ console.log(apiError)
               value={formData.industryName}
               onChange={handleChange}
               placeholder="e.g. Systems Ltd"
-              className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+              className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400"
             />
           </div>
 
@@ -94,7 +94,7 @@ console.log(apiError)
               value={formData.location}
               onChange={handleChange}
               placeholder="e.g. Karachi"
-              className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+              className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400"
             />
           </div>
 
@@ -109,7 +109,7 @@ console.log(apiError)
               value={formData.industryType}
               onChange={handleChange}
               placeholder="e.g. Software House"
-              className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+              className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400"
             />
           </div>
 
@@ -124,7 +124,7 @@ console.log(apiError)
               value={formData.industryEmail}
               onChange={handleChange}
               placeholder="e.g. contact@company.com"
-              className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+              className="w-full p-2 border border-slate-200 rounded-md outline-none focus:border-slate-400 focus:ring-1 focus:ring-slate-400"
             />
           </div>
 

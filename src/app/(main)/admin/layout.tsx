@@ -1,5 +1,6 @@
 import React from "react";
 import AdminSidebar from "@/components/layouts/adminSideBar";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function AdminLayout({
   children,
@@ -16,8 +17,10 @@ export default function AdminLayout({
           <AdminSidebar />
         </div>
       </aside>
+        <ScrollArea className="flex-1">
 
-      <main className="flex-1 max-h-screen bg-[#eeeeee]">{children}</main>
+      <main className="h-screen bg-[#eeeeee]">{children}</main>
+        </ScrollArea>
     </div>
   );
 }

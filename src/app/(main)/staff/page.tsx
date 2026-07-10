@@ -54,17 +54,11 @@ export default function StaffUploadForm() {
     groupId: "",
     domainIds: [] as string[],
     facultySupervisors: [{ userId: "", role: "", remark: "" }],
-    industries: [] as {
-      industryName: string;
-      associationType: string;
-      extEmail: string;
-    }[],
-
-    // Grant specific states
+    industries: [] as { industryName: string; associationType: string; extEmail: string; }[],
     grantIndustryName: "",
     grantName: "",
     grantAmount: "",
-    recievedDate: "", // Replaced flat strings with an array of objects
+    recievedDate: "",
     reportFile: null as File | null,
     resourceFile: null as File | null,
   });
@@ -115,10 +109,10 @@ export default function StaffUploadForm() {
           body: payload,
         },
       );
+      const result = await response.json();
 
       if (!response.ok)
-        throw new Error(`HTTP error! status: ${response.status}`);
-      const result = await response.json();
+        throw new Error(`${result.message} HTTP error ${response.status}, ${response.statusText}`);
       const newProjectId = result.data?.projectId;
 
       toast.success(
@@ -148,13 +142,13 @@ export default function StaffUploadForm() {
       });
 
       targetForm.reset();
-    } catch (error) {
+    } catch (error: any) {
       console.error("Upload failed:", error);
-      toast.error("Failed to upload project.", {
+      toast.error(error.message || "Failed to upload project.", {
         id: toastId,
-        description:
-          "Please check your network connection or form data and try again.",
+        // description: "Please check your network connection or form data and try again.",
       });
+
     } finally {
       setIsSubmitting(false);
     }
