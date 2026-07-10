@@ -68,6 +68,7 @@ export default function AdminSidebarNav() {
     totalGrants: 0,
     totalGroups: 0,
     totalLogs: 0,
+    archivedProject: 0,
   };
   // --- NAVIGATION DATA ---
   const ADMIN_NAV = [
@@ -159,7 +160,8 @@ export default function AdminSidebarNav() {
           name: "Projects",
           href: "/admin/archive-projects",
           icon: ShieldCogCorner,
-          
+          badge: data.archivedProject
+
         },
       ],
     },

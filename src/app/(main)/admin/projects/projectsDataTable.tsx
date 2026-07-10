@@ -30,10 +30,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Rows } from "lucide-react";
-import { useAdminProjectStore } from "@/store/useAdminProjectStore";
-import { ScrollArea } from "@/components/ui/scroll-area";
-// import { ProjectColumn } from "./columns";
+import { useProjectStore } from "@/store/useProjectStore";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -55,21 +52,16 @@ export function DataTable<TData, TValue>({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    // getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-    },
+    state: { sorting, columnFilters, columnVisibility, },
   });
 
-  const { error, fetchAdminProjects, currentPage, isLoading, totalPages } =
-    useAdminProjectStore();
+  const { error, fetchProjects, currentPage, isLoading, totalPages } =
+    useProjectStore();
 
   return (
     <div className="rounded-2xl p-4 bg-[#ffffff] ">
@@ -174,7 +166,7 @@ export function DataTable<TData, TValue>({
           <Button
             variant={"outline"}
             size={"sm"}
-            onClick={() => fetchAdminProjects(currentPage - 1)}
+            onClick={() => fetchProjects(currentPage - 1)}
             disabled={currentPage === 1 || isLoading}
           >
             Previous
@@ -187,7 +179,7 @@ export function DataTable<TData, TValue>({
           <Button
             variant={"outline"}
             size={"sm"}
-            onClick={() => fetchAdminProjects(currentPage + 1)}
+            onClick={() => fetchProjects(currentPage + 1)}
             disabled={currentPage === totalPages || isLoading}
           >
             Next

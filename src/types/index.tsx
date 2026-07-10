@@ -121,6 +121,7 @@ export interface DashboardStats {
   totalGrants: number;
   totalGroups: number;
   totalLogs: number,
+  archivedProject: number;
   projectsByDept: number;
   studentsByFilter: number;
 }

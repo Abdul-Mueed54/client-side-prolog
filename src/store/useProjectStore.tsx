@@ -10,7 +10,7 @@ interface ProjectStore {
   totalRecords: number;
   isLoading: boolean;
   error: string | null;
-  fetchProjects: (page: number, search?: string) => Promise<void>;
+  fetchProjects: (page: number, search?: string, isDeleted?: boolean) => Promise<void>;
   archiveProject: (projectId: string) => Promise<void>;
 }
 
@@ -22,7 +22,7 @@ export const useProjectStore = create<ProjectStore>((set) => ({
   isLoading: false,
   error: null,
 
-  fetchProjects: async (page: number, search: string = "") => {
+  fetchProjects: async (page: number, search: string = "", isDeleted: boolean = false) => {
     set({ isLoading: true, error: null });
 
     try {
@@ -41,7 +41,10 @@ export const useProjectStore = create<ProjectStore>((set) => ({
       const skipOffset = (page - 1) * 10;
       url.searchParams.append("limit", "10");
       url.searchParams.append("offset", skipOffset.toString());
-
+      
+      if (isDeleted) {
+        url.searchParams.append("isDeleted", "true");
+      }
       if (search) {
         url.searchParams.append("search", search);
       }
@@ -91,7 +94,6 @@ export const useProjectStore = create<ProjectStore>((set) => ({
       const headers: any = { "Content-Type": "application/json" };
       if (token) headers["Authorization"] = `Bearer ${token}`;
 
-      // Calling a dedicated archive endpoint
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/projects/${projectId}/archive`,
         {
@@ -101,12 +103,10 @@ export const useProjectStore = create<ProjectStore>((set) => ({
       );
 
       const json = await response.json();
-
       if (!response.ok) {
         throw new Error(json.message || "Failed to archive project");
       }
 
-      // Optimistic UI update: instantly remove the project from the table
       set((state) => ({
         projects: state.projects.filter((p) => p.id !== projectId),
         totalRecords: Math.max(0, state.totalRecords - 1),
@@ -114,7 +114,7 @@ export const useProjectStore = create<ProjectStore>((set) => ({
 
     } catch (error: any) {
       console.error("Error archiving project:", error);
-      throw error; // Throw to allow the component's toast.error to catch it
+      throw error;
     }
   },
 }));
