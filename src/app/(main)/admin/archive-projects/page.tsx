@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { columns } from "../projects/columns";
+import { columns } from "./columns";
 import { DataTable } from "../projects/projectsDataTable";
 import Link from "next/link";
 import ProtectedRoute from "@/components/protectedRoutes/protectedRoutes";

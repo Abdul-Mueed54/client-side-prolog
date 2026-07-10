@@ -12,6 +12,7 @@ interface ProjectStore {
   error: string | null;
   fetchProjects: (page: number, search?: string, isDeleted?: boolean) => Promise<void>;
   archiveProject: (projectId: string) => Promise<void>;
+  restoreProject: (projectId: string) => Promise<void>;
 }
 
 export const useProjectStore = create<ProjectStore>((set) => ({
@@ -41,7 +42,7 @@ export const useProjectStore = create<ProjectStore>((set) => ({
       const skipOffset = (page - 1) * 10;
       url.searchParams.append("limit", "10");
       url.searchParams.append("offset", skipOffset.toString());
-      
+
       if (isDeleted) {
         url.searchParams.append("isDeleted", "true");
       }
@@ -114,6 +115,38 @@ export const useProjectStore = create<ProjectStore>((set) => ({
 
     } catch (error: any) {
       console.error("Error archiving project:", error);
+      throw error;
+    }
+  },
+
+
+  restoreProject: async (projectId: string) => {
+    try {
+      const token = useAuthStore.getState().token;
+      const headers: any = { "Content-Type": "application/json" };
+      if (token) headers["Authorization"] = `Bearer ${token}`;
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/projects/${projectId}/restore`,
+        {
+          method: "PATCH",
+          headers,
+        }
+      );
+
+      const json = await response.json();
+
+      if (!response.ok) {
+        throw new Error(json.message || "Failed to restore project");
+      }
+
+      set((state) => ({
+        projects: state.projects.filter((p) => p.id !== projectId),
+        totalRecords: Math.max(0, state.totalRecords - 1),
+      }));
+
+    } catch (error: any) {
+      console.error("Error restoring project:", error);
       throw error;
     }
   },

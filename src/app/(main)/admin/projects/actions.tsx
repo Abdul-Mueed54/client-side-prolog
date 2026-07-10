@@ -120,7 +120,6 @@ function ArchiveProjectDialog({
   const handleArchive = async () => {
     setIsArchiving(true);
     try {
-      // This function in your store should call a PATCH endpoint to flip `is_deleted = true`
       await archiveProject(project.id);
       onOpenChange(false);
       toast.success(`Project archived successfully.`);

@@ -18,6 +18,7 @@ import {
   CopyCheck,
   ShieldCogCorner,
   Loader2,
+  FileArchive,
 } from "lucide-react";
 import LogoutButton from "../logoutButton/logout";
 import { ScrollArea } from "../ui/scroll-area";
@@ -159,7 +160,7 @@ export default function AdminSidebarNav() {
         {
           name: "Projects",
           href: "/admin/archive-projects",
-          icon: ShieldCogCorner,
+          icon: FileArchive,
           badge: data.archivedProject
 
         },

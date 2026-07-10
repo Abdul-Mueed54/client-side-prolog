@@ -4,7 +4,7 @@ import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Project } from "@/types";
-import { ProjectActions } from "./actions";
+import { ArchiveProjectActions } from "./actions";
 import { FileText, FileArchive } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
@@ -160,8 +160,7 @@ export const columns: ColumnDef<Project>[] = [
       header: "Actions",
       cell: ({ row }) => {
         const project = row.original;
-
-        return <ProjectActions project={project} />;
+        return <ArchiveProjectActions project={project} />;
       },
     },
 ];
