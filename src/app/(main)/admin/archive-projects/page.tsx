@@ -30,7 +30,7 @@ export default function AdminProjectsTable() {
 
         <div className="space-y-4 h-125 max-w-280 rounded-md overflow-x-auto bg-[#ffffff] m-4">
           <ScrollArea className=" h-full">
-            <DataTable columns={columns} data={projects} />
+            <DataTable columns={columns} data={projects} archiveProjects={true}/>
           </ScrollArea>
         </div>
       </ProtectedRoute>

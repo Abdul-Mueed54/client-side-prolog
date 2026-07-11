@@ -1,6 +1,5 @@
 export interface Resources {
-  projectReport: string;
-  other: string;
+  url: string;
 }
 
 export interface Comments {

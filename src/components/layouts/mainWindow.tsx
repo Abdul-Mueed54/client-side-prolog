@@ -39,7 +39,6 @@ export default function MainWindow() {
 
   useEffect(() => {
     if (!isHydrated) return;
-    // Any time filters or search change, drop back to page 1
     fetchProjects(1, debouncedSearch);
   }, [
     isHydrated,

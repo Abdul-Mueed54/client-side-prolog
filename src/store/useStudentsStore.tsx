@@ -25,16 +25,9 @@ interface StudentStore {
   currentPage: number;
   totalStudents: number;
 
-  // 1. Updated signature: page is a direct number now
-  fetchStudents: (
-    page?: number,
-    filters?: FetchStudentsFilters,
-  ) => Promise<void>;
+  fetchStudents: ( page?: number, search?: string, filters?: FetchStudentsFilters,) => Promise<void>;
   addStudent: (data: NewStudentPayload) => Promise<void>;
-  updateStudent: (
-    seatNo: string,
-    data: Partial<NewStudentPayload>,
-  ) => Promise<void>;
+  updateStudent: ( seatNo: string, data: Partial<NewStudentPayload>,) => Promise<void>;
   deleteStudent: (seatNo: string) => Promise<void>;
 }
 
@@ -49,6 +42,7 @@ export const useStudentStore = create<StudentStore>((set, get) => ({
   // 2. Accept page directly, default to 1
   fetchStudents: async (
     page: number = 1,
+    search: string = "",
     filters: FetchStudentsFilters = {},
   ) => {
     set({ isLoading: true, error: null });
@@ -67,6 +61,10 @@ export const useStudentStore = create<StudentStore>((set, get) => ({
 
       url.searchParams.append("limit", limit.toString());
       url.searchParams.append("offset", offset.toString());
+
+       if (search) {
+        url.searchParams.append("search", search);
+      }
 
       if (filters.deptAbbreviation) {
         url.searchParams.append("deptAbbreviation", filters.deptAbbreviation);

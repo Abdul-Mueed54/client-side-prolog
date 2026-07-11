@@ -95,10 +95,7 @@ export const useStaffStore = create<StaffStore>((set, get) => ({
       if (!response.ok) {
         throw new Error(json.message || "Failed to add staff");
       }
-
       const rawStaff = json.data;
-
-      // Map the POST (camelCase) response
       const newStaff: Staff = {
         staffId: rawStaff.userId,
         staffName: rawStaff.userName,

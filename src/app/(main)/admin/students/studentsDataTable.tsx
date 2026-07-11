@@ -42,8 +42,20 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+
+  const {fetchStudents } = useStudentStore();
+    const [searchTerm, setSearchTerm] = React.useState("");
+
+    React.useEffect(() => {
+      const delayDebounceFn = setTimeout(() => {
+        fetchStudents(1, searchTerm,);
+      }, 500);
+
+      return () => clearTimeout(delayDebounceFn);
+    }, [searchTerm, fetchStudents]);
+
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const { error, fetchStudents, currentPage, totalPages, isLoading } =
+  const { error, currentPage, totalPages, isLoading } =
     useStudentStore();
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -73,10 +85,8 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter Students..."
-          value={(table.getColumn("stdName")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("stdName")?.setFilterValue(event.target.value)
-          }
+          value={searchTerm}
+          onChange={(event) =>setSearchTerm(event.target.value)}
           className="max-w-sm"
         />
         <DropdownMenu>

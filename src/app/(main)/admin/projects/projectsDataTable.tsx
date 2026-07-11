@@ -33,14 +33,28 @@ import { Input } from "@/components/ui/input";
 import { useProjectStore } from "@/store/useProjectStore";
 
 interface DataTableProps<TData, TValue> {
+  archiveProjects: boolean
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
 export function DataTable<TData, TValue>({
+  archiveProjects,
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+
+  const {fetchProjects } = useProjectStore();
+  const [searchTerm, setSearchTerm] = React.useState("");
+
+  React.useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      fetchProjects(1, searchTerm, archiveProjects);
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm, fetchProjects]);
+
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -60,17 +74,17 @@ export function DataTable<TData, TValue>({
     state: { sorting, columnFilters, columnVisibility, },
   });
 
-  const { error, fetchProjects, currentPage, isLoading, totalPages } =
+  const { error, currentPage, isLoading, totalPages } =
     useProjectStore();
 
   return (
     <div className="rounded-2xl p-4 bg-[#ffffff] ">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter projects..."
-          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter projects by title, domain, ID, supervisor, etc..."
+          value={searchTerm}
           onChange={(event) =>
-            table.getColumn("title")?.setFilterValue(event.target.value)
+            setSearchTerm(event.target.value)
           }
           className="max-w-sm"
         />
