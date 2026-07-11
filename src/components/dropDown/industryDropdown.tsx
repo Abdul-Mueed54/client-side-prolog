@@ -86,7 +86,7 @@ export default function IndustryDropdown({
             availableOptions.map((opt) => (
               <div
                 key={opt.industryId}
-                className="px-3 py-2 text-sm text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors truncate"
+                className="px-3 py-2 text-sm text-slate-700 hover:bg-brand/10 cursor-pointer transition-colors truncate"
                 onClick={() => {
                   onChange(opt.industryName);
                   setSearchTerm("");

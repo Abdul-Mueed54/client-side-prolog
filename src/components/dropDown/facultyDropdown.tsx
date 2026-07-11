@@ -1,7 +1,6 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
-import { ChevronDown, Check } from "lucide-react";
-
+import React, { useState, useEffect, useRef } from "react";
+import { ChevronDown, X } from "lucide-react";
 import { Faculty } from "@/types";
 
 interface FacultyDropdownProps {
@@ -15,9 +14,10 @@ export default function FacultyDropdown({
   options = [],
   value,
   onChange,
-  placeholder = "Select Faculty",
+  placeholder = "Select Faculty...",
 }: FacultyDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -25,64 +25,81 @@ export default function FacultyDropdown({
       if (
         dropdownRef.current &&
         !dropdownRef.current.contains(e.target as Node)
-      )
+      ) {
         setIsOpen(false);
+      }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const selected = options.find((opt) => opt.facultyId === value);
+  const availableOptions = options.filter(
+    (opt) =>
+      opt.facultyId !== value &&
+      opt.facultyName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const selectedFaculty = options.find((opt) => opt.facultyId === value);
 
   return (
-    <div className="relative w-full" ref={dropdownRef}>
-      <button
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between bg-white border border-slate-200 text-slate-700 text-sm rounded-md px-3 py-2.5 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all"
+    <div ref={dropdownRef} className="relative w-full">
+      <div
+        onClick={() => setIsOpen(true)}
+        className="w-full min-h-[38px] p-1.5 bg-white border border-slate-200 rounded-md flex items-center gap-1.5 focus-within:border-slate-400 focus-within:ring-1 focus-within:ring-slate-400 transition-all cursor-text shadow-sm"
       >
-        <span
-          className={selected ? "text-slate-900 font-medium" : "text-slate-400"}
-        >
-          {selected ? selected.facultyName : placeholder}
-        </span>
-        <ChevronDown
-          className={`w-4 h-4 text-slate-400 transition-transform ${isOpen ? "rotate-180" : ""}`}
+        {selectedFaculty && (
+          <span className="flex items-center gap-1.5 bg-slate-100 text-slate-700 text-sm px-2 py-0.5 rounded max-w-[calc(100%-2rem)]">
+            <span className="truncate">{selectedFaculty.facultyName}</span>
+            <X
+              className="w-3.5 h-3.5 cursor-pointer text-slate-400 hover:text-slate-700 transition-colors shrink-0"
+              onClick={(e) => {
+                e.stopPropagation();
+                onChange("");
+                setSearchTerm("");
+              }}
+            />
+          </span>
+        )}
+
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+            if (!isOpen) setIsOpen(true);
+          }}
+          placeholder={!selectedFaculty ? placeholder : ""}
+          className="flex-1 bg-transparent min-w-[50px] outline-none text-sm text-slate-700 placeholder:text-slate-400 px-1"
         />
-      </button>
+
+        <ChevronDown
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsOpen(!isOpen);
+          }}
+          className="w-4 h-4 shrink-0 text-slate-400 ml-auto cursor-pointer"
+        />
+      </div>
 
       {isOpen && (
-        <div className="absolute z-50 w-full mt-1 bg-white border border-slate-200 rounded-md shadow-lg max-h-60 overflow-auto animate-in fade-in">
-          {options.length === 0 ? (
-            <div className="p-3 text-sm text-slate-500 text-center">
-              No faculty found
-            </div>
+        <div className="absolute top-full mt-1 w-full bg-white border border-slate-200 rounded-md shadow-lg z-50 max-h-60 overflow-y-auto py-1">
+          {availableOptions.length > 0 ? (
+            availableOptions.map((opt) => (
+              <div
+                key={opt.facultyId}
+                className="px-3 py-2 text-sm text-slate-700 hover:bg-brand/10 cursor-pointer transition-colors truncate"
+                onClick={() => {
+                  onChange(opt.facultyId);
+                  setSearchTerm("");
+                  setIsOpen(false);
+                }}
+              >
+                {opt.facultyName}
+              </div>
+            ))
           ) : (
-            <div className="p-1">
-              {options.map((opt) => (
-                <button
-                  key={opt.facultyId}
-                  type="button"
-                  onClick={() => {
-                    onChange(opt.facultyId);
-                    setIsOpen(false);
-                  }}
-                  className="w-full text-left flex items-center justify-between px-3 py-2 text-sm rounded-sm hover:bg-slate-100 transition-colors"
-                >
-                  <span
-                    className={
-                      value === opt.facultyId
-                        ? "font-semibold text-slate-900"
-                        : "text-slate-600"
-                    }
-                  >
-                    {opt.facultyName}
-                  </span>
-                  {value === opt.facultyId && (
-                    <Check className="w-4 h-4 text-indigo-600" />
-                  )}
-                </button>
-              ))}
+            <div className="px-3 py-2 text-sm text-slate-400 italic">
+              No faculty found
             </div>
           )}
         </div>
