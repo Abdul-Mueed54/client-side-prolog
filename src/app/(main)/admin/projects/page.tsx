@@ -8,7 +8,7 @@ import ProtectedRoute from "@/components/protectedRoutes/protectedRoutes";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useProjectStore } from "@/store/useProjectStore";
 
-export default function AdminProjectsTable() {
+export default function AdminProjectsTable(archieveProjects=false) {
   // Pull from the ADMIN store, not the Main Window store
   const { projects, fetchProjects } = useProjectStore();
 
@@ -31,7 +31,7 @@ export default function AdminProjectsTable() {
 
         <div className="space-y-4 h-125 max-w-280 rounded-md overflow-x-auto bg-[#ffffff] m-4">
           <ScrollArea className=" h-full">
-            <DataTable columns={columns} data={projects}  />
+            <DataTable columns={columns} data={projects} archiveProjects={false} />
           </ScrollArea>
         </div>
       </ProtectedRoute>

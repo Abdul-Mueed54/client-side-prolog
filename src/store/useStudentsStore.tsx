@@ -12,7 +12,7 @@ export interface NewStudentPayload {
 
 export interface FetchStudentsFilters {
   limit?: number;
-  deptAbbreviation?: string;
+  deptAbbreviation?: { deptAbbreviation: string; batch: string };
   batch?: string;
 }
 
@@ -64,7 +64,7 @@ export const useStudentStore = create<StudentStore>((set, get) => ({
       }
 
       if (filters.deptAbbreviation) {
-        url.searchParams.append("deptAbbreviation", filters.deptAbbreviation);
+        url.searchParams.append("deptAbbreviation", filters.deptAbbreviation.deptAbbreviation);
       }
       if (filters.batch) {
         url.searchParams.append("batch", filters.batch);
