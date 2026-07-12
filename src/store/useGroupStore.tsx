@@ -31,13 +31,10 @@ export const useGroupStore = create<GroupStore>((set, get) => ({
     set({ isLoading: true, error: null });
 
     try {
-      const { token } = useAuthStore.getState();
       const headers: any = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/group/getGroups`,
-        { method: "GET", headers },
+        { method: "GET", headers, credentials: "include", },
       );
 
       const json = await response.json();
@@ -73,16 +70,14 @@ export const useGroupStore = create<GroupStore>((set, get) => ({
 
   addGroup: async (data: NewGroupPayload) => {
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/group/`,
         {
           method: "POST",
           headers,
           body: JSON.stringify(data),
+          credentials: "include",
         },
       );
 
@@ -113,16 +108,14 @@ export const useGroupStore = create<GroupStore>((set, get) => ({
   },
   updateGroup: async (id: string, data: Partial<NewGroupPayload>) => {
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/group/${id}`,
         {
           method: "PATCH", // Ensure your router uses PATCH
           headers,
           body: JSON.stringify(data),
+          credentials: "include",
         },
       );
 
@@ -153,15 +146,13 @@ export const useGroupStore = create<GroupStore>((set, get) => ({
 
   deleteGroup: async (id: string) => {
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/group/${id}`,
         {
           method: "DELETE",
           headers,
+          credentials: "include",
         },
       );
 

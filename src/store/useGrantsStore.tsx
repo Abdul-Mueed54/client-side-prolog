@@ -25,16 +25,10 @@ export const useGrantStore = create<GrantStore>((set) => ({
     set({ isLoading: true, error: null });
 
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-
-      if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
-      }
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/grants/getGrants/`,
-        { method: "GET", headers },
+        { method: "GET", headers, credentials: "include" },
       );
 
       const json = await response.json();
@@ -67,19 +61,14 @@ export const useGrantStore = create<GrantStore>((set) => ({
 
   addGrant: async (data: NewGrantPayload) => {
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-
-      if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
-      }
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/grants/`,
         {
           method: "POST",
           headers,
           body: JSON.stringify(data),
+          credentials: "include",
         },
       );
 

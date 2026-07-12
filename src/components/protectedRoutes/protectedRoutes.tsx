@@ -15,10 +15,7 @@ export default function ProtectedRoute({
   allowedRoles,
 }: ProtectedRouteProps) {
   const router = useRouter();
-  const { role, token } = useAuthStore();
-
-  // We need this hydration state because Next.js server doesn't have access to localStorage.
-  // This prevents UI mismatch errors between server and client.
+  const { role} = useAuthStore();
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
@@ -27,18 +24,14 @@ export default function ProtectedRoute({
 
   useEffect(() => {
     if (isHydrated) {
-      // 1. If there's no token or they are a guest, send them to login
-      if (!token || role === "guest" || !allowedRoles.includes(role)) {
+      if (role === "guest" || !allowedRoles.includes(role)) {
         router.replace("/");
       }
     }
-  }, [isHydrated, role, token, router, allowedRoles]);
+  }, [isHydrated, role, router, allowedRoles]);
 
-  // Show a loading state while we check their credentials
-  if (!isHydrated || !token || !allowedRoles.includes(role)) {
+  if (!isHydrated || !allowedRoles.includes(role)) {
     return <Loader />;
   }
-
-  // If they pass all checks, let them see the page!
   return <>{children}</>;
 }

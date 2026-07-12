@@ -6,22 +6,23 @@ interface DashboardStore {
   stats: DashboardStats | null;
   isLoading: boolean;
   error: string | null;
-  fetchStats: (token: string) => Promise<void>;
+  fetchStats: () => Promise<void>;
 }
 
 export const useDashboardStore = create<DashboardStore>((set) => ({
   stats: null,
   isLoading: false,
   error: null,
-  fetchStats: async (token: string) => {
+  fetchStats: async () => {
     set({ isLoading: true, error: null });
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/dashboard/stats`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          // headers: {
+          //   Authorization: `Bearer ${token}`,
+          // },
+          credentials: "include"
         },
       );
 

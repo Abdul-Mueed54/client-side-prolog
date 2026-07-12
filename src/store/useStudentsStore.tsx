@@ -48,10 +48,7 @@ export const useStudentStore = create<StudentStore>((set, get) => ({
     set({ isLoading: true, error: null });
 
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
       const url = new URL(
         `${process.env.NEXT_PUBLIC_API_URL}/students/getStudents/`,
       );
@@ -73,7 +70,7 @@ export const useStudentStore = create<StudentStore>((set, get) => ({
         url.searchParams.append("batch", filters.batch);
       }
 
-      const response = await fetch(url, { method: "GET", headers });
+      const response = await fetch(url, { method: "GET", headers, credentials: "include", });
       const json = await response.json();
 
       if (!response.ok) {
@@ -109,16 +106,14 @@ export const useStudentStore = create<StudentStore>((set, get) => ({
 
   addStudent: async (data: NewStudentPayload) => {
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/students/`,
         {
           method: "POST",
           headers,
           body: JSON.stringify(data),
+          credentials: "include",
         },
       );
 
@@ -142,16 +137,14 @@ export const useStudentStore = create<StudentStore>((set, get) => ({
 
   updateStudent: async (seatNo: string, data: Partial<NewStudentPayload>) => {
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/students/${seatNo}`,
         {
           method: "PATCH",
           headers,
           body: JSON.stringify(data),
+          credentials: "include",
         },
       );
 
@@ -185,15 +178,13 @@ export const useStudentStore = create<StudentStore>((set, get) => ({
 
   deleteStudent: async (seatNo: string) => {
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/students/${seatNo}`,
         {
           method: "DELETE",
           headers,
+          credentials: "include",
         },
       );
 

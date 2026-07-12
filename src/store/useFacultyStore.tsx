@@ -39,19 +39,12 @@ export const useFacultyStore = create<FacultyStore>((set, get) => ({
     set({ isLoading: true, error: null });
 
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
-      const url = new URL(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/getUsers/?role=faculty`,
-      );
-
+      const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/users/getUsers/?role=faculty`,);
       if (params.deptAbbreviation) {
         url.searchParams.append("deptAbbreviation", params.deptAbbreviation);
       }
-
-      const response = await fetch(url, { method: "GET", headers });
+      const response = await fetch(url, { method: "GET", headers, credentials: "include" });
       const json = await response.json();
 
       if (!response.ok) {
@@ -85,16 +78,14 @@ export const useFacultyStore = create<FacultyStore>((set, get) => ({
 
   addFaculty: async (data: NewFacultyPayload) => {
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/users/faculty`,
         {
           method: "POST",
           headers,
           body: JSON.stringify(data),
+          credentials: "include",
         },
       );
       console.log(data);
@@ -132,16 +123,14 @@ export const useFacultyStore = create<FacultyStore>((set, get) => ({
     data: Partial<NewFacultyPayload>,
   ) => {
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/users/${facultyId}`,
         {
           method: "PATCH",
           headers,
           body: JSON.stringify(data),
+          credentials: "include",
         },
       );
 
@@ -172,15 +161,13 @@ export const useFacultyStore = create<FacultyStore>((set, get) => ({
 
   deleteFaculty: async (facultyId: string) => {
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/users/${facultyId}`,
         {
           method: "DELETE",
           headers,
+          credentials: "include",
         },
       );
 

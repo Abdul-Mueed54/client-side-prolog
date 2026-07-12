@@ -40,13 +40,10 @@ export const useReportStore = create<ReportStore>((set) => ({
     set({ isLoading: true, error: null });
 
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/reports/comprehensive`,
-        { method: "GET", headers },
+        { method: "GET", headers, credentials: "include", },
       );
 
       const json = await response.json();

@@ -31,13 +31,10 @@ export const useExternalStore = create<ExternalStore>((set, get) => ({
     set({ isLoading: true, error: null });
 
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/externals/getExternals/`,
-        { method: "GET", headers },
+        { method: "GET", headers, credentials: "include" },
       );
 
       const json = await response.json();
@@ -72,16 +69,14 @@ export const useExternalStore = create<ExternalStore>((set, get) => ({
 
   addExternal: async (data: NewExternalPayload) => {
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/externals/`,
         {
           method: "POST",
           headers,
           body: JSON.stringify(data),
+          credentials: "include",
         },
       );
       const json = await response.json();
@@ -102,16 +97,14 @@ export const useExternalStore = create<ExternalStore>((set, get) => ({
   },
   updateExternal: async (email: string, data: Partial<NewExternalPayload>) => {
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/externals/${email}`,
         {
           method: "PATCH",
           headers,
           body: JSON.stringify(data),
+          credentials: "include",
         },
       );
 
@@ -142,15 +135,13 @@ export const useExternalStore = create<ExternalStore>((set, get) => ({
 
   deleteExternal: async (email: string) => {
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/externals/${email}`,
         {
           method: "DELETE",
           headers,
+          credentials: "include",
         },
       );
 

@@ -20,13 +20,11 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function Dashboard() {
   const { stats, isLoading, error, fetchStats } = useDashboardStore();
-  const token = useAuthStore((state) => state.token);
-
   useEffect(() => {
-    if (token) {
-      fetchStats(token);
-    }
-  }, [token, fetchStats]);
+
+      fetchStats();
+
+  }, [fetchStats]);
 
   if (isLoading) {
     return <Loader />;

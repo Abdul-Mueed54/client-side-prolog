@@ -15,23 +15,21 @@ interface AuthState {
   role: Role;
   user: User | null;
   token: string | null;
-  login: (userData: User, token: string, role: Role) => void;
+  login: (userData: User, role: Role) => void;
   logout: () => void;
 }
 
-export const useAuthStore = create<AuthState>()(
-  persist(
-    (set) => ({
-      role: "guest",
-      user: null,
-      token: null,
+export const useAuthStore = create<AuthState>()((set) => ({
+  role: "guest",
+  user: null,
+  token: null,
 
-      login: (userData, token, role) => set({ user: userData, token, role }),
-
-      logout: () => set({ user: null, token: null, role: "guest" }),
-    }),
-    {
-      name: "prolog-auth", // this is the key it will use in localStorage
-    },
-  ),
-);
+  login: (userData, role) => set({ user: userData, role }),
+  logout: async () => {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
+      method: "POST",
+      credentials: "include",
+    });
+    set({ user: null, role: "guest" });
+  },
+}));

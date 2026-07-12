@@ -27,18 +27,9 @@ export const useProjectStore = create<ProjectStore>((set) => ({
     set({ isLoading: true, error: null });
 
     try {
-      const token = useAuthStore.getState().token;
       const filters = useFilterStore.getState();
-
       const headers: any = { "Content-Type": "application/json" };
-      if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
-      }
-
-      const url = new URL(
-        `${process.env.NEXT_PUBLIC_API_URL}/projects/getProjects`,
-      );
-
+      const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/projects/getProjects`,);
       const skipOffset = (page - 1) * 10;
       url.searchParams.append("limit", "10");
       url.searchParams.append("offset", skipOffset.toString());
@@ -68,7 +59,7 @@ export const useProjectStore = create<ProjectStore>((set) => ({
       if (filters.toYear) {
         url.searchParams.append("to", filters.toYear);
       }
-      const response = await fetch(url, { method: "GET", headers });
+      const response = await fetch(url, { method: "GET", headers, credentials: "include", });
       const json = await response.json();
 
       if (!response.ok) {
@@ -90,15 +81,13 @@ export const useProjectStore = create<ProjectStore>((set) => ({
 
   archiveProject: async (projectId: string) => {
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/projects/${projectId}/archive`,
         {
           method: "PATCH",
           headers,
+          credentials: "include",
         }
       );
 
@@ -121,15 +110,13 @@ export const useProjectStore = create<ProjectStore>((set) => ({
 
   restoreProject: async (projectId: string) => {
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/projects/${projectId}/restore`,
         {
           method: "PATCH",
           headers,
+          credentials: "include",
         }
       );
 

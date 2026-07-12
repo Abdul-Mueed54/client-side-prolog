@@ -31,16 +31,10 @@ export const useIndustryStore = create<IndustryStore>((set) => ({
     set({ isLoading: true, error: null });
 
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-
-      if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
-      }
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/industries/getIndustries`,
-        { method: "GET", headers },
+        { method: "GET", headers, credentials: "include" },
       );
 
       const json = await response.json();
@@ -81,19 +75,14 @@ export const useIndustryStore = create<IndustryStore>((set) => ({
 
   addIndustry: async (data: NewIndustryPayload) => {
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-
-      if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
-      }
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/industries/`,
         {
           method: "POST",
           headers,
           body: JSON.stringify(data),
+          credentials: "include",
         },
       );
 
@@ -117,19 +106,14 @@ export const useIndustryStore = create<IndustryStore>((set) => ({
   },
   updateIndustry: async (id: string, data: Partial<NewIndustryPayload>) => {
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-
-      if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
-      }
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/industries/${id}`,
         {
           method: "PATCH",
           headers,
           body: JSON.stringify(data),
+          credentials: "include",
         },
       );
 
@@ -162,18 +146,13 @@ export const useIndustryStore = create<IndustryStore>((set) => ({
 
   deleteIndustry: async (id: string) => {
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-
-      if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
-      }
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/industries/${id}`,
         {
           method: "DELETE",
           headers,
+          credentials: "include"
         },
       );
 

@@ -28,13 +28,10 @@ import { useDashboardStore } from "@/store/useDashboardStore";
 export default function AdminSidebarNav() {
   const pathname = usePathname();
   const { stats, isLoading, error, fetchStats } = useDashboardStore();
-  const token = useAuthStore((state) => state.token);
 
   useEffect(() => {
-    if (token) {
-      fetchStats(token);
-    }
-  }, [token, fetchStats]);
+      fetchStats();
+  }, [fetchStats]);
 
   if (isLoading) {
     return (

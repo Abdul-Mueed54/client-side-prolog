@@ -30,6 +30,7 @@ export default function LandingPage() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password }),
+          credentials: "include"
         },
       );
 
@@ -41,10 +42,10 @@ export default function LandingPage() {
         );
       }
 
-      const { token, user } = json.data;
+      const { user } = json.data;
 
       // Save to Zustand & localStorage
-      login(user, token, user.role);
+      login(user, user.role);
 
       switch (user.role) {
         case "admin":

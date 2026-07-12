@@ -33,12 +33,8 @@ export const useAuditLogStore = create<AuditLogStore>((set) => ({
     set({ isLoading: true, error: null });
 
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
       const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/audit/getAudits`);
-
       const offset = (page - 1) * limit;
 
       url.searchParams.append("limit", limit.toString());
@@ -49,7 +45,7 @@ export const useAuditLogStore = create<AuditLogStore>((set) => ({
         url.searchParams.append("tableName", tableName);
       }
 
-      const response = await fetch(url.toString(), { method: "GET", headers });
+      const response = await fetch(url.toString(), { method: "GET", headers, credentials: "include" });
       const json = await response.json();
 
       if (!response.ok) {

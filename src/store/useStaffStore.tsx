@@ -32,10 +32,7 @@ export const useStaffStore = create<StaffStore>((set, get) => ({
     set({ isLoading: true, error: null });
 
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
       const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/users/getUsers/`);
       url.searchParams.append("role", "staff");
 
@@ -43,7 +40,7 @@ export const useStaffStore = create<StaffStore>((set, get) => ({
         url.searchParams.append("deptAbbreviation", params.deptAbbreviation);
       }
 
-      const response = await fetch(url.toString(), { method: "GET", headers });
+      const response = await fetch(url.toString(), { method: "GET", headers, credentials: "include", });
       const json = await response.json();
 
       if (!response.ok) {
@@ -77,16 +74,14 @@ export const useStaffStore = create<StaffStore>((set, get) => ({
 
   addStaff: async (data: NewStaffPayload) => {
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/users/staff`,
         {
           method: "POST",
           headers,
           body: JSON.stringify(data),
+          credentials: "include",
         },
       );
 

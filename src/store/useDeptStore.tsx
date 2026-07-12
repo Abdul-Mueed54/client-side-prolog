@@ -29,16 +29,10 @@ export const useDepartmentStore = create<DepartmentStore>((set, get) => ({
     set({ isLoading: true, error: null });
 
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-
-      if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
-      }
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/departments/getDepartments`,
-        { method: "GET", headers },
+        { method: "GET", headers, credentials: "include" },
       );
 
       const json = await response.json();
@@ -74,19 +68,14 @@ export const useDepartmentStore = create<DepartmentStore>((set, get) => ({
 
   addDepartment: async (data: NewDepartmentPayload) => {
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-
-      if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
-      }
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/departments/`,
         {
           method: "POST",
           headers,
           body: JSON.stringify(data),
+          credentials: "include"
         },
       );
 
@@ -108,19 +97,14 @@ export const useDepartmentStore = create<DepartmentStore>((set, get) => ({
   },
   updateDepartment: async (id: string, data: Partial<NewDepartmentPayload>) => {
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-
-      if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
-      }
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/departments/${id}`,
         {
           method: "PATCH",
           headers,
           body: JSON.stringify(data),
+          credentials: "include"
         },
       );
 
@@ -146,18 +130,13 @@ export const useDepartmentStore = create<DepartmentStore>((set, get) => ({
 
   deleteDepartment: async (id: string) => {
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-
-      if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
-      }
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/departments/${id}`,
         {
           method: "DELETE",
           headers,
+          credentials: "include"
         },
       );
 

@@ -25,13 +25,10 @@ export const useDomainsStore = create<DomainStore>((set) => ({
     set({ isLoading: true });
 
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/domains`,
-        { method: "GET", headers },
+        { method: "GET", headers, credentials: "include" },
       );
 
       const json = await response.json();
@@ -68,19 +65,14 @@ export const useDomainsStore = create<DomainStore>((set) => ({
 
   addDomain: async (data: NewDomainPayload) => {
     try {
-      const token = useAuthStore.getState().token;
       const headers: any = { "Content-Type": "application/json" };
-
-      if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
-      }
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/domains`,
         {
           method: "POST",
           headers,
           body: JSON.stringify(data),
+          credentials: "include",
         },
       );
 
