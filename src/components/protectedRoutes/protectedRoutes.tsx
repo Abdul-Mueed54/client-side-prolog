@@ -29,16 +29,8 @@ export default function ProtectedRoute({
     }
   }, []);
 
-  useEffect(() => {
-    if (isStoreHydrated) {
-      if (role === "guest" || !allowedRoles.includes(role)) {
-        router.replace("/");
-      }
-    }
-  }, [isStoreHydrated, role, router, allowedRoles.join(",")]);
-
   if (!isStoreHydrated) {
-    return <Loader />; // or a spinner — don't show Access Denied while still checking
+    return <Loader />;
   }
 
   if (role === "guest" || !allowedRoles.includes(role)) {
