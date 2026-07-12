@@ -16,21 +16,27 @@ export default function ProtectedRoute({
 }: ProtectedRouteProps) {
   const router = useRouter();
   const { role} = useAuthStore();
-  const [isHydrated, setIsHydrated] = useState(false);
-
+  const [isStoreHydrated, setIsStoreHydrated] = useState(false);
   useEffect(() => {
-    setIsHydrated(true);
+    if (useAuthStore.persist.hasHydrated()) {
+      setIsStoreHydrated(true);
+    } else {
+      const unsub = useAuthStore.persist.onFinishHydration(() => {
+        setIsStoreHydrated(true);
+      });
+      return () => { unsub(); };
+    }
   }, []);
 
   useEffect(() => {
-    if (isHydrated) {
+    if (isStoreHydrated) {
       if (role === "guest" || !allowedRoles.includes(role)) {
         router.replace("/");
       }
     }
-  }, [isHydrated, role, router, allowedRoles]);
+  }, [isStoreHydrated, role, router]);
 
-  if (!isHydrated || !allowedRoles.includes(role)) {
+  if (!isStoreHydrated || role === "guest" || !allowedRoles.includes(role)) {
     return <Loader />;
   }
   return <>{children}</>;
