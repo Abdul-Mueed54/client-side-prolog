@@ -37,7 +37,7 @@ export default function ProtectedRoute({
   }, [isStoreHydrated, role, router]);
 
   if (!isStoreHydrated || role === "guest" || !allowedRoles.includes(role)) {
-    return <Loader />;
+    return router.replace("/");
   }
   return <>{children}</>;
 }

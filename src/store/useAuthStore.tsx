@@ -1,9 +1,7 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-// persist stores state info in local storage of browser
 
 export type Role = "guest" | "faculty" | "staff" | "admin";
-
 interface User {
   user_id: string;
   user_name: string;
@@ -36,7 +34,7 @@ export const useAuthStore = create<AuthState>()(
       },
     }),
     {
-      name: "prolog-auth", 
+      name: "prolog-auth",
       storage: createJSONStorage(() => sessionStorage),
     },
   ),
