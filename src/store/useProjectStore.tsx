@@ -62,13 +62,12 @@ export const useProjectStore = create<ProjectStore>((set) => ({
           filters.selectedIndustries.join(","),
         );
       }
-      if (filters.selectedYears.length > 0) {
-        url.searchParams.append(
-          "academicYear",
-          filters.selectedYears.join(","),
-        );
+      if (filters.fromYear) {
+        url.searchParams.append("from", filters.fromYear);
       }
-
+      if (filters.toYear) {
+        url.searchParams.append("to", filters.toYear);
+      }
       const response = await fetch(url, { method: "GET", headers });
       const json = await response.json();
 

@@ -26,7 +26,8 @@ export default function MainWindow() {
     selectedDepartment,
     selectedDomains,
     selectedIndustries,
-    selectedYears,
+    fromYear,
+    toYear,
   } = useFilterStore();
 
   // Search States
@@ -47,7 +48,8 @@ export default function MainWindow() {
     selectedDepartment,
     selectedDomains,
     selectedIndustries,
-    selectedYears,
+    fromYear,
+    toYear
   ]);
 
   return (

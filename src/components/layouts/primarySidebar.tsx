@@ -41,10 +41,11 @@ export default function PrimarySidebar() {
     !!store.selectedDepartment ||
     store.selectedDomains.length > 0 ||
     store.selectedIndustries.length > 0 ||
-    store.selectedYears.length > 0;
+    store.fromYear.length > 0 ||
+    store.toYear.length > 0
 
   return (
-    <aside className="w-64 h-142 bg-white border-r border-slate-200 flex flex-col">
+    <aside className="w-64 h-156 bg-white border-r border-slate-200 flex flex-col">
       <ScrollArea className="flex-1 h-full">
         <div className="sticky top-0 bg-white z-20 flex items-center justify-between p-5 border-b border-slate-200">
           <div className="flex items-center gap-2 text-slate-700 text-xl font-bold">
@@ -91,19 +92,28 @@ export default function PrimarySidebar() {
                 />
               </div>
 
+
+              <YearRangeFilter
+                label="Academic Year"
+                options={store.years}
+                fromYear={store.fromYear}
+                toYear={store.toYear}
+                onChangeFrom={store.setFromYear}
+                onChangeTo={store.setToYear}
+              />
               <FilterCheckboxGroup
                 label="Industry"
                 options={store.industries}
                 selectedItems={store.selectedIndustries}
                 onChange={store.setIndustries}
               />
-
+{/*
               <FilterCheckboxGroup
-                label="Academic Year"
+                label="Academic Batch"
                 options={store.years}
                 selectedItems={store.selectedYears}
                 onChange={store.setYears}
-              />
+              /> */}
             </div>
           )}
         </div>
@@ -170,5 +180,71 @@ function FilterCheckboxGroup({
         </div>
       </div>
     </ScrollArea>
+  );
+}
+
+
+interface YearRangeFilterProps {
+  label: string;
+  options: string[]; 
+  fromYear: string;
+  toYear: string;
+  onChangeFrom: (year: string) => void;
+  onChangeTo: (year: string) => void;
+}
+
+export function YearRangeFilter({
+  label,
+  options,
+  fromYear,
+  toYear,
+  onChangeFrom,
+  onChangeTo,
+}: YearRangeFilterProps) {
+  // Ensure years are sorted logically (ascending)
+  const sortedYears = [...options].sort((a, b) => Number(a) - Number(b));
+
+  return (
+    <div className="flex flex-col gap-3">
+      <label className="text-slate-500 text-sm font-bold uppercase tracking-widest">
+        {label}
+      </label>
+      <div className="flex items-center gap-2">
+        {/* From Year Dropdown */}
+        <select
+          value={fromYear}
+          onChange={(e) => onChangeFrom(e.target.value)}
+          className="w-full min-h-[38px] p-1.5 bg-white border border-slate-200 rounded-md flex items-center gap-1.5 focus-within:border-slate-400 focus-within:ring-1 focus-within:ring-slate-400 transition-all cursor-text text-sm text-slate-400 shadow-sm"
+        >
+          <option value="">From</option>
+          {sortedYears.map((year) => (
+            <option key={year} value={year}>
+              {year}
+            </option>
+          ))}
+        </select>
+
+        <span className="text-slate-400 text-sm font-medium">to</span>
+
+        {/* To Year Dropdown */}
+        <select
+          value={toYear}
+          onChange={(e) => onChangeTo(e.target.value)}
+          className="w-full min-h-[38px] p-1.5 bg-white border border-slate-200 rounded-md flex items-center gap-1.5 focus-within:border-slate-400 focus-within:ring-1 focus-within:ring-slate-400 transition-all cursor-text text-sm text-slate-400 shadow-sm"
+        >
+          <option value="">To</option>
+          {sortedYears.map((year) => (
+            <option
+              key={year}
+              value={year}
+              // Disable years that are before the selected 'From' year
+              disabled={fromYear ? Number(year) < Number(fromYear) : false}
+            >
+              {year}
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
   );
 }

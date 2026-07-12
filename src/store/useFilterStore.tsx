@@ -6,18 +6,18 @@ interface FilterState {
   selectedDepartment: string;
   selectedDomains: string[];
   selectedIndustries: string[];
-  selectedYears: string[];
-
+  years: string[];
+  fromYear: string;
+  toYear: string;
   setDepartment: (dept: string) => void;
   setDomains: (domains: string[]) => void;
   setIndustries: (industries: string[]) => void;
-  setYears: (years: string[]) => void;
+  setFromYear: (year: string) => void;
+  setToYear: (year: string) => void;
   clearAll: () => void;
-
   departments: Departments[];
   domainMapping: Record<string, Domains[]>;
   industries: string[];
-  years: string[];
   isFiltersLoading: boolean;
 
   fetchFilters: () => Promise<void>;
@@ -27,26 +27,25 @@ export const useFilterStore = create<FilterState>((set) => ({
   selectedDepartment: "",
   selectedDomains: [],
   selectedIndustries: [],
-  selectedYears: [],
-
+  fromYear: "",
+  toYear: "",
   departments: [],
   domainMapping: {},
   industries: ["Industry-Linked", "Received Grant"],
   years: generateAcademicYears(),
-
   isFiltersLoading: false,
-
   setDepartment: (dept) => set({ selectedDepartment: dept }),
   setDomains: (domains) => set({ selectedDomains: domains }),
   setIndustries: (industries) => set({ selectedIndustries: industries }),
-  setYears: (years) => set({ selectedYears: years }),
-
+  setFromYear: (year) => set({ fromYear: year }),
+  setToYear: (year) => set({ toYear: year }),
   clearAll: () =>
     set({
       selectedDepartment: "",
       selectedDomains: [],
       selectedIndustries: [],
-      selectedYears: [],
+      fromYear: "",
+      toYear: "",
     }),
 
   fetchFilters: async () => {
@@ -55,7 +54,6 @@ export const useFilterStore = create<FilterState>((set) => ({
       const headers: any = { "Content-Type": "application/json" };
 
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
-      console.log(API_URL);
 
       const [deptResponse, domainResponse] = await Promise.all([
         fetch(`${API_URL}/departments/getDepartments`, { headers }),
@@ -68,12 +66,10 @@ export const useFilterStore = create<FilterState>((set) => ({
 
       const deptsJson = await deptResponse.json();
       const domainsJson = await domainResponse.json();
-
       const formattedDepts = deptsJson.data.data.map((d: any) => ({
         deptAbbreviation: d.dept_abbreviation,
         deptName: d.dept_name,
       }));
-
       const newDomainMapping: Record<string, Domains[]> = {};
 
       domainsJson.data.data.forEach((domain: any) => {
@@ -91,6 +87,7 @@ export const useFilterStore = create<FilterState>((set) => ({
       });
 
       set({
+
         departments: formattedDepts,
         domainMapping: newDomainMapping,
         isFiltersLoading: false,
