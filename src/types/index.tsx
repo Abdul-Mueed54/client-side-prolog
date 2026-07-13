@@ -19,6 +19,7 @@ export interface Project {
   industries?: { name: string; association: string }[];
   comment?: Comments[];
   resources?: Resources[];
+  grants?: any[];
 }
 
 export interface Domains {

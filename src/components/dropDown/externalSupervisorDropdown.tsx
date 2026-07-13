@@ -12,6 +12,7 @@ interface ExternalDropdownProps {
   value: string;
   onChange: (val: string) => void;
   placeholder?: string;
+  disabled?: boolean;
 }
 
 export default function ExternalSupervisorDropdown({

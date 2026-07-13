@@ -29,12 +29,12 @@ export default function StudentFilters() {
 
   const handleDeptChange = (newDept: string) => {
     setSelectedDept(newDept);
-    fetchStudents(1, { deptAbbreviation: newDept, batch: selectedBatch });
+    fetchStudents(1, "", { deptAbbreviation: newDept, batch: selectedBatch });
   };
 
   const handleBatchChange = (newBatch: string) => {
     setSelectedBatch(newBatch);
-    fetchStudents(1, { deptAbbreviation: selectedDept, batch: newBatch });
+    fetchStudents(1, "", { deptAbbreviation: selectedDept, batch: newBatch });
   };
 
   const clearFilters = () => {
